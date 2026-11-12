@@ -1,0 +1,14 @@
+Tiobe-Index
+https://www.tiobe.com/tiobe-index/
+
+PYPL-Index
+http://pypl.github.io/PYPL.html
+
+IEEE-Index
+https://spectrum.ieee.org/computing/software/the-2017-top-programming-languages
+
+RedMonk-Rankings
+http://redmonk.com/sogrady/2017/06/08/language-rankings-6-17/
+
+ZDNET
+http://www.zdnet.com/article/which-programming-languages-are-most-popular-and-what-does-that-even-mean/
