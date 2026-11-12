@@ -1,4 +1,4 @@
-Tiobe-Index
+TIOBE-Index
 https://www.tiobe.com/tiobe-index/
 
 PYPL-Index
