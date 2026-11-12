@@ -1,23 +1,17 @@
-Link-to-MinGW64-64-bit-version-for-Windows.7z-file
+MinGW-w64-64-bit-for-Windows
 https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-posix/seh/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
 
 CodeLite-IDE-Homepage
 https://codelite.org/
 
-CodeLite-IDE-Homepage
-https://codelite.org/
-
-CodeLite-IDE-Homepage
-https://codelite.org/
-
-C-Shell-Homepage
+Cpp-Shell-Homepage
 http://cpp.sh/
 
 OnlineGDB-Homepage
 https://www.onlinegdb.com/
 
-Repl.It
-https://repl.it
+Replit
+https://replit.com
 
-IDE-One
+Ideone
 https://ideone.com/
