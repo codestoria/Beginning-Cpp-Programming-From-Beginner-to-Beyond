@@ -16,7 +16,7 @@ Below are 2 sample runs of the program:
 =======================================
 Enter your favorite number between 1 and 100: 24
 Amazing!! That's my favorite number too!
-No really!!, 24 is my favorite number!
+No really!! 24 is my favorite number!
 
 
 Enter your favorite number between 1 and 100: 75
