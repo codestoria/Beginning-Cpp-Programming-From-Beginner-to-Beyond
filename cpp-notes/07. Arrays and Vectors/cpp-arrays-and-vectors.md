@@ -37,7 +37,7 @@ int score3 = 99;
 
 This approach works fine when you have only a few values. But what if you need to store 100 test scores? Or 10,000? Declaring and naming 10,000 individual variables is impractical, tedious, and error-prone. You would have to keep track of 10,000 different variable names, and any operation that applies to “all scores” would require writing 10,000 lines of code. Clearly, we need a better way to group related values together.
 
-This is where **compound data types** (also called **structured data types**) come in. A compound type is a data type built from other data types. For example, a collection of test scores—each of which is an integer—is a compound type made up of integers.
+This is where **compound data types** (also called **structured data types**) come in. A compound type is a data type built from other data types. For example, a collection of test scores — each of which is an integer — is a compound type made up of integers.
 
 In this tutorial, we will study two of the most important compound data types in C++:
 
@@ -48,7 +48,7 @@ Understanding both is essential. Arrays help you read and maintain legacy C++ co
 
 > **Prerequisites:** You should be comfortable with basic data types (`int`, `double`, `char`), variables, `if` statements, and loops. Loops and collections pair naturally, so if you are shaky on loops, review that chapter first.
 
-> **A note on namespaces:** The examples in this tutorial use fully qualified names such as `std::cout` and `std::vector` to make it clear where each name comes from. In your own programs, you can write `using namespace std;` at the top of the file to omit the `std::` prefix. In larger programs—or when using multiple namespaces—the explicit `std::` form is often preferred because it avoids name conflicts.
+> **A note on namespaces:** The examples in this tutorial use fully qualified names such as `std::cout` and `std::vector` to make it clear where each name comes from. In your own programs, you can write `using namespace std;` at the top of the file to omit the `std::` prefix. In larger programs — or when using multiple namespaces — the explicit `std::` form is often preferred because it avoids name conflicts.
 
 ---
 
@@ -81,7 +81,7 @@ int student100_score = 78;
 
 This becomes unmanageable quickly. If you then need 10,000 scores, the approach collapses entirely.
 
-An array lets you tell the compiler: *“Give me a collection of as many elements as I want, and give the entire collection a single name.”* You no longer have to name each individual element—you access them by position.
+An array lets you tell the compiler: *“Give me a collection of as many elements as I want, and give the entire collection a single name.”* You no longer have to name each individual element — you access them by position.
 
 ```cpp
 int test_scores[100];        // 100 integers, one name
@@ -97,14 +97,14 @@ Understanding these properties is essential to using arrays correctly.
 | Characteristic | Meaning |
 |---|---|
 | **Fixed size** | Once you create an array of a specific size, the size cannot change. Arrays do not grow or shrink while the program runs. |
-| **Homogeneous** | All elements must be of the same type. You can have arrays of `int`, arrays of `double`, arrays of `char`, etc.—but not a mix. |
+| **Homogeneous** | All elements must be of the same type. You can have arrays of `int`, arrays of `double`, arrays of `char`, etc. — but not a mix. |
 | **Contiguous memory** | Elements are stored back-to-back in a single chunk of memory. |
 | **Individually accessible** | Any element can be accessed directly using its index (position). |
 | **Zero-based indexing** | The first element is at index `0`, not `1`. The last element is at index `size - 1`. |
 | **No bounds checking** | C++ does not verify that your index is within the valid range. Accessing out of bounds causes **undefined behavior**. |
 | **Uninitialized by default** | Local arrays contain garbage values until you explicitly initialize them. |
 
-> **What is undefined behavior?** Undefined behavior (UB) means the C++ standard does not specify what your program will do. The result may vary from run to run, may crash, or may appear to work correctly—until it silently corrupts data. Well-written code must avoid any situation that causes undefined behavior.
+> **What is undefined behavior?** Undefined behavior (UB) means the C++ standard does not specify what your program will do. The result may vary from run to run, may crash, or may appear to work correctly — until it silently corrupts data. Well-written code must avoid any situation that causes undefined behavior.
 
 > **Important:** Because the size of an array is fixed, adding or removing elements at runtime is impossible. If you create an array of 100 scores and later need room for more, you must change the size in the source code and recompile the program.
 
@@ -120,7 +120,7 @@ type name[size];
 - **name** — the name of the array variable
 - **size** — the number of elements, written in square brackets `[]` (the array indexing operator)
 
-The size must be known at **compile time**—the moment the compiler translates your source code into a program. The compiler needs this number to reserve the correct amount of memory before the program ever runs. The size can be:
+The size must be known at **compile time** — the moment the compiler translates your source code into a program. The compiler needs this number to reserve the correct amount of memory before the program ever runs. The size can be:
 
 - A **constant literal**: `5`, `365`
 - A **declared constant**: `const int DAYS = 365;`
@@ -141,7 +141,7 @@ double temperatures[DAYS];       // size determined by a constant
 
 ### 2.5 Initializing Arrays
 
-You can initialize an array at the point of declaration using an **initializer list**—a comma-separated list of values inside curly braces `{}`.
+You can initialize an array at the point of declaration using an **initializer list** — a comma-separated list of values inside curly braces `{}`.
 
 #### Full initialization
 
@@ -244,9 +244,9 @@ For example, if `test_scores` starts at address `1000` and each `int` occupies 4
 
 *(This simplified example uses small numbers; real memory addresses are much larger, such as `0x7ffee4a3c8a0`.)*
 
-This is why arrays are so efficient: accessing any element is a single arithmetic operation, regardless of the array’s size. The computer does not need to search through the array—it computes the address directly.
+This is why arrays are so efficient: accessing any element is a single arithmetic operation, regardless of the array’s size. The computer does not need to search through the array — it computes the address directly.
 
-**There is no bounds checking.** If you ask for `test_scores[10]` on a 5-element array, the compiler will happily compute the address (base + 10×4) and read or write whatever happens to be there. That memory may belong to another variable, or it may be inaccessible—either way, the result is **undefined behavior**. Your program may produce strange results, silently corrupt data, or crash.
+**There is no bounds checking.** If you ask for `test_scores[10]` on a 5-element array, the compiler will happily compute the address (base + 10×4) and read or write whatever happens to be there. That memory may belong to another variable, or it may be inaccessible — either way, the result is **undefined behavior**. Your program may produce strange results, silently corrupt data, or crash.
 
 > **It is the programmer’s responsibility** to ensure that every index is between `0` and `size - 1`.
 
@@ -256,7 +256,7 @@ When you print the array name itself:
 std::cout << test_scores;   // prints a hexadecimal address, e.g. 0x7ffd...
 ```
 
-For a non-character array, you get the memory address of the first element—not the contents of the array. (A `char` array is printed as a C-style string only if it is null-terminated; otherwise, printing it causes undefined behavior.) This is a direct consequence of the memory model described above: the array name decays to the starting address.
+For a non-character array, you get the memory address of the first element — not the contents of the array. (A `char` array is printed as a C-style string only if it is null-terminated; otherwise, printing it causes undefined behavior.) This is a direct consequence of the memory model described above: the array name decays to the starting address.
 
 ### 2.8 Multi-dimensional Arrays
 
@@ -282,7 +282,7 @@ This can model data such as three reviewers each rating four movies:
 
 #### Accessing elements
 
-You provide both indices—first the row, then the column:
+You provide both indices — first the row, then the column:
 
 ```cpp
 movie_ratings[1][2] = 5;              // reviewer 1, movie 2
@@ -321,18 +321,18 @@ All the characteristics of one-dimensional arrays (fixed size, homogeneous type,
 
 ### 3.1 The Problem with Fixed-Size Arrays
 
-Suppose you want to store test scores for students in a class, but registration hasn’t started—you don’t know how many students there will be. Students may also drop or add as the semester progresses.
+Suppose you want to store test scores for students in a class, but registration hasn’t started — you don’t know how many students there will be. Students may also drop or add as the semester progresses.
 
 Arrays are **fixed in size**. You must specify the size at compile time, and it cannot change at runtime. Your options with arrays are unsatisfactory:
 
 1. **Over-allocate:** Set the size large enough (for example, 50 for a class of 30). This wastes memory, and you still must track how many elements are actually in use. Eventually, a student will exceed even the most generous size.
-2. **Recompile:** Change the size and rebuild the program whenever enrollment changes—not acceptable for a running program.
+2. **Recompile:** Change the size and rebuild the program whenever enrollment changes — not acceptable for a running program.
 
 We need a collection that can **grow and shrink at runtime**. This is exactly what a vector provides.
 
 ### 3.2 What Is a Vector?
 
-A **vector** is a dynamic array provided by the C++ Standard Library (it is commonly described as an STL-style container). It is a **container**—an object that holds a collection of elements and provides methods for working with them.
+A **vector** is a dynamic array provided by the C++ Standard Library (it is commonly described as an STL-style container). It is a **container** — an object that holds a collection of elements and provides methods for working with them.
 
 Key properties of vectors:
 
@@ -517,7 +517,7 @@ Recall that arrays perform no bounds checking. Vectors give you a choice:
 - `v[i]` — **no** bounds checking (fast, but dangerous)
 - `v.at(i)` — **bounds-checked** (safer)
 
-If you use `at()` with an invalid index, C++ **throws an exception**—an indication that an exceptional condition has occurred and normal execution cannot continue. If the exception is not caught, an error message is displayed and the program terminates.
+If you use `at()` with an invalid index, C++ **throws an exception** — an indication that an exceptional condition has occurred and normal execution cannot continue. If the exception is not caught, an error message is displayed and the program terminates.
 
 Example:
 
@@ -541,7 +541,7 @@ Read this message in two parts:
 
 Different compilers may format the message differently, but the information is the same.
 
-**Why is crashing during testing good?** It surfaces bugs immediately, while you can still fix them. What you do **not** want is a crash in production. Later in your C++ journey, you will learn **exception handling**—catching these exceptions at runtime and responding gracefully so the program does not crash. That is a more advanced topic, but the key point for now is:
+**Why is crashing during testing good?** It surfaces bugs immediately, while you can still fix them. What you do **not** want is a crash in production. Later in your C++ journey, you will learn **exception handling** — catching these exceptions at runtime and responding gracefully so the program does not crash. That is a more advanced topic, but the key point for now is:
 
 > Use `at()` when you want safety; use `[]` when you have verified the index yourself and want maximum performance.
 
@@ -571,7 +571,7 @@ std::cout << movie_ratings[0][1];   // 2  (reviewer 0, movie 1)
 
 #### Accessing elements with vector syntax
 
-Apply `at()` twice—once for the outer vector, once for the inner:
+Apply `at()` twice — once for the outer vector, once for the inner:
 
 ```cpp
 std::cout << movie_ratings.at(0).at(0);   // 1
@@ -586,7 +586,7 @@ Read it left to right: *“Give me the element at index 0 of `movie_ratings` (wh
 
 | Feature | Array | Vector |
 |---|---|---|
-| **Size** | Fixed at compile time | Dynamic—grows and shrinks at runtime |
+| **Size** | Fixed at compile time | Dynamic — grows and shrinks at runtime |
 | **Header required** | None | `#include <vector>` |
 | **Namespace** | None | `std` |
 | **Initialization** | Local automatic arrays are uninitialized unless initialized; global/static arrays are zero-initialized. | A default-constructed vector is empty. The size constructor value-initializes elements (zero for `int`); `push_back(x)` inserts `x`. |
@@ -625,7 +625,7 @@ In this tutorial, you learned:
 
 2. **Arrays** are fixed-size, homogeneous, contiguous collections with zero-based indexing and no bounds checking.
    - Declare with `type name[size];`
-   - Initialize with `{value1, value2, ...}`—partial initialization fills the rest with zeros.
+   - Initialize with `{value1, value2, ...}` — partial initialization fills the rest with zeros.
    - Access with `name[index]`.
    - Understand the memory model: the array name is the address of the first element, and indexing is simple pointer arithmetic.
    - Multi-dimensional arrays use additional square brackets: `name[rows][cols]`.
@@ -643,7 +643,7 @@ In this tutorial, you learned:
 
 5. **In modern C++, prefer vectors over raw arrays.** They are safer, more flexible, and more powerful. But understand arrays, because they appear throughout legacy code and illuminate how vectors work under the hood.
 
-6. **Looping and iteration** pair naturally with both arrays and vectors—you will frequently loop through a collection to process every element.
+6. **Looping and iteration** pair naturally with both arrays and vectors — you will frequently loop through a collection to process every element.
 
 ---
 
