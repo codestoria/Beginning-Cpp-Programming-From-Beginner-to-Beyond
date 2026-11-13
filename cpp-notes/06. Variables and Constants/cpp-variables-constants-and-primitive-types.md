@@ -1,7 +1,5 @@
 # C++ Variables, Constants, and Primitive Data Types
 
----
-
 ## Table of Contents
 
 1. [Introduction: Why We Need Variables](#1-introduction-why-we-need-variables)
