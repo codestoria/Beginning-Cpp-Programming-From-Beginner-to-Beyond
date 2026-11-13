@@ -78,8 +78,8 @@ Address:   1000          2000
           |  10   |     | 1000  |----+
           +-------+     +-------+    |
               x              p       |
-                                      |
-                                      +--> points to address 1000 (x)
+                                     |
+                                     +--> points to address 1000 (x)
 ```
 
 When you later write `*p`, you are saying: "Go to the mailbox whose number is stored in `p`, and read (or write) what is inside."
@@ -107,10 +107,10 @@ If you can just use `x` directly, why bother with a pointer? There are several i
 Declaring a pointer is almost identical to declaring a regular variable, except you add an asterisk (`*`) before the variable name:
 
 ```cpp
-int* int_ptr;         // pointer to an int
-double* double_ptr;   // pointer to a double
-char* char_ptr;       // pointer to a char
-std::string* str_ptr; // pointer to a std::string
+int* int_ptr;          // pointer to an int
+double* double_ptr;    // pointer to a double
+char* char_ptr;        // pointer to a char
+std::string* str_ptr;  // pointer to a std::string
 ```
 
 The asterisk in a declaration is **not** a mathematical operator. It simply marks the variable as a pointer. Read declarations right-to-left: "`int_ptr` is a pointer to an `int`."
@@ -204,8 +204,8 @@ C++ is strict about pointer types. A pointer declared as `int*` can only hold ad
 int score = 10;
 double high_temp = 100.7;
 
-int* score_ptr = &score;     // OK: score is an int
-score_ptr = &high_temp;      // ERROR: high_temp is a double
+int* score_ptr = &score;  // OK: score is an int
+score_ptr = &high_temp;   // ERROR: high_temp is a double
 ```
 
 Even though both addresses might be the same size, the compiler enforces type correctness. This prevents subtle bugs where you might interpret the bytes of a `double` as an `int`.
@@ -232,7 +232,7 @@ The dereference operator follows the pointer to the address it holds and gives y
 When you dereference a pointer on the left side of an assignment, you are assigning to the memory location the pointer points to:
 
 ```cpp
-*score_ptr = 200;  // changes score to 200
+*score_ptr = 200;    // changes score to 200
 std::cout << score;  // prints 200
 ```
 
@@ -363,7 +363,7 @@ If you lose the pointer to dynamically allocated memory — for example, by lett
 
 ```cpp
 int* p = new int(100);  // allocate
-p = nullptr;             // LEAK: the heap int is now unreachable
+p = nullptr;            // LEAK: the heap int is now unreachable
 ```
 
 The heap memory still exists, but there is no way to access or free it. Over time, leaks can exhaust available memory.
@@ -398,9 +398,9 @@ int* score_ptr = scores;  // same as &scores[0]
 Now `scores` and `score_ptr` can be used almost interchangeably:
 
 ```cpp
-std::cout << scores[0];      // 100
-std::cout << *score_ptr;     // 100
-std::cout << score_ptr[0];   // 100
+std::cout << scores[0];     // 100
+std::cout << *score_ptr;    // 100
+std::cout << score_ptr[0];  // 100
 ```
 
 The key difference: `scores` is **not a modifiable variable** — you cannot change what it points to. `score_ptr` is a variable and can be reassigned.
@@ -464,9 +464,9 @@ This is why pointer arithmetic is type-aware: `p + 1` means "the address of the 
 You can add or subtract integers from pointers:
 
 ```cpp
-int* p = arr;        // points to arr[0]
-int* q = p + 2;      // points to arr[2] (2 elements ahead)
-int* r = p - 1;      // one element before arr[0]: undefined behavior — do not do this
+int* p = arr;    // points to arr[0]
+int* q = p + 2;  // points to arr[2] (2 elements ahead)
+int* r = p - 1;  // one element before arr[0]: undefined behavior — do not do this
 ```
 
 The compiler multiplies the integer operand by the size of the pointee type:
@@ -768,7 +768,7 @@ int& ref = num;  // ref is an alias for num
 
 std::cout << num;  // 100
 std::cout << ref;  // 100 (same variable)
-ref = 200;          // modifies num
+ref = 200;         // modifies num
 std::cout << num;  // 200
 ```
 
@@ -848,8 +848,8 @@ Compared to pointer parameters, references are cleaner (no `&` at the call site,
 An **l-value** is an expression that identifies a persistent object or function occupying a memory location. You can normally take its address (bit-fields are a notable exception). Only a **modifiable l-value** — for example, a non-`const` variable — can appear on the left side of an assignment. A `const int` variable and an array name are l-values, but they are not modifiable.
 
 ```cpp
-int x = 10;       // x is an l-value
-std::string name; // name is an l-value
+int x = 10;        // x is an l-value
+std::string name;  // name is an l-value
 ```
 
 L-values can appear on the left side of an assignment (hence the name).
