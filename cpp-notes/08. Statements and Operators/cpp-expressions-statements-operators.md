@@ -625,7 +625,7 @@ Compound assignment is not just shorter — it also avoids repeating the left-ha
 
 ### Precedence
 
-When an expression contains multiple operators, **precedence** determines how the expression is grouped—i.e., which operator binds more tightly. Precedence by itself does not specify the runtime order in which operands with side effects are evaluated. Higher rows in the table below bind more tightly:
+When an expression contains multiple operators, **precedence** determines how the expression is grouped — i.e., which operator binds more tightly. Precedence by itself does not specify the runtime order in which operands with side effects are evaluated. Higher rows in the table below bind more tightly:
 
 | Precedence | Operator | Associativity |
 |------------|----------|---------------|
