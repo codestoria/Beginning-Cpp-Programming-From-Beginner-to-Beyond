@@ -661,4 +661,4 @@ In this tutorial, you learned:
 | Bounds-checked access | Not available | `v.at(i)` |
 | 2D version | `int a[3][4];` | `vector<vector<int>> v;` |
 
-With arrays and vectors in your toolkit, you can now model collections of data efficiently and write programs that handle many values at once—a major step beyond individual variables.
+With arrays and vectors in your toolkit, you can now model collections of data efficiently and write programs that handle many values at once — a major step beyond individual variables.
