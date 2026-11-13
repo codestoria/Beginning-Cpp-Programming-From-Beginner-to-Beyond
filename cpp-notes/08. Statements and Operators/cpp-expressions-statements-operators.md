@@ -1,7 +1,5 @@
 # C++ Expressions, Statements, and Operators
 
----
-
 ## Table of Contents
 
 1. [Introduction](#introduction)
