@@ -28,7 +28,7 @@ Pseudocode:
     Display tax:   number of rooms * price per room * tax rate
     Display total estimate: (number of rooms * price per room) + (number of rooms * price per room * tax rate)
     Display estimate expiration time
- */
+*/
 
 #include <iostream>
 
