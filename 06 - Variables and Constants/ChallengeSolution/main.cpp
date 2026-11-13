@@ -22,7 +22,7 @@ Tax: $6.6
 ===============================
 Total estimate: $116.6
 This estimate is valid for 30 days
- */
+*/
 
 #include <iostream>
 
