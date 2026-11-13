@@ -1,7 +1,5 @@
 # C++ Fundamentals: Program Structure, Preprocessing, Comments, `main`, Namespaces, and Basic I/O
 
----
-
 ## Table of Contents
 
 1. [Introduction: Why Study Program Structure?](#1-introduction-why-study-program-structure)
