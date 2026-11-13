@@ -1,7 +1,5 @@
 # C++ Control Structures: Selection and Iteration
 
----
-
 ## Table of Contents
 
 **Introduction**
