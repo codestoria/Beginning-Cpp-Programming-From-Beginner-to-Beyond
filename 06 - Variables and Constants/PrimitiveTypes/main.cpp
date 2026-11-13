@@ -7,15 +7,15 @@ using namespace std;
 
 int main()
 {
-   /***********************************************
-    *  Character type
-    **********************************************/
+    /***********************************************
+     *  Character type
+     **********************************************/
     char middle_initial {'J'};  // Notice the single quotes around characters
     cout << "My middle initial is " << middle_initial << endl;
 
     /***********************************************
-    *  Integer types
-    **********************************************/
+     *  Integer types
+     **********************************************/
     unsigned short int exam_score {55};  // same as unsigned short exam_score {55};
     cout << "My exam score was " << exam_score << endl;
 
@@ -32,8 +32,8 @@ int main()
     cout << "The distance to alpha centauri is " << distance_to_alpha_centauri << " kilometers" << endl;
 
     /***********************************************
-    *  Floating point types
-    **********************************************/
+     *  Floating point types
+     **********************************************/
     float car_payment {401.23};
     cout << "My car payment is " << car_payment << endl;
 
@@ -44,14 +44,14 @@ int main()
     cout << large_amount << " is a very big number" << endl;
 
     /***********************************************
-    *  Boolean type
-    **********************************************/
+     *  Boolean type
+     **********************************************/
     bool game_over {false};
     cout << "The value of gameOver is " << game_over << endl;
 
     /***********************************************
-    *  Overflow example
-    **********************************************/
+     *  Overflow example
+     **********************************************/
     short value1 {30000};
     short value2 {1000};
     short product {value1 * value2};
