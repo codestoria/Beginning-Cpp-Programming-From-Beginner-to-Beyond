@@ -43,17 +43,17 @@ int main()
     cout << test_scores.at(2) << endl;
 
 
-    cout << "\nEnter a test score to add to the vector: ";
     int score_to_add {0};
 
+    cout << "\nEnter a test score to add to the vector: ";
     cin >> score_to_add;
     test_scores.push_back(score_to_add);
+
     cout << "\nEnter one more test score to add to the vector: ";
-
     cin >> score_to_add;
     test_scores.push_back(score_to_add);
-    cout << "\nTest scores are now: " << endl;
 
+    cout << "\nTest scores are now: " << endl;
     cout << test_scores.at(0) << endl;
     cout << test_scores.at(1) << endl;
     cout << test_scores.at(2) << endl;
