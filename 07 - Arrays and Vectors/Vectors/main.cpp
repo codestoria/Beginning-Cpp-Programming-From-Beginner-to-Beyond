@@ -38,7 +38,6 @@ int main()
     cin >> test_scores.at(2);
 
     cout << "\nUpdated test scores: " << endl;
-
     cout << test_scores.at(0) << endl;
     cout << test_scores.at(1) << endl;
     cout << test_scores.at(2) << endl;
