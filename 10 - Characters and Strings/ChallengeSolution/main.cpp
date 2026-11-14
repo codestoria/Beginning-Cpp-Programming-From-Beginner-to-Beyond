@@ -35,7 +35,8 @@ Reuse existing functionality in libraries and in the std::string class!
 
 using namespace std;
 
-int main() {
+int main()
+{
     string alphabet {" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"};
     string key      {" XZNLWEBGJHQDYVTKFUOMPCIASRxznlwebgjhqdyvtkfuompciasr"};
 
