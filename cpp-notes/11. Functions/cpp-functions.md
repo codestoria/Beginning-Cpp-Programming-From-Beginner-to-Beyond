@@ -120,8 +120,8 @@ int main() {
 #include <iostream>
 
 int main() {
-    std::srand(std::time(nullptr));       // seed the generator
-    const int lower = 1, upper = 6;       // inclusive range
+    std::srand(std::time(nullptr));  // seed the generator
+    const int lower = 1, upper = 6;  // inclusive range
 
     for (int i = 0; i < 10; ++i) {
         int roll = std::rand() % (upper - lower + 1) + lower;
@@ -204,7 +204,7 @@ void say_world() { std::cout << "World\n"; }
 
 void say_hello() {
     std::cout << "Hello\n";
-    say_world();          // a function can call another function
+    say_world();  // a function can call another function
     std::cout << "Bye from say_hello\n";
 }
 
@@ -222,7 +222,7 @@ The compiler reads your file **top to bottom**. Before it can check a call to `s
 
 ```cpp
 int main() {
-    say_hello();          // ERROR: 'say_hello' was not declared in this scope
+    say_hello();  // ERROR: 'say_hello' was not declared in this scope
 }
 
 void say_hello() { /* ... */ }
@@ -255,8 +255,8 @@ If the compiler has not seen the function before the call, it **cannot type-chec
 A prototype is just the function *header* followed by a semicolon — no body:
 
 ```cpp
-int add_numbers(int, int);          // parameter names optional
-int add_numbers(int a, int b);      // easier to read; best practice
+int add_numbers(int, int);      // parameter names optional
+int add_numbers(int a, int b);  // easier to read; best practice
 ```
 
 Parameter names are **ignored by the compiler** — only the types matter for matching. But include them anyway: they document the intent for human readers.
@@ -465,7 +465,7 @@ If **98% of your customers** live in a 6% tax region, you will write `calc_cost(
 
 ```cpp
 double calc_cost(double base_cost,
-                 double tax_rate = 0.06);   // default
+                 double tax_rate = 0.06);  // default
 ```
 
 Now:
@@ -660,7 +660,7 @@ Mark the array parameter `const` to tell the compiler: *"this function must not 
 void print_array(const int arr[], int size) {
     for (int i = 0; i < size; ++i) {
         std::cout << arr[i] << ' ';
-        // arr[i] = 0;    // ← COMPILE ERROR: assignment to read-only location
+        // arr[i] = 0;  // ← COMPILE ERROR: assignment to read-only location
     }
 }
 ```
@@ -1062,9 +1062,9 @@ C++ translation:
 ```cpp
 unsigned long long factorial(unsigned long long n) {
     if (n == 0) {
-        return 1;                            // base case
+        return 1;  // base case
     }
-    return n * factorial(n - 1);             // recursive case
+    return n * factorial(n - 1);  // recursive case
 }
 ```
 
@@ -1072,7 +1072,7 @@ Called from `main`:
 
 ```cpp
 int main() {
-    std::cout << factorial(8) << '\n';       // 40320
+    std::cout << factorial(8) << '\n';  // 40320
 }
 ```
 
@@ -1108,7 +1108,7 @@ C++:
 ```cpp
 unsigned long long fibonacci(unsigned long long n) {
     if (n <= 1) {
-        return n;                             // base cases: 0 → 0, 1 → 1
+        return n;  // base cases: 0 → 0, 1 → 1
     }
     return fibonacci(n - 1) + fibonacci(n - 2);  // recursive case
 }
@@ -1203,8 +1203,8 @@ Name resolution: **look local first, then outward**, never inward.
 
 ```cpp
 RetType f(args) {
-    if (base_case) return base_value;   // must terminate
-    return combine(f(smaller_args));    // must shrink toward base
+    if (base_case) return base_value;  // must terminate
+    return combine(f(smaller_args));   // must shrink toward base
 }
 ```
 
