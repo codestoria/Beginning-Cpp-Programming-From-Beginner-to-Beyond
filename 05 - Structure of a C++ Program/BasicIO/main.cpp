@@ -16,9 +16,9 @@ int main()
     std::cout << "Hello\nOut\nThere\n";
 
     // cin example
-    int num1;
-    int num2;
-    double num3;
+    int num1 {0};
+    int num2 {0};
+    double num3 {0.0};
 
     std::cout << "Enter an integer: ";
     std::cin >> num1;
