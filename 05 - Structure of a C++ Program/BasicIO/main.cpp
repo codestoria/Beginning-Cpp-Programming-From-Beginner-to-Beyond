@@ -22,7 +22,15 @@ int main()
 
     std::cout << "Enter an integer: ";
     std::cin >> num1;
-    std::cout << "You entered: " << num1 << std::endl;
+    std::cout << "You entered: " << num1 << '\n';
+
+    std::cout << "Enter 2 integers separated by a space: ";
+    std::cin >> num1 >> num2;
+    std::cout << "You entered " << num1 << " and " << num2 << '\n';
+
+    std::cout << "Enter a double: ";
+    std::cin >> num3;
+    std::cout << "You entered: " << num3 << '\n';
 
     return 0;
 }
