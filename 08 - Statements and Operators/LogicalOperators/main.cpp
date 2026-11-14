@@ -30,7 +30,7 @@ int main()
 
     bool outside_bounds {false};
     outside_bounds = (num < lower || num > upper);
-    cout << num << " is outside " << lower << " and " << upper << ": " << outside_bounds << endl;
+    cout << num << " is outside the bounds " << lower << " and " << upper << ": " << outside_bounds << endl;
 
     // Determine if an entered integer is exactly on the boundary
     // assume lower < upper
