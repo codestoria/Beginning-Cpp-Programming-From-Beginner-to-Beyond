@@ -777,21 +777,3 @@ This ensures the header is processed only once per translation unit, even if it 
 4. **Always** use `ClassName::` when implementing methods outside the class declaration.
 5. **Prefer** `private` attributes with `public` methods (getters/setters) to control access.
 6. **Avoid** `using namespace std;` in header files — use `std::` explicitly.
-
----
-
-## Next Steps
-
-Now that you understand the fundamentals of classes, objects, member methods, and access control, you are ready to explore more advanced object-oriented topics in C++:
-
-- **Constructors** — controlling how objects are initialized
-- **Initializer lists** — efficient member initialization
-- **Default, overloaded, copy, and move constructors** — different ways to construct objects
-- **Shallow vs. deep copying** — what happens when classes contain pointers
-- **Destructors** — cleaning up when objects are destroyed
-- **The `this` pointer** — referring to the current object
-- **Static class members** — attributes and methods that belong to the class itself, not to individual objects
-- **Structs vs. classes** — the differences in C++
-- **Friendship** — granting controlled access to private members
-
-These topics build directly on what you have learned here. The fundamental pattern — declare a class, create objects, access members through a well-defined interface, and separate specification from implementation — will serve you throughout your C++ journey.
