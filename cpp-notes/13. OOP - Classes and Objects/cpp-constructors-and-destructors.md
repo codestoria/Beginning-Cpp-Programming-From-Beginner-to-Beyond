@@ -120,7 +120,7 @@ private:
     std::string name;
     double balance;
 public:
-    Account() {                 // your own default constructor
+    Account() {            // your own default constructor
         name    = "None";
         balance = 0.0;
     }
@@ -186,10 +186,10 @@ public:
 };
 
 int main() {
-    Player  empty;                               // calls the no-args constructor
-    Player  hero("Hero");                        // calls the one-string constructor
-    Player  frank("Frank", 100, 4);              // calls the three-arg constructor
-    Player* enemy = new Player("Enemy", 1000, 0);// heap allocation, three-arg constructor
+    Player  empty;                                 // calls the no-args constructor
+    Player  hero("Hero");                          // calls the one-string constructor
+    Player  frank("Frank", 100, 4);                // calls the three-arg constructor
+    Player* enemy = new Player("Enemy", 1000, 0);  // heap allocation, three-arg constructor
 }
 ```
 
@@ -365,8 +365,8 @@ private:
     int xp;
 public:
     Player(std::string name_val = "None",
-           int         health_val = 0,
-           int         xp_val = 0)
+           int health_val = 0,
+           int xp_val = 0)
         : name{name_val}, health{health_val}, xp{xp_val} {
     }
 };
