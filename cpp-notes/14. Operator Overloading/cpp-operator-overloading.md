@@ -53,7 +53,7 @@ Number result = (a + b) * (c / d);
 
 This is the power and purpose of operator overloading: it lets your types behave like built-in types.
 
-> **What you will learn in this document**: How operator overloading works, which operators you can overload, the rules you must follow, how to choose between member and global functions, and — most importantly — how to implement the assignment operator correctly for classes that manage resources.
+> **What you will learn in this document**: How operator overloading works, which operators you can overload, the rules you must follow, how to choose between member and global functions, and — most importantly — how to implement the assignment operator correctly for classes that manage resources. We assume you are familiar with classes, constructors, and destructors.
 
 ---
 
@@ -81,7 +81,7 @@ Key points to understand:
 
 - **Behind the scenes, it is a function call.** When you write `a + b`, the compiler translates this into a function call such as `a.operator+(b)` or `operator+(a, b)`. This is **syntactic sugar** — it looks like an operator, but it is actually a method or function call.
 
-- **The compiler generally does not provide meaningful overloaded operator implementations for your class.** If you want an operator to have class-specific meaning, you normally have to define that overload yourself. The only overloadable operator that the compiler implicitly declares for a class is the **assignment operator** (`=`), in the form of a copy assignment operator and — under the conditions specified by the language — a move assignment operator. However, an implicitly declared assignment operator may be defined as **deleted** — for example, if a member is `const`, a reference, or itself not assignable — so not every object is actually assignable. In addition, user-declared special member functions can suppress or affect the implicit declaration of the move assignment operator. All other overloadable operators that you want to give class-specific meaning must be explicitly defined by the programmer.
+- **The compiler usually does not provide meaningful overloaded operators for your class.** If you want an operator to have class-specific meaning, you normally have to define that overload yourself. Among the overloadable operators, there is one important exception: the **assignment operator** (`=`). The compiler implicitly declares a copy assignment operator (and, under specific conditions, a move assignment operator) for your class. However, these implicit versions may not do what you want — for example, they may be defined as **deleted** if a member is `const`, a reference, or itself not assignable, so not every object is actually assignable. In addition, user-declared special member functions can suppress or affect the implicit declaration of the move assignment operator. All other overloadable operators that you want to give class-specific meaning must be explicitly defined by the programmer.
 
 > **Key idea**: Operator overloading does not change how operators work with built-in types. It only lets you define what an operator means for *your* types.
 
@@ -115,13 +115,13 @@ When overloading operators, the following rules must be followed:
 
 1. **Precedence and associativity cannot be changed.** C++ programmers are already familiar with how operators bind; overloading does not alter that. For example, `*` still binds tighter than `+`.
 
-2. **Arity cannot be changed.** If an operator is binary (applied to two arguments), it stays binary. If it is unary, it stays unary. You cannot turn a binary operator into a unary one or vice versa.
+2. **Arity cannot be changed (for ordinary operators).** If an operator is binary (applied to two arguments), it stays binary; if it is unary, it stays unary. You cannot turn a binary operator into a unary one or vice versa. The special operators `operator()` and `operator[]` are exceptions: `operator()` accepts any number of parameters, and since C++23 `operator[]` may also take more than one.
 
 3. **You cannot change how operators work with built-in types.** For example, you cannot redefine what `+` does for two `int`s. At least one operand must be a user-defined type.
 
 4. **You cannot create new operators.** You can only overload operators that already exist in C++. You cannot invent a new symbol like `**` for exponentiation (though you could overload `^` or write a function instead).
 
-5. **Some operators must be implemented as member functions.** The assignment operator (`=`) and the arrow operator (`->`) are required by the language to be **non-static** member functions. The subscript operator (`[]`) and the function call operator (`()`) are also required to be member functions, but since C++23 they may additionally be declared `static` member functions. Others, like `+` or `==`, can be implemented as either member or global functions. The reason is partly historical and partly semantic: operators that fundamentally modify the left-hand object or access its internals are required to be members so that the left-hand operand is normally the object itself.
+5. **Some operators must be implemented as member functions.** The assignment operator (`=`) and the arrow operator (`->`) are required by the language to be **non-static** member functions. The subscript operator (`[]`) and the function call operator (`()`) are also required to be member functions; before C++23 they had to be non-static, and since C++23 they may also be declared `static` member functions. Others, like `+` or `==`, can be implemented as either member or global functions. The reason is partly historical and partly semantic: operators that fundamentally modify the left-hand object or access its internals are required to be members so that the left-hand operand is normally the object itself.
 
 ---
 
@@ -231,9 +231,9 @@ Before we overload the assignment operator, we must clearly distinguish between 
 
 ### 6.2 The Implicitly-Declared Copy Assignment Operator
 
-C++ provides a default way of assigning one object to another. If you do not provide your own copy assignment operator, the compiler implicitly declares a copy assignment operator for you. Declaring a destructor or a copy constructor does **not**, by itself, suppress the implicit copy assignment operator in the usual case (though in C++11–C++17 such a declaration makes the implicit copy assignment operator deprecated; this deprecation rule was removed in C++20). Declaring a **move constructor or move assignment operator**, however, causes the implicit copy assignment operator to be defined as `deleted`. Conversely, declaring a destructor, copy constructor, or copy assignment operator suppresses the implicit declaration of the **move** assignment operator (and the move constructor). The compiler's version performs member-wise assignment.
+C++ provides a default way of assigning one object to another. If you do not provide your own copy assignment operator, the compiler implicitly declares one. The implicit copy assignment operator performs **member-wise assignment**: each member of the right-hand side object is assigned to the corresponding member of the left-hand side object, using that member's own assignment operator. For a class-type member this calls its `operator=`; for a raw-pointer member it copies only the pointer value — a **shallow copy** — not the pointed-to data.
 
-The behavior of the implicitly-declared copy assignment operator is **member-wise assignment**: each member of the right-hand side object is assigned to the corresponding member of the left-hand side object, using that member's own assignment operator. For a class-type member this calls its `operator=`; for a raw-pointer member it copies only the pointer value — a **shallow copy** — not the pointed-to data.
+**Caveats.** The implicit version is not always available. It may be defined as **deleted** if a member is `const`, a reference, or itself not assignable. Declaring a **move constructor or move assignment operator** also causes the implicit copy assignment operator to be defined as `deleted`. Conversely, declaring a destructor, copy constructor, or copy assignment operator suppresses the implicit declaration of the **move** assignment operator (and the move constructor). (Declaring a destructor or a copy constructor does not, by itself, suppress the implicit copy assignment operator in the usual case, though in C++11–C++17 such a declaration made it deprecated; that deprecation rule was removed in C++20.)
 
 If your class does not contain raw pointers, the implicitly-declared copy assignment operator is usually fine. However, if your class has a raw pointer member (as our `MyString` class does), shallow copying causes problems:
 
@@ -316,7 +316,7 @@ Let's walk through each step:
 
 1. **Check for self-assignment.** If someone writes `a = a`, we should detect it and do nothing. This avoids unnecessary allocation and copying. More importantly, it protects implementations that deallocate the old resource before copying from `rhs`: without the check, such an implementation would free the very resource it then tries to copy from. **The implementation above** avoids that specific danger by allocating and copying **before** deleting the old buffer, so `a = a` would not crash even without the check — but the check is still recommended because it avoids wasted work. We check by comparing the address of the current object (`this`) with the address of the right-hand side object (`&rhs`).
 
-2. **Allocate new space and copy the data.** We allocate a new buffer and copy `rhs.str` into it *before* touching the old resource. If `new` throws `std::bad_alloc`, `*this` is left unchanged — no leak, no dangling pointer. This ordering gives **strong exception safety** for the allocation step. (An alternative is the copy-and-swap idiom: build a temporary `MyString` from `rhs`, then `swap` it with `*this`.)
+2. **Allocate new space and copy the data.** We allocate a new buffer and copy `rhs.str` into it *before* touching the old resource. If `new` throws `std::bad_alloc`, `*this` is left unchanged — no leak, no dangling pointer. Assuming `std::strlen`/`std::strcpy` do not throw and `delete[]` does not throw, this ordering gives the whole copy assignment the **strong exception safety** guarantee. (An alternative is the copy-and-swap idiom: build a temporary `MyString` from `rhs`, then `swap` it with `*this`.)
 
 3. **Deallocate the left-hand side's existing resource.** Now that the new buffer is ready, it is safe to `delete[]` the old character array. The left-hand side object may already own some memory (even an empty string occupies memory). If we simply overwrote the pointer, that memory would be orphaned and leaked.
 
@@ -351,7 +351,7 @@ The copy assignment operator we just wrote performs a deep copy: it allocates ne
 
 To talk about this precisely, C++ distinguishes two kinds of expressions:
 
-- **Lvalue** (locator value): an expression that refers to a persistent object — roughly, something whose address you can take. Named variables are lvalues, and they persist beyond the expression in which they appear.
+- **Lvalue** (locator value): an expression that refers to a persistent object — roughly, something whose address you can take. (Strictly, there are lvalues you cannot take the address of, such as bit-fields; "roughly" is precise enough here.) Named variables are lvalues, and they persist beyond the expression in which they appear.
 - **Rvalue**: an expression that is treated as movable-from — either a temporary that does not refer to a persistent object, or an expression such as `std::move(x)` that names a persistent object but is explicitly marked as movable-from. Temporaries such as `MyString("Frank")`, and the result of expressions like `x + y`, are rvalues; they are typically destroyed at the end of the full expression. (Strictly, C++11 splits rvalues into *prvalues* and *xvalues*; for this discussion, "rvalue" is precise enough.)
 
 Consider:
@@ -374,7 +374,7 @@ s1 = MyString("Frank");  // temporary object (an rvalue)
 s2 = std::move(s3);      // explicit move
 ```
 
-`std::move` is declared in `<utility>`; remember to `#include <utility>` when you use it.
+`std::move` is declared in `<utility>`; remember to `#include <utility>` when you use it. Note that `std::move` itself does **not** move anything — it is just a cast that produces an xvalue (an rvalue), so that an overload taking `Type&&` can be selected.
 
 If you do not provide a move assignment operator (and no move assignment is implicitly declared), overload resolution falls back to the copy assignment operator when it is available. The program still works, but it is less efficient.
 
@@ -400,7 +400,9 @@ MyString& operator=(MyString&& rhs) noexcept;
 
 ```cpp
 MyString& MyString::operator=(MyString&& rhs) noexcept {
-    std::cout << "Move assignment" << std::endl;
+    // Note: no debug output here. This function is marked noexcept, and
+    // iostream operations can throw when the stream's exception mask is set;
+    // an exception escaping a noexcept function calls std::terminate.
 
     // 1. Check for self-assignment
     if (this == &rhs) {
@@ -495,7 +497,7 @@ No allocation, no character-by-character copy. For large strings or expensive-to
 
 - **Operators are functions in disguise.** The `operator` keyword followed by the symbol defines the function name. Writing `a + b` is syntactic sugar for a function call such as `a.operator+(b)` or `operator+(a, b)`.
 
-- **Most operators can be overloaded**, but some (like `.`, `::`, `?:`, `.*`, `sizeof`, `typeid`, and the named casts) cannot. Some must be member functions: `=` and `->` must be non-static members, while `[]` and `()` must be members but may since C++23 also be `static` member functions. Only overload an operator when it makes sense for your class.
+- **Most operators can be overloaded**, but some (like `.`, `::`, `?:`, `.*`, `sizeof`, `typeid`, and the named casts) cannot. Some must be member functions: `=` and `->` must be **non-static** members; `[]` and `()` must be members — they had to be non-static before C++23, and since C++23 they may also be declared `static` member functions. Only overload an operator when it makes sense for your class.
 
 - **Initialization uses constructors; assignment uses `operator=`.** Know the difference: `MyString s2 = s1;` is initialization (copy constructor), while `s2 = s1;` after `s2` already exists is assignment.
 
@@ -505,7 +507,7 @@ No allocation, no character-by-character copy. For large strings or expensive-to
 
 - **Move assignment** (`operator=(Type&&)`) is used for rvalue arguments — typically temporaries, or named objects explicitly passed through `std::move`. It steals the resource: check for self-assignment, deallocate, steal pointer, null out source, return `*this`. Mark it `noexcept` when it cannot throw; this helps containers and generic code use move operations safely and efficiently. (For `std::vector` reallocation, the relevant property is whether the **move constructor** is `noexcept`.)
 
-- **Always check for self-assignment** in `operator=`. For copy assignment, the check avoids unnecessary allocation and copying; it is also essential for implementations that delete the old resource before copying from `rhs`. For move assignment, without the check, `s = std::move(s)` can release `s`'s resource and leave `s` with a null pointer (as in the implementation shown here), losing its original value; other implementations may behave even worse. The check makes the operation a safe no-op.
+- **Check for self-assignment** in `operator=`. For copy assignment, the check avoids unnecessary allocation and copying, and it is essential for implementations that delete the old resource before copying from `rhs` (the implementation in §6.3.2 allocates first, so it would survive self-assignment even without the check, but the check still saves work). For the move assignment implemented in §6.4.4, the check is **required**: without it, `s = std::move(s)` would release `s`'s resource and then set `s.str` to null, losing its original value. The check makes the operation a safe no-op.
 
 - **Move semantics are more efficient** than copy semantics because they avoid allocation and copying.
 
