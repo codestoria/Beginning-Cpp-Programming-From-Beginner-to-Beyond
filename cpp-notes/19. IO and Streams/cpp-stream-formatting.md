@@ -2,20 +2,11 @@
 
 ## Table of Contents
 
-- [Introduction](#introduction)
-  - [Why Learn Stream Formatting?](#why-learn-stream-formatting)
-  - [What Is a Stream?](#what-is-a-stream)
-  - [The Stream Objects You Already Know](#the-stream-objects-you-already-know)
-  - [Headers You Need](#headers-you-need)
-  - [Two Ways to Format: Manipulators vs. Member Functions](#two-ways-to-format-manipulators-vs-member-functions)
-  - [The Central Rule: Persistent vs. One-Time Settings](#the-central-rule-persistent-vs-one-time-settings)
-- [1. Formatting Boolean Values](#1-formatting-boolean-values)
-- [2. Formatting Integer Values](#2-formatting-integer-values)
-- [3. Formatting Floating-Point Values](#3-formatting-floating-point-values)
-- [4. Field Width, Alignment, and Fill Characters](#4-field-width-alignment-and-fill-characters)
-- [5. Putting It All Together: A Formatted Table](#5-putting-it-all-together-a-formatted-table)
-- [Best Practices](#best-practices)
-- [Summary Table](#summary-table)
+1. [Formatting Boolean Values](#1-formatting-boolean-values)
+2. [Formatting Integer Values](#2-formatting-integer-values)
+3. [Formatting Floating-Point Values](#3-formatting-floating-point-values)
+4. [Field Width, Alignment, and Fill Characters](#4-field-width-alignment-and-fill-characters)
+5. [Putting It All Together: A Formatted Table](#5-putting-it-all-together-a-formatted-table)
 
 ---
 
