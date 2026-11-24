@@ -47,7 +47,6 @@ Suppose you want a function that returns the larger of two values. For integers,
 int max_value(int a, int b) {
     return (a > b) ? a : b;
 }
-
 ```
 
 What if you also need to compare `double` values, `char` values, or custom `Player` objects? Without generic programming, you are forced to write and maintain separate overloaded functions for every single type:
@@ -56,7 +55,6 @@ What if you also need to compare `double` values, `char` values, or custom `Play
 double max_value(double a, double b) { return (a > b) ? a : b; }
 char max_value(char a, char b)       { return (a > b) ? a : b; }
 // ...and dozens more overloads for every other type!
-
 ```
 
 This violates the **DRY (Don't Repeat Yourself)** principle. Every overload duplicates identical logic; if you discover a bug or want to refine the algorithm, you must update every copy manually.
@@ -78,7 +76,6 @@ Consider a macro implementation of `MAX`:
 ```cpp
 // Legacy C style — strictly discouraged in modern C++
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
-
 ```
 
 Notice the defensive parentheses wrapped around every parameter and around the entire expression. Without them, even basic arithmetic fails. Yet even *with* careful parentheses, macros suffer from three fatal flaws:
@@ -91,7 +88,6 @@ Notice the defensive parentheses wrapped around every parameter and around the e
 int result = 100 / SQUARE(2 + 3); 
 // Blindly expands to: 100 / 2 + 3 * 2 + 3
 // Evaluates as: (100 / 2) + (3 * 2) + 3 = 59 (Expected: 4!)
-
 ```
 
 
@@ -114,7 +110,6 @@ template <typename T>
 T max_value(T a, T b) {
     return (a > b) ? a : b;
 }
-
 ```
 
 * **`template <typename T>`** introduces a **template parameter list**, telling the compiler that `T` is a placeholder for a type to be supplied later. *(Note: You may see `template <class T>` in older codebases. In a template parameter list, `typename` and `class` are interchangeable, though `typename` is often preferred for clarity because `T` can be a primitive type like `int`; `typename` also has a distinct role when naming dependent types inside templates.)*
@@ -148,14 +143,12 @@ int main() {
     std::cout << res1 << " | " << res2 << " | " << res3 << "\n";
     return 0;
 }
-
 ```
 
 **Output:**
 
 ```text
 20 | 3.14 | 10
-
 ```
 
 Behind the scenes, the compiler generates two completely independent, type-safe functions — one accepting `int` and one accepting `double` — just as if you had written both overloads by hand.
@@ -196,14 +189,12 @@ int main() {
     std::cout << "Winner: " << winner.name << "\n";
     return 0;
 }
-
 ```
 
 **Output:**
 
 ```text
 Winner: Bob
-
 ```
 
 ### Multiple Template Parameters
@@ -223,7 +214,6 @@ int main() {
     print_pair(42, std::string{"The Answer"}); // T1 = int, T2 = std::string
     return 0;
 }
-
 ```
 
 ---
@@ -267,7 +257,6 @@ int main() {
     std::cout << auto_item.get_name() << ": " << auto_item.get_value() << "\n";
     return 0;
 }
-
 ```
 
 To the compiler, `Item<int>`, `Item<std::string>`, and `Item<double>` are **three completely distinct classes** generated from the same blueprint. You can also compose templates arbitrarily, such as `Item<Item<double>>` or `std::vector<Item<int>>`.
@@ -304,7 +293,6 @@ public:
         int data[n]; // Standard C++ forbids variable-length stack arrays!
     }
 };
-
 ```
 
 The solution is to pass the size as a **non-type template parameter**, making the size part of the type itself:
@@ -338,7 +326,6 @@ int main() {
     std::cout << "words size:   " << words.size()   << ", first: " << words[0]   << "\n";
     return 0;
 }
-
 ```
 
 Note that `FixedArray<int, 5>` and `FixedArray<int, 10>` are treated as **two different types** because their non-type template arguments differ.
