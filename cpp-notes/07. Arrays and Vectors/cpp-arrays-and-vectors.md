@@ -253,10 +253,11 @@ This is why arrays are so efficient: accessing any element is a single arithmeti
 When you print the array name itself:
 
 ```cpp
-std::cout << test_scores;   // prints a hexadecimal address, e.g. 0x7ffd...
+std::cout << test_scores;  // prints a pointer value (hexadecimal address), e.g. 0x7ffd...
 ```
 
-For a non-character array, you get the memory address of the first element — not the contents of the array. (A `char` array is printed as a C-style string only if it is null-terminated; otherwise, printing it causes undefined behavior.) This is a direct consequence of the memory model described above: the array name decays to the starting address.
+For a non-character array, the array name decays to a pointer to its first element, so `std::cout` prints that pointer's address rather than the contents of the array. (A `char` array is treated as a C-style string and printed as text if it is null-terminated; otherwise, printing it reads past the end and causes undefined behavior.)
+This is a direct consequence of the memory model described above: in most expressions, the array name decays to a pointer to the first element.
 
 ### 2.8 Multi-dimensional Arrays
 
@@ -269,7 +270,7 @@ type name[rows][columns];
 Example:
 
 ```cpp
-int movie_ratings[3][4];   // 3 rows × 4 columns = 12 integers total
+int movie_ratings[3][4];  // 3 rows × 4 columns = 12 integers total
 ```
 
 This can model data such as three reviewers each rating four movies:
@@ -285,8 +286,8 @@ This can model data such as three reviewers each rating four movies:
 You provide both indices — first the row, then the column:
 
 ```cpp
-movie_ratings[1][2] = 5;              // reviewer 1, movie 2
-std::cout << movie_ratings[1][2];     // prints 5
+movie_ratings[1][2] = 5;           // reviewer 1, movie 2
+std::cout << movie_ratings[1][2];  // prints 5
 ```
 
 #### Initializing a 2D array
@@ -308,7 +309,7 @@ Writing the data across multiple lines is much more readable than a single line,
 The same pattern extends to three or more dimensions:
 
 ```cpp
-int cube[3][4][5];   // 3 × 4 × 5 = 60 integers
+int cube[3][4][5];  // 3 × 4 × 5 = 60 integers
 ```
 
 > **Note:** Most compilers impose practical limits on the number of dimensions, though these limits are very high and rarely reached.
@@ -366,10 +367,10 @@ Because vectors are part of the standard library, the syntax differs slightly fr
 using namespace std;
 ```
 
-**Step 3:** Declare the vector. The element type goes inside **angle brackets** `<>`:
+**Step 3:** Declare the vector. The element type goes inside **angle brackets** `<>` (using `std::vector` explicitly, or `vector` if you have `using namespace std;`):
 
 ```cpp
-vector<type> name;
+std::vector<type> name;
 ```
 
 #### Common declaration styles
@@ -377,15 +378,15 @@ vector<type> name;
 **Empty vector:**
 
 ```cpp
-vector<char> vowels;        // empty vector of characters (size 0)
-vector<int> test_scores;    // empty vector of integers
+vector<char> vowels;      // empty vector of characters (size 0)
+vector<int> test_scores;  // empty vector of integers
 ```
 
 **Vector with a specified size (elements initialized to zero):**
 
 ```cpp
-vector<char> vowels(5);          // 5 characters, each initialized to '\0'
-vector<int> test_scores(10);     // 10 integers, each initialized to 0
+vector<char> vowels(5);       // 5 characters, each initialized to '\0'
+vector<int> test_scores(10);  // 10 integers, each initialized to 0
 ```
 
 > Unlike local arrays, elements created by the size constructor are **value-initialized**. For fundamental types such as `int` and `double`, this means zero, so you do not get garbage values. This removes an entire category of bugs that beginners often encounter with arrays.
@@ -393,7 +394,7 @@ vector<int> test_scores(10);     // 10 integers, each initialized to 0
 **Vector with a size and an initial value:**
 
 ```cpp
-vector<double> temperatures(365, 80.0);   // 365 doubles, all set to 80.0
+vector<double> temperatures(365, 80.0);  // 365 doubles, all set to 80.0
 ```
 
 The first argument is the size; the second is the value to fill every element with.
@@ -410,7 +411,7 @@ vector<int> test_scores {100, 98, 89, 85, 93};
 **Copying from another vector:**
 
 ```cpp
-vector<int> copy_of_scores(test_scores);   // copy of another vector
+vector<int> copy_of_scores(test_scores);  // copy of another vector
 ```
 
 #### Summary of declaration forms
@@ -432,10 +433,10 @@ There are two primary ways to access vector elements.
 ```cpp
 vector<int> test_scores {100, 95, 99, 87, 88};
 
-std::cout << test_scores[0];   // 100
-std::cout << test_scores[4];   // 88
+std::cout << test_scores[0];  // 100
+std::cout << test_scores[4];  // 88
 
-test_scores[0] = 90;           // modify element 0
+test_scores[0] = 90;          // modify element 0
 ```
 
 The syntax is identical to arrays. Indexing starts at `0`.
@@ -453,10 +454,10 @@ object_name.method_name(arguments)
 The `at()` method returns the element at a given index:
 
 ```cpp
-std::cout << test_scores.at(0);   // 100
-std::cout << test_scores.at(4);   // 88
+std::cout << test_scores.at(0);  // 100
+std::cout << test_scores.at(4);  // 88
 
-test_scores.at(0) = 90;           // modify element 0
+test_scores.at(0) = 90;          // modify element 0
 ```
 
 The name `at` makes the intent clear and readable. More importantly, **`at()` performs bounds checking**. If the index is out of range, it throws an exception (see [Section 3.6](#36-bounds-checking-and-exceptions)).
@@ -476,7 +477,7 @@ Example using `size()`:
 
 ```cpp
 vector<int> test_scores {100, 98, 89};
-std::cout << "There are " << test_scores.size() << " scores.";   // prints 3
+std::cout << "There are " << test_scores.size() << " scores.";  // prints 3
 ```
 
 Because vectors can grow and shrink, asking a vector for its current size is a common and important operation. With an array, the size is fixed and known from the declaration, but a vector’s size changes over time, so you must ask it rather than assume.
@@ -490,8 +491,8 @@ The `push_back()` method adds a new element to the **end** of the vector. The el
 ```cpp
 vector<int> test_scores {100, 95, 99};   // size 3
 
-test_scores.push_back(80);   // now: 100, 95, 99, 80     (size 4)
-test_scores.push_back(90);   // now: 100, 95, 99, 80, 90 (size 5)
+test_scores.push_back(80);  // now: 100, 95, 99, 80     (size 4)
+test_scores.push_back(90);  // now: 100, 95, 99, 80, 90 (size 5)
 ```
 
 If the vector needs more memory to hold the new element, it automatically allocates additional space, copies the existing elements if necessary, and updates its internal state. **You do not need to manage memory yourself.** This is one of the major advantages of vectors over arrays: you focus on your data, and the vector handles the details of memory management.
@@ -504,7 +505,7 @@ int score_to_add {0};
 
 // Read values until the user signals end of input (Ctrl+Z / Ctrl+D)
 while (std::cin >> score_to_add) {
-    scores.push_back(score_to_add);   // vector grows as needed
+    scores.push_back(score_to_add);  // vector grows as needed
 }
 ```
 
@@ -522,9 +523,9 @@ If you use `at()` with an invalid index, C++ **throws an exception** — an indi
 Example:
 
 ```cpp
-vector<int> test_scores {100, 95, 99, 80, 90};   // size 5
+vector<int> test_scores {100, 95, 99, 80, 90};  // size 5
 
-std::cout << test_scores.at(10);   // index 10 is out of range → exception
+std::cout << test_scores.at(10);  // index 10 is out of range → exception
 ```
 
 The error message will resemble:
@@ -565,8 +566,8 @@ vector<vector<int>> movie_ratings {
 #### Accessing elements with array syntax
 
 ```cpp
-std::cout << movie_ratings[0][0];   // 1  (reviewer 0, movie 0)
-std::cout << movie_ratings[0][1];   // 2  (reviewer 0, movie 1)
+std::cout << movie_ratings[0][0];  // 1  (reviewer 0, movie 0)
+std::cout << movie_ratings[0][1];  // 2  (reviewer 0, movie 1)
 ```
 
 #### Accessing elements with vector syntax
@@ -574,8 +575,8 @@ std::cout << movie_ratings[0][1];   // 2  (reviewer 0, movie 1)
 Apply `at()` twice — once for the outer vector, once for the inner:
 
 ```cpp
-std::cout << movie_ratings.at(0).at(0);   // 1
-std::cout << movie_ratings.at(0).at(1);   // 2
+std::cout << movie_ratings.at(0).at(0);  // 1
+std::cout << movie_ratings.at(0).at(1);  // 2
 ```
 
 Read it left to right: *“Give me the element at index 0 of `movie_ratings` (which is a vector), then give me the element at index 0 of that vector.”*

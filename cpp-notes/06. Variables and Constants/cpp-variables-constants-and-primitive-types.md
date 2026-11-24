@@ -125,6 +125,8 @@ This consistency is a great strength of C++: once you understand `int`, you unde
 
 ### 3.2 The danger of uninitialized variables
 
+In short snippets below, `<iostream>` and `std::` are assumed unless stated otherwise.
+
 Consider:
 
 ```cpp
