@@ -901,7 +901,7 @@ A running C++ program's memory is divided into segments:
 ├──────────────────┤
 │   Stack          │   function call frames  ← focus of this section
 ├──────────────────┤
-│   Heap           │   dynamic memory (covered later in the course)
+│   Heap           │   dynamic memory (covered separately)
 └──────────────────┘
 ```
 
@@ -935,14 +935,15 @@ When the function returns, its frame is **popped**, and control resumes in the f
 Consider:
 
 ```cpp
-int function2(int& x, int y, int z) {
-    return x = x + y + z;
+int function2(int x, int y, int z) {
+    x = x + y + z;
+    return x;
 }
 
 int function1(int a, int b) {
     int result = a + b;
-    function2(result, a, b);
-    return result;
+    int combined = function2(result, a, b);
+    return combined;
 }
 
 int main() {
@@ -958,7 +959,7 @@ int main() {
 2. `main` calls `function1(x, y)`. `function1`'s frame is pushed: `a` gets **a copy** of `x` (`10`), `b` gets **a copy** of `y` (`20`).
 3. `function1` computes `result = a + b = 30`.
 4. `function1` calls `function2(result, a, b)`. `function2`'s frame is pushed:
-   - `x` is a **reference** to `result` (an alias — no copy).
+   - `x` is a **copy** to `result` (`30`).
    - `y` is a **copy** of `a` (`10`).
    - `z` is a **copy** of `b` (`20`).
 5. `function2` computes `x = x + y + z = 30 + 10 + 20 = 60`. Because `x` is an alias for `result`, **`result` becomes `60`**.
@@ -1052,7 +1053,7 @@ If the base case is missing or wrong, the function recurses forever, exhausts th
 
 Mathematical definition:
 
-```
+```text
 n! = 1                if n = 0     (base case)
 n! = n × (n-1)!       if n > 0     (recursive case)
 ```
@@ -1097,7 +1098,7 @@ The push phase goes down until the base case; the **unwinding** phase goes back 
 
 Mathematical definition:
 
-```
+```text
 fib(0) = 0
 fib(1) = 1
 fib(n) = fib(n-1) + fib(n-2)      for n > 1
@@ -1120,7 +1121,7 @@ The `n <= 1` check handles both base cases in one test.
 
 `fibonacci(n)` makes **two** recursive calls, each of which makes two more, and so on. The number of calls grows exponentially — roughly with the golden ratio `φ ≈ 1.618` raised to the power `n`. Calculating `fibonacci(40)` requires on the order of **300 million** function calls, which takes noticeable wall-clock time even on a fast machine.
 
-This is the classic warning: **recursion can be expensive** because every call pushes a new frame, and poorly-structured recursive functions re-solve the same subproblems over and over. (A technique called *memoization* — caching previously computed results — fixes this, and is covered later in the course.)
+This is the classic warning: **recursion can be expensive** because every call pushes a new frame, and poorly-structured recursive functions re-solve the same subproblems over and over. (A technique called *memoization* — caching previously computed results — fixes this, and is covered separately.)
 
 ### Practical Advice
 

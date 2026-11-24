@@ -205,16 +205,14 @@ Important properties:
 
 - **An array-based C-style string has a fixed size at compile time.** It cannot grow or shrink at runtime. (A `char*` can point to dynamically allocated memory, but then you must manage allocation and deallocation yourself.)
 - **Extra space is zero-filled.**
-
-```cpp
-char name[8] = "Frank";   // F r a n k \0 \0 \0
-```
+    ```cpp
+    char name[8] = "Frank";  // F r a n k \0 \0 \0
+    ```
 
 - **Individual characters are accessed with `[]`:**
-
-```cpp
-char first = name[0];     // 'F'
-```
+    ```cpp
+    char first = name[0];  // 'F'
+    ```
 
 ### 4.4 The dangers of C-style strings
 
@@ -223,8 +221,8 @@ C-style strings are simple and fast, but they come with serious pitfalls. Unders
 **1. Uninitialized local arrays contain garbage.**
 
 ```cpp
-char name[20];              // uninitialized
-std::cout << name;          // undefined behavior — prints garbage or crashes
+char name[20];      // uninitialized
+std::cout << name;  // undefined behavior — prints garbage or crashes
 ```
 
 The array holds whatever bytes happen to be in memory. (Global and static arrays, by contrast, are zero-initialized.) If no null character appears nearby, printing walks off into unrelated memory.
@@ -234,7 +232,7 @@ The array holds whatever bytes happen to be in memory. (Global and static arrays
 ```cpp
 char a[10];
 char b[10] = "Frank";
-a = b;                      // ❌ compiler error
+a = b;  // ❌ compiler error
 ```
 
 An array name decays to a pointer to its first element in most expressions, and arrays themselves are not assignable. Copying a pointer is not a string copy. To copy the characters, you must call a function such as `strcpy` (Section 5).
@@ -251,14 +249,14 @@ To find the length of a string, C++ has to scan character by character until it 
 
 ```cpp
 char name[20];
-std::cin >> name;           // ⚠️ overflow if input exceeds 19 characters
+std::cin >> name;  // ⚠️ overflow if input exceeds 19 characters
 ```
 
 `>>` has no idea how large the array is. Always cap the read:
 
 ```cpp
 #include <iomanip>
-std::cin >> std::setw(20) >> name;   // reads at most 19 characters + '\0'
+std::cin >> std::setw(20) >> name;  // reads at most 19 characters + '\0'
 ```
 
 or use `cin.getline` (Section 5.6).
@@ -300,7 +298,7 @@ k   → count 5
 This is why calling `strlen(s)` inside a loop condition is a performance trap: the loop becomes O(n²). Cache the length first:
 
 ```cpp
-size_t len = strlen(s);        // compute once
+size_t len = strlen(s);  // compute once
 for (size_t i = 0; i < len; ++i) { /* ... */ }
 ```
 
@@ -311,7 +309,7 @@ for (size_t i = 0; i < len; ++i) { /* ... */ }
 Use `size_t` for lengths, indices, and anything representing a size. Sizes are never negative, so unsigned arithmetic is the correct and portable choice.
 
 ```cpp
-size_t len = strlen("Frank");   // 5
+size_t len = strlen("Frank");  // 5
 ```
 
 > **Trap to know.** Because `size_t` is unsigned, subtracting can wrap around. `s.length() - 1` when `s` is empty produces a huge number, not `-1`. Guard against empty strings before subtracting.
@@ -322,9 +320,9 @@ size_t len = strlen("Frank");   // 5
 char first[20] = "Frank";
 char full[50];
 
-strcpy(full, first);            // full = "Frank"
-strcat(full, " ");              // full = "Frank "
-strcat(full, "Mitropoulos");    // full = "Frank Mitropoulos"
+strcpy(full, first);          // full = "Frank"
+strcat(full, " ");            // full = "Frank "
+strcat(full, "Mitropoulos");  // full = "Frank Mitropoulos"
 ```
 
 Read the argument order carefully: `strcpy(dest, src)` means "copy `src` into `dest`" — the data flows from the second argument into the first. Students often find this backwards; say it out loud until it sticks.
@@ -351,7 +349,7 @@ The exact magnitude is unspecified — only the sign matters. `strcmp` is the st
 
 ```cpp
 char fullName[50];
-cin.getline(fullName, 50);   // reads up to 49 chars, or until Enter
+cin.getline(fullName, 50);  // reads up to 49 chars, or until Enter
 ```
 
 The second argument is the buffer size. `getline` reads at most `size - 1` characters and appends `'\0'`. If the line is longer, `getline` sets the stream's failbit — you must clear it before reading again:
@@ -366,8 +364,8 @@ cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 ```cpp
 #include <cstdlib>
 
-int n = atoi("12");         // 12
-double d = atof("3.14");    // 3.14
+int n = atoi("12");       // 12
+double d = atof("3.14");  // 3.14
 ```
 
 `atoi` does **not** report errors. If the string is not a number, it returns 0 — indistinguishable from a valid `"0"`. For real code, prefer `std::stoi` (C++11, declared in `<string>`), which throws `std::invalid_argument` or `std::out_of_range` on failure.
@@ -387,10 +385,10 @@ int main() {
     char fullName[50]  = "";
 
     cout << "Enter your first name: ";
-    cin >> std::setw(20) >> firstName;         // at most 19 chars + '\0'
+    cin >> setw(20) >> firstName;  // at most 19 chars + '\0'
 
     cout << "Enter your last name: ";
-    cin >> std::setw(20) >> lastName;
+    cin >> setw(20) >> lastName;
 
     cout << "Hello " << firstName
          << ", your first name has "
@@ -403,7 +401,7 @@ int main() {
     cout << "Your full name is " << fullName << "\n";
 
     // Uppercase every letter
-    size_t len = strlen(fullName);             // cache — avoid O(n²)
+    size_t len = strlen(fullName);  // cache — avoid O(n²)
     for (size_t i = 0; i < len; ++i) {
         unsigned char uc = static_cast<unsigned char>(fullName[i]);
         if (isalpha(uc)) {
@@ -451,12 +449,12 @@ using namespace std;
 ### 6.3 Declaring and initializing
 
 ```cpp
-string s1;                  // empty string (not garbage!)
-string s2{"Frank"};         // from a C-style literal
-string s3{s2};              // copy of s2
-string s4{"Frank", 3};      // first 3 chars of "Frank" → "Fra"
-string s5{s3, 0, 2};        // from s3, starting at index 0, length 2 → "Fr"
-string s6(3, 'X');          // three X's → "XXX"  (note the parentheses)
+string s1;                // empty string (not garbage!)
+string s2{"Frank"};       // from a C-style literal
+string s3{s2};            // copy of s2
+string s4{"Frank", 3};    // first 3 chars of "Frank" → "Fra"
+string s5{s3, 0, 2};      // from s3, starting at index 0, length 2 → "Fr"
+string s6(3, 'X');        // three X's → "XXX"  (note the parentheses)
 ```
 
 > **Why parentheses for `s6`?** Braces `{3, 'X'}` would match `string`'s `initializer_list<char>` constructor and produce a two-character string (the character with ASCII value 3, followed by `'X'`). Parentheses `(3, 'X')` select the `(size_t count, char ch)` constructor instead — three `'X'` characters. This is a subtle but real difference.
@@ -466,7 +464,7 @@ string s6(3, 'X');          // three X's → "XXX"  (note the parentheses)
 ```cpp
 string s1 = "C++ rocks";
 string s2 = "hello";
-s1 = s2;                    // s1 is now an independent copy of s2
+s1 = s2;  // s1 is now an independent copy of s2
 ```
 
 After assignment, `s1` and `s2` are separate strings. Modifying one does not affect the other.
@@ -480,15 +478,15 @@ string sentence = part1 + " is a " + part2 + " language";
 // "C++ is a powerful language"
 
 string name{"Frank"};
-name += " James";           // "Frank James"
+name += " James";  // "Frank James"
 ```
 
 **Rule:** at least one operand of `+` must be a `std::string`.
 
 ```cpp
-string bad = "Hello" + "World";              // ❌ both are const char[]
-string good = string{"Hello"} + " World";    // ✅
-string alsoGood = "Hello " + string{"World"};// ✅
+string bad = "Hello" + "World";                // ❌ both are const char[]
+string good = string{"Hello"} + " World";      // ✅
+string alsoGood = "Hello " + string{"World"};  // ✅
 ```
 
 Two C-style literals cannot be added — the compiler has no `operator+` that takes two `const char*` operands. As soon as one side is a `std::string`, the other is converted automatically.
@@ -534,9 +532,9 @@ string s1{"apple"};
 string s2{"banana"};
 string s3{"apple"};
 
-s1 == s3;           // true  (same contents)
-s1 == "apple";      // true  (literal converted to string)
-s1 == s2;           // false
+s1 == s3;         // true  (same contents)
+s1 == "apple";    // true  (literal converted to string)
+s1 == s2;         // false
 ```
 
 Comparison is **lexicographic, character by character**, using ASCII values. Two consequences:
@@ -589,15 +587,15 @@ else
 
 ```cpp
 string s{"This is a test"};
-s.erase(0, 5);      // "is a test"
-s.clear();          // ""
+s.erase(0, 5);    // "is a test"
+s.clear();        // ""
 ```
 
 **`length()`** (or its synonym **`size()`**) — number of characters. This is fast: the length is stored inside the object, so it does not rescan.
 
 ```cpp
 string s{"Frank"};
-s.length();         // 5
+s.length();  // 5
 ```
 
 **`c_str()`** — return a `const char*` pointing to the internal buffer, for passing to C APIs:
@@ -612,14 +610,14 @@ The pointer is valid only while the string exists and is unmodified.
 
 ```cpp
 string name;
-cin >> name;        // stops at whitespace
+cin >> name;  // stops at whitespace
 ```
 
 `>>` works, but like C-style strings, it stops at the first whitespace. To read a full line:
 
 ```cpp
 string fullName;
-getline(cin, fullName);         // reads everything up to '\n'
+getline(cin, fullName);  // reads everything up to '\n'
 ```
 
 `getline` consumes the newline but does **not** store it.
@@ -628,7 +626,7 @@ A second overload takes a delimiter:
 
 ```cpp
 string s;
-getline(cin, s, 'x');           // stop at 'x'
+getline(cin, s, 'x');  // stop at 'x'
 ```
 
 For input `"this is an x example"`, `s` becomes `"this is an "`, and the `x` is consumed and discarded.
