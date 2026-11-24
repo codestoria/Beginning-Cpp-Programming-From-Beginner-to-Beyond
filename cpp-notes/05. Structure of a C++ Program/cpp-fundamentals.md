@@ -79,7 +79,8 @@ Understanding this distinction matters because it explains *where* these names c
 - `*` (multiplication)
 - `/` (division)
 
-C++ also uses operators in ways that may look unfamiliar to beginners. Three important examples from the course's sample program:
+C++ also uses operators in ways that may look unfamiliar to beginners.
+Three important examples from the course's sample program:
 
 | Operator | Name | Purpose |
 |---|---|---|
@@ -118,7 +119,8 @@ C++ also uses operators in ways that may look unfamiliar to beginners. Three imp
 
 ### 3.1 What the Preprocessor Is
 
-The **C++ preprocessor** is a program that processes your source code **before the compiler sees it**. It is a separate stage in the build process.
+The **C++ preprocessor** is a program that processes your source code **before the compiler sees it**.
+It is a separate stage in the build process.
 
 The preprocessor performs two main jobs:
 
@@ -129,7 +131,8 @@ After the preprocessor has run, the compiler receives a version of your source f
 
 ### 3.2 Preprocessor Directives
 
-A **preprocessor directive** is a line in the source code that begins with a pound sign (`#`), also called a hash sign or number sign. Directives are not C++ statements — they are instructions to the preprocessor.
+A **preprocessor directive** is a line in the source code that begins with a pound sign (`#`), also called a hash sign or number sign.
+Directives are not C++ statements — they are instructions to the preprocessor.
 
 The most commonly used directive is `#include`:
 
@@ -137,13 +140,15 @@ The most commonly used directive is `#include`:
 #include <iostream>
 ```
 
-When the preprocessor encounters `#include`, it replaces that line with the contents of the file being referred to, and then **recursively processes that file as well**. This means that the file you include may itself include other files, and so on. By the time the compiler sees your code, all of those inclusions have been expanded.
+When the preprocessor encounters `#include`, it replaces that line with the contents of the file being referred to, and then **recursively processes that file as well**.
+This means that the file you include may itself include other files, and so on. By the time the compiler sees your code, all of those inclusions have been expanded.
 
 **Why this matters.** This is why you must write `#include <iostream>` before using `cin` or `cout`: the declarations for those objects live in the `iostream` header, and the preprocessor is what brings them into your file.
 
 ### 3.3 Conditional Compilation (Brief Mention)
 
-Preprocessor directives are also commonly used to **compile code conditionally**. For example, you might want to compile a certain portion of your source code only when building on Windows:
+Preprocessor directives are also commonly used to **compile code conditionally**.
+For example, you might want to compile a certain portion of your source code only when building on Windows:
 
 - Test whether you are on Windows.
 - If so, include Windows-specific libraries.
@@ -153,7 +158,9 @@ This topic is beyond the scope of this course section, but several preprocessor 
 
 ### 3.4 The Most Important Point
 
-The C++ preprocessor **does not understand C++**. It is not a C++ compiler. It simply follows the preprocessor directives and prepares the source code for the compiler. The **compiler** is the program that actually understands C++ and translates it into machine code.
+The C++ preprocessor **does not understand C++**. It is not a C++ compiler.
+It simply follows the preprocessor directives and prepares the source code for the compiler.
+The **compiler** is the program that actually understands C++ and translates it into machine code.
 
 **Why this distinction matters.** Beginners sometimes assume that `#include` is a C++ statement and that the preprocessor "knows" what `iostream` means. It does not. The preprocessor's job is purely textual substitution and directive execution. Understanding this separation of responsibilities is essential for understanding build errors that originate from missing headers or malformed directives.
 
@@ -165,13 +172,16 @@ The C++ preprocessor **does not understand C++**. It is not a C++ compiler. It s
 
 **Comments** are programmer-readable explanations embedded in the source code. They can contain notes, annotations, or any text that adds meaning to what the program is doing. Comments are **for humans**, not for the compiler.
 
-A crucial fact: in C++, the **preprocessor strips out comments** before the compiler sees them. After preprocessing, each comment has been replaced by a single space, so the compiler never sees the comment text. This may sound strange — why write something the compiler will never see? — but that is precisely the point: comments exist for the next programmer who reads the code, or for yourself when you return to modify it later.
+A crucial fact: in C++, the **preprocessor strips out comments** before the compiler sees them.
+After preprocessing, each comment has been replaced by a single space, so the compiler never sees the comment text.
+This may sound strange — why write something the compiler will never see? — but that is precisely the point: comments exist for the next programmer who reads the code, or for yourself when you return to modify it later.
 
 ### 4.2 Two Styles of Comments
 
 C++ supports two comment styles.
 
-**Single-line comments** begin with two forward slashes (`//`). Everything after the `//` until the end of the line is ignored by the compiler:
+**Single-line comments** begin with two forward slashes (`//`).
+Everything after the `//` until the end of the line is ignored by the compiler:
 
 ```cpp
 int favorite_number;   // This is where my favorite number is stored
@@ -246,9 +256,13 @@ A typical header looks like this:
 
 ### 5.1 The Entry Point
 
-Every *hosted* C++ program must have **exactly one** `main` function. A program can consist of hundreds of files, but one of those files must contain `main`. The name `main` must be written in lowercase letters — `Main` or `MAIN` will not be recognized as the entry point. (Freestanding environments, such as some embedded systems, may define their own entry point instead.)
+Every *hosted* C++ program must have **exactly one** `main` function.
+A program can consist of hundreds of files, but one of those files must contain `main`.
+The name `main` must be written in lowercase letters — `Main` or `MAIN` will not be recognized as the entry point.
+(Freestanding environments, such as some embedded systems, may define their own entry point instead.)
 
-When a C++ program executes, the **operating system calls `main`**, and the code between its curly braces executes. When execution reaches the `return` statement, the program returns an integer value to the operating system.
+When a C++ program executes, the **operating system calls `main`**, and the code between its curly braces executes.
+When execution reaches the `return` statement, the program returns an integer value to the operating system.
 
 ### 5.2 The Return Value
 
@@ -257,7 +271,8 @@ The integer returned by `main` is the program's **exit status**:
 - **0** means the program terminated successfully.
 - **A non-zero value** tells the operating system that something went wrong. The operating system can inspect the returned value to determine the nature of the failure.
 
-`main` must always return an integer. This is why every `main` you have seen so far begins with `int`. (C++ also allows falling off the end of `main` without an explicit `return`; in that case the program returns `0`.)
+`main` must always return an integer. This is why every `main` you have seen so far begins with `int`.
+(C++ also allows falling off the end of `main` without an explicit `return`; in that case the program returns `0`.)
 
 ### 5.3 Two Valid Versions of `main`
 
@@ -272,7 +287,8 @@ int main() {
 }
 ```
 
-This version expects no information from the operating system in order to run. It is the version used for most of this course.
+This version expects no information from the operating system in order to run.
+It is the version used for most of this course.
 
 **Version 2 — with arguments:**
 
@@ -283,18 +299,24 @@ int main(int argc, char* argv[]) {
 }
 ```
 
-This version expects information from the operating system. It is used when you want to pass data to the program from the command line — which is very common for command-line applications. The two parameters are:
+This version expects information from the operating system.
+It is used when you want to pass data to the program from the command line — which is very common for command-line applications.
+The two parameters are:
 
 - **`argc`** — the *argument count*: how many pieces of information were passed in. (The name is conventional; you could use another name, but `argc` is the historical convention.)
 - **`argv`** — the *argument vector*: the actual arguments passed in. Its syntax (`char* argv[]`) looks a little strange at first, but it will make sense as the course progresses. For now, think of it as a collection of strings such as `program.exe`, `argument1`, and `argument2`.
 
-Both versions are perfectly valid and both are commonly seen. You should recognize both so you can read existing code.
+Both versions are perfectly valid and both are commonly seen.
+You should recognize both so you can read existing code.
 
 ### 5.4 `main` as a Function
 
-`main` is an example of a **function**. A function is a name that refers to a block of code. In `main`'s case, the block is everything between the curly braces. Functions are used constantly in C++, and the course includes a full section on writing your own.
+`main` is an example of a **function**. A function is a name that refers to a block of code.
+In `main`'s case, the block is everything between the curly braces.
+Functions are used constantly in C++, and the course includes a full section on writing your own.
 
-`main` is a *special* function: it is the entry point, and its signature and return type are prescribed by the language. As your programs grow more complex, you will write your own functions, and later your own classes, to better modularize and organize your code. But for now, all your code lives inside `main`.
+`main` is a *special* function: it is the entry point, and its signature and return type are prescribed by the language.
+As your programs grow more complex, you will write your own functions, and later your own classes, to better modularize and organize your code. But for now, all your code lives inside `main`.
 
 ---
 
@@ -308,18 +330,22 @@ As your programs grow, they become a combination of:
 - The C++ standard library,
 - Third-party libraries.
 
-Sooner or later, two different sources will define the same name. For example, suppose another library you are using defines a name called `cout`. Now when you write `cout` in your program, the compiler cannot know which `cout` you mean — the one from the standard library, or the one from the third-party library. This is called a **naming conflict**.
+Sooner or later, two different sources will define the same name.
+For example, suppose another library you are using defines a name called `cout`. Now when you write `cout` in your program, the compiler cannot know which `cout` you mean — the one from the standard library, or the one from the third-party library.
+This is called a **naming conflict**.
 
 ### 6.2 The Solution: Namespaces as Containers
 
-C++ allows developers to group names into **namespaces**, which act as containers for code entities. If a library author creates a namespace called `Frank` and defines a `cout` inside it, then:
+C++ allows developers to group names into **namespaces**, which act as containers for code entities.
+If a library author creates a namespace called `Frank` and defines a `cout` inside it, then:
 
 - To use that version, a programmer writes `Frank::cout`.
 - To use the standard library's version, the programmer writes `std::cout`.
 
 The `::` is the **scope resolution operator** (introduced in Section 2.3). It resolves *which* name you want to use.
 
-Namespaces exist to **reduce the possibility of naming conflicts**. They do not eliminate conflicts entirely, but they give you an explicit way to say which name you mean.
+Namespaces exist to **reduce the possibility of naming conflicts**.
+They do not eliminate conflicts entirely, but they give you an explicit way to say which name you mean.
 
 ### 6.3 Three Ways to Use Names from a Namespace
 
@@ -330,7 +356,8 @@ std::cout << "Hello" << std::endl;
 std::cin >> x;
 ```
 
-This is the most explicit approach. You always specify the namespace, so there is no ambiguity. However, it is tedious to type `std::` every time.
+This is the most explicit approach. You always specify the namespace, so there is no ambiguity.
+However, it is tedious to type `std::` every time.
 
 **Option 2: Bring in the entire namespace with a `using namespace` directive.**
 
@@ -353,13 +380,15 @@ using std::cin;
 using std::endl;
 ```
 
-This variant tells the compiler exactly which names you want to use from a specific namespace. You can then use `cout`, `cin`, and `endl` without the `std::` prefix, and you are **not** pulling in any other names from `std`.
+This variant tells the compiler exactly which names you want to use from a specific namespace.
+You can then use `cout`, `cin`, and `endl` without the `std::` prefix, and you are **not** pulling in any other names from `std`.
 
 This approach offers the best of both worlds: less typing than full qualification, but no risk of unexpected conflicts from unrelated names. It is the recommended approach for larger programs.
 
 ### 6.4 Which Should You Use?
 
-For the examples in this course, `using namespace std;` is fine and keeps the code readable. But keep in mind that in larger programs, the qualified `using` declarations (Option 3) are safer.
+For the examples in this course, `using namespace std;` is fine and keeps the code readable.
+But keep in mind that in larger programs, the qualified `using` declarations (Option 3) are safer.
 
 ---
 
@@ -367,7 +396,8 @@ For the examples in this course, `using namespace std;` is fine and keeps the co
 
 ### 7.1 Streams and the `<iostream>` Header
 
-C++ uses a **stream abstraction** to handle I/O on devices such as the console and the keyboard. A stream is a sequence of data flowing in one direction.
+C++ uses a **stream abstraction** to handle I/O on devices such as the console and the keyboard.
+A stream is a sequence of data flowing in one direction.
 
 The C++ standard library defines several standard stream objects. The four most commonly used narrow-character ones are:
 
@@ -384,7 +414,8 @@ To use any of these, you must `#include <iostream>`.
 
 ### 7.2 Output with `cout` and `<<`
 
-The **insertion operator** (`<<`) is used with output streams. It takes the value of the operand on its right and inserts it into the stream on its left:
+The **insertion operator** (`<<`) is used with output streams.
+It takes the value of the operand on its right and inserts it into the stream on its left:
 
 ```cpp
 std::cout << "Hello, world!";
@@ -400,7 +431,8 @@ std::cout << "The answer is " << 42 << std::endl;
 
 This is a very common and very convenient pattern.
 
-**Line breaks are not automatic.** The insertion operator does **not** automatically add a line break. To move to the next line, you must do one of two things explicitly:
+**Line breaks are not automatic.** The insertion operator does **not** automatically add a line break.
+To move to the next line, you must do one of two things explicitly:
 
 - Use the `endl` manipulator: `std::cout << "Hello" << std::endl;`
 - Embed a newline character `\n` in a string: `std::cout << "Hello\n";`
@@ -414,7 +446,8 @@ Flushing matters when the stream is buffered: if the stream is buffered, output 
 
 ### 7.3 Input with `cin` and `>>`
 
-The **extraction operator** (`>>`) is used with input streams. It extracts information from the stream on its left and stores it in the variable on its right:
+The **extraction operator** (`>>`) is used with input streams.
+It extracts information from the stream on its left and stores it in the variable on its right:
 
 ```cpp
 int num1;
@@ -453,7 +486,9 @@ This has several important consequences:
 
 To truly understand `cin`, you need a mental model of **buffering**.
 
-When you type characters on the keyboard, they are not read directly by `cin`. They are first stored in a **buffer** — a temporary holding area — to make the program more efficient. The extraction operator then reads from that buffer.
+When you type characters on the keyboard, they are not read directly by `cin`.
+They are first stored in a **buffer** — a temporary holding area — to make the program more efficient.
+The extraction operator then reads from that buffer.
 
 Consider this example:
 

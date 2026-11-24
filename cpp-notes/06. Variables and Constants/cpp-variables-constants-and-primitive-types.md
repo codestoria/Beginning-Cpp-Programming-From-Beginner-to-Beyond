@@ -72,14 +72,14 @@ Every variable has:
 The type matters because the compiler must know how many bytes to reserve and how to interpret the bits. Consider:
 
 ```cpp
-age = 21;   // ERROR: the compiler does not know what 'age' is
+age = 21;  // ERROR: the compiler does not know what 'age' is
 ```
 
 This fails because `age` was never *declared*. The compiler has no idea what type `age` should be, so it cannot check whether `21` is legal. Compare with:
 
 ```cpp
-int age;    // declare age as an integer
-age = 21;   // now legal
+int age;   // declare age as an integer
+age = 21;  // now legal
 ```
 
 C++ uses **static typing**: type rules are enforced at **compile time**, not at run time. This is a feature, not a limitation — many errors are caught before the program ever runs.
@@ -117,8 +117,8 @@ std::string name;     // a sequence of characters
 Notice the last one: `std::string` is **not** a built-in type. One of C++'s most powerful features is **object-oriented programming**, which lets you create your own types. You declare variables of your own types using exactly the same syntax:
 
 ```cpp
-Account my_account;   // a variable of a user-defined type
-Person  the_author;   // another user-defined type
+Account my_account;  // a variable of a user-defined type
+Person  the_author;  // another user-defined type
 ```
 
 This consistency is a great strength of C++: once you understand `int`, you understand the shape of every declaration.
@@ -300,10 +300,10 @@ This is generally what you want. A local variable becomes usable at its declarat
 Variables declared **outside any function** are **global**. They can be accessed from anywhere in the program.
 
 ```cpp
-int age{18};            // global
+int age{18};  // global
 
 int main() {
-    std::cout << age;   // finds the global age
+    std::cout << age;  // finds the global age
     return 0;
 }
 ```
@@ -324,11 +324,11 @@ Globals have their place — for example, truly program-wide configuration — b
 You can have both a global and a local with the same name. The local one **shadows** the global within its scope:
 
 ```cpp
-int age{18};            // global
+int age{18};  // global
 
 int main() {
-    int age{16};        // local, shadows the global
-    std::cout << age;   // prints 16, not 18
+    int age{16};       // local, shadows the global
+    std::cout << age;  // prints 16, not 18
     return 0;
 }
 ```
@@ -391,9 +391,9 @@ Key rules:
 - **`signed` is optional; `unsigned` is required** for unsigned types.
 
 ```cpp
-int           exam_score{55};     // signed by default
-unsigned int  count{10};          // explicitly unsigned
-unsigned short rooms{5};          // 'short' implies 'short int'
+int           exam_score{55};    // signed by default
+unsigned int  count{10};         // explicitly unsigned
+unsigned short rooms{5};         // 'short' implies 'short int'
 long long     population{7600000000LL};
 ```
 
@@ -428,7 +428,7 @@ List initialization catches **narrowing conversions** *at compile time*:
 
 ```cpp
 // On a platform where long is 32 bits (e.g. Windows):
-long people_on_earth{7'600'000'000};   // ❌ error: narrowing conversion
+long people_on_earth{7'600'000'000};  // ❌ error: narrowing conversion
 
 // On a platform where long is 64 bits (e.g. Linux/macOS), this compiles fine.
 ```
@@ -436,7 +436,7 @@ long people_on_earth{7'600'000'000};   // ❌ error: narrowing conversion
 The compiler refuses **on a 32-bit `long` platform**, because converting 7.6 billion to a 32-bit `long` is a narrowing conversion. Use `long long`, which is guaranteed to be at least 64 bits everywhere:
 
 ```cpp
-long long people_on_earth{7'600'000'000};   // ✔ fits on every platform
+long long people_on_earth{7'600'000'000};  // ✔ fits on every platform
 ```
 
 > **Digit separators:** C++14 lets you write `7'600'000'000` for readability. The compiler strips the apostrophes. If your compiler rejects this, you are using a pre-C++14 standard; either upgrade or remove the separators.
@@ -445,8 +445,8 @@ Contrast list initialization with copy initialization:
 
 ```cpp
 // Again, on a platform where long is 32 bits:
-long people_on_earth = 7'600'000'000;   // compiles; out-of-range conversion is
-                                        // implementation-defined (commonly truncated)
+long people_on_earth = 7'600'000'000;    // compiles; out-of-range conversion is
+                                         // implementation-defined (commonly truncated)
 ```
 
 Here the compiler **allows** the conversion. Converting a value that cannot be represented to a signed type is *implementation-defined*; in practice you often get a truncated, usually negative, number such as `-989934592`.
@@ -466,14 +466,14 @@ Because computers have finite storage, and many real numbers (like π) have infi
 ```cpp
 float  car_payment{401.23f};
 double pi{3.14159265358979};
-long double huge{2.7e120L};   // 2.7 × 10^120
+long double huge{2.7e120L};  // 2.7 × 10^120
 ```
 
 If you store `401.23` into an `int`, the fractional part `.23` is truncated — a common source of error:
 
 ```cpp
-int dollars = 401.23;   // compiles: value becomes 401 (fraction dropped)
-int dollars2{401.23};   // ❌ compile error: narrowing conversion
+int dollars = 401.23;  // compiles: value becomes 401 (fraction dropped)
+int dollars2{401.23};  // ❌ compile error: narrowing conversion
 ```
 
 Also note that converting a floating-point value that is out of range for the integer type is **undefined behavior**. Match the type to the data.
@@ -623,7 +623,7 @@ The one crucial difference:
 
 ```cpp
 const int age{21};
-age = 22;   // ❌ error: assignment of read-only variable
+age = 22;  // ❌ error: assignment of read-only variable
 ```
 
 ### 8.2 Why use constants?
@@ -642,7 +642,7 @@ int months_in_year = 12;
 But a variable can be changed — even accidentally. A **constant** gives you the readability *and* the guarantee:
 
 ```cpp
-const int months_in_year{12};   // cannot be changed, even by mistake
+const int months_in_year{12};  // cannot be changed, even by mistake
 ```
 
 > **Benefit of constants:** meaningful names, guaranteed immutability, and the ability to change the value in exactly one place.
@@ -652,10 +652,10 @@ const int months_in_year{12};   // cannot be changed, even by mistake
 A **literal** is a value written directly in the source code:
 
 ```cpp
-12          // integer literal
-1.56        // floating-point literal
-'J'         // character literal
-"Frank"     // string literal
+12         // integer literal
+1.56       // floating-point literal
+'J'        // character literal
+"Frank"    // string literal
 ```
 
 Literals are the most obvious kind of constant. They have types, determined by the literal's **form and any suffix** (e.g., `42`, `42u`, `42L`, `3.14f`).
@@ -714,7 +714,7 @@ The most common and most recommended way to declare a constant in C++ uses the `
 ```cpp
 const double price_per_room{30.0};
 const double sales_tax{0.06};
-const int    estimate_expiry{30};   // days
+const int    estimate_expiry{30};  // days
 ```
 
 Rules:
@@ -837,7 +837,7 @@ The number `30` appeared both as the **price per room** and as the **estimate ex
 int main() {
     const double price_per_room{30.0};
     const double sales_tax{0.06};
-    const int    estimate_expiry{30};   // days
+    const int    estimate_expiry{30};  // days
 
     std::cout << "Hello, welcome to Frank's Carpet Cleaning Service!\n";
     std::cout << "\nHow many rooms would you like cleaned? ";
@@ -873,9 +873,9 @@ Everything else updates automatically. And because `price_per_room` is `const`, 
 The refactored code is much better, but not perfect. Look at the calculation:
 
 ```cpp
-price_per_room * number_of_rooms                       // cost
-price_per_room * number_of_rooms * sales_tax           // tax
-price_per_room * number_of_rooms + ...                 // total
+price_per_room * number_of_rooms                // cost
+price_per_room * number_of_rooms * sales_tax    // tax
+price_per_room * number_of_rooms + ...          // total
 ```
 
 The expression `price_per_room * number_of_rooms` appears **four times**. That is four places where the same bug could be introduced, and four places to fix if the formula ever changes.
