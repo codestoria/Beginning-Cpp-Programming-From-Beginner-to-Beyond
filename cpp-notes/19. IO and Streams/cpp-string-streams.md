@@ -2,21 +2,19 @@
 
 ## Table of Contents
 
-- [String Streams, Stream States, and Input Validation](#string-streams-stream-states-and-input-validation)
-  - [Table of Contents](#table-of-contents)
-  - [1. Why String Streams Exist](#1-why-string-streams-exist)
-  - [2. Three String Stream Classes (`<sstream>`)](#2-three-string-stream-classes-sstream)
-  - [3. Parsing Data from Strings (`std::istringstream`)](#3-parsing-data-from-strings-stdistringstream)
+1. [Why String Streams Exist](#1-why-string-streams-exist)
+2. [Three String Stream Classes (`<sstream>`)](#2-three-string-stream-classes-sstream)
+3. [Parsing Data from Strings (`std::istringstream`)](#3-parsing-data-from-strings-stdistringstream)
     - [Extracting Whitespace-Separated Tokens](#extracting-whitespace-separated-tokens)
     - [Parsing Delimited Text (Such as CSV) with `std::getline()`](#parsing-delimited-text-such-as-csv-with-stdgetline)
-  - [4. Building Formatted Strings (`std::ostringstream`)](#4-building-formatted-strings-stdostringstream)
+4. [Building Formatted Strings (`std::ostringstream`)](#4-building-formatted-strings-stdostringstream)
     - [Reusing a String Stream Object Safely](#reusing-a-string-stream-object-safely)
-  - [5. Under the Hood: Stream State Flags and Buffer Recovery](#5-under-the-hood-stream-state-flags-and-buffer-recovery)
+5. [Under the Hood: Stream State Flags and Buffer Recovery](#5-under-the-hood-stream-state-flags-and-buffer-recovery)
     - [Why Raw `std::cin >> number` Causes Cascading Failures](#why-raw-stdcin--number-causes-cascading-failures)
     - [Why Mixing `>>` and `std::getline()` Produces an Empty Line](#why-mixing--and-stdgetline-produces-an-empty-line)
-  - [6. Real-World Application: Crash-Proof User Input Validation](#6-real-world-application-crash-proof-user-input-validation)
+6. [Real-World Application: Crash-Proof User Input Validation](#6-real-world-application-crash-proof-user-input-validation)
     - [Tracing Three Sample Inputs](#tracing-three-sample-inputs)
-  - [7. Summary and Best Practices](#7-summary-and-best-practices)
+7. [Summary and Best Practices](#7-summary-and-best-practices)
 
 ---
 

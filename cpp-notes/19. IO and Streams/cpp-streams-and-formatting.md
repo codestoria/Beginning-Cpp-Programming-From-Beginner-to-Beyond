@@ -2,24 +2,22 @@
 
 ## Table of Contents
 
-- [C++ Stream Fundamentals and Output Formatting](#c-stream-fundamentals-and-output-formatting)
-  - [Table of Contents](#table-of-contents)
-  - [1. Why Streams Exist: The Core Abstraction](#1-why-streams-exist-the-core-abstraction)
+1. [Why Streams Exist: The Core Abstraction](#1-why-streams-exist-the-core-abstraction)
     - [Why This Design Matters](#why-this-design-matters)
     - [Standard Stream Objects and Headers](#standard-stream-objects-and-headers)
-  - [2. How Output Buffers Work (`\n` vs. `std::endl`)](#2-how-output-buffers-work-n-vs-stdendl)
+2. [How Output Buffers Work (`\n` vs. `std::endl`)](#2-how-output-buffers-work-n-vs-stdendl)
     - [Why You Should Prefer `'\n'` Over `std::endl`](#why-you-should-prefer-n-over-stdendl)
-  - [3. Formatting Mechanics: Manipulators and Persistence](#3-formatting-mechanics-manipulators-and-persistence)
+3. [Formatting Mechanics: Manipulators and Persistence](#3-formatting-mechanics-manipulators-and-persistence)
     - [Two Ways to Control Stream Formatting](#two-ways-to-control-stream-formatting)
     - [The Central Rule: Persistent vs. One-Time Settings](#the-central-rule-persistent-vs-one-time-settings)
-  - [4. Formatting Booleans and Integers](#4-formatting-booleans-and-integers)
+4. [Formatting Booleans and Integers](#4-formatting-booleans-and-integers)
     - [Boolean Formatting (`boolalpha`)](#boolean-formatting-boolalpha)
     - [Integer Bases and Visual Flags](#integer-bases-and-visual-flags)
-  - [5. Formatting Floating-Point Numbers](#5-formatting-floating-point-numbers)
+5. [Formatting Floating-Point Numbers](#5-formatting-floating-point-numbers)
     - [Why `setprecision(n)` Changes Meaning](#why-setprecisionn-changes-meaning)
-  - [6. Layout Control: Width, Alignment, and Fill](#6-layout-control-width-alignment-and-fill)
-  - [7. Putting It All Together: A Clean Report Table](#7-putting-it-all-together-a-clean-report-table)
-  - [8. Best Practices and Quick Reference](#8-best-practices-and-quick-reference)
+6. [Layout Control: Width, Alignment, and Fill](#6-layout-control-width-alignment-and-fill)
+7. [Putting It All Together: A Clean Report Table](#7-putting-it-all-together-a-clean-report-table)
+8. [Best Practices and Quick Reference](#8-best-practices-and-quick-reference)
 
 ---
 

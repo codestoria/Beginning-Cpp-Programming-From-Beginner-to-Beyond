@@ -2,27 +2,25 @@
 
 ## Table of Contents
 
-- [C++ Generic Programming \& Templates](#c-generic-programming--templates)
-  - [Table of Contents](#table-of-contents)
-  - [1. Introduction to the C++ STL](#1-introduction-to-the-c-stl)
+1. [Introduction to the C++ STL](#1-introduction-to-the-c-stl)
     - [Why Learn the STL?](#why-learn-the-stl)
-  - [2. What Is Generic Programming?](#2-what-is-generic-programming)
+2. [What Is Generic Programming?](#2-what-is-generic-programming)
     - [The Core Problem: Static Typing vs. Code Duplication](#the-core-problem-static-typing-vs-code-duplication)
-  - [3. Attempt 1: Preprocessor Macros (And Why They Fail)](#3-attempt-1-preprocessor-macros-and-why-they-fail)
+3. [Attempt 1: Preprocessor Macros (And Why They Fail)](#3-attempt-1-preprocessor-macros-and-why-they-fail)
     - [How Macros Work](#how-macros-work)
     - [When Are Macros Acceptable Today?](#when-are-macros-acceptable-today)
-  - [4. Attempt 2: Function Templates (The Modern C++ Way)](#4-attempt-2-function-templates-the-modern-c-way)
-    - [Syntax \& Compilation Model](#syntax--compilation-model)
+4. [Attempt 2: Function Templates (The Modern C++ Way)](#4-attempt-2-function-templates-the-modern-c-way)
+    - [Syntax & Compilation Model](#syntax--compilation-model)
     - [Template Instantiation (Explicit vs. Deduced)](#template-instantiation-explicit-vs-deduced)
-    - [Type Requirements (Syntactic \& Semantic Contracts)](#type-requirements-syntactic--semantic-contracts)
+    - [Type Requirements (Syntactic & Semantic Contracts)](#type-requirements-syntactic--semantic-contracts)
     - [Multiple Template Parameters](#multiple-template-parameters)
-  - [5. Class Templates \& The Header-Only Rule](#5-class-templates--the-header-only-rule)
+5. [Class Templates & The Header-Only Rule](#5-class-templates--the-header-only-rule)
     - [Building a Generic Class](#building-a-generic-class)
     - [Why Templates Must Live in Header Files](#why-templates-must-live-in-header-files)
-  - [6. Non-Type Template Parameters (`std::array` Motivation)](#6-non-type-template-parameters-stdarray-motivation)
+6. [Non-Type Template Parameters (`std::array` Motivation)](#6-non-type-template-parameters-stdarray-motivation)
     - [The Motivation: Fixed-Size Stack Arrays](#the-motivation-fixed-size-stack-arrays)
     - [Real-World Application: `std::array<T, N>`](#real-world-application-stdarrayt-n)
-  - [7. Summary \& Key Takeaways](#7-summary--key-takeaways)
+7. [Summary & Key Takeaways](#7-summary--key-takeaways)
 
 ---
 

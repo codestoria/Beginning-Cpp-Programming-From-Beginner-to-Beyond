@@ -2,13 +2,13 @@
 
 ## Table of Contents
 
-- [1. Introduction](#1-introduction)
-- [2. Motivation: Why C++ Needed Lambda Expressions](#2-motivation-why-c-needed-lambda-expressions)
-- [3. Structure and Syntax of a Lambda Expression](#3-structure-and-syntax-of-a-lambda-expression)
-- [4. Stateless Lambda Expressions](#4-stateless-lambda-expressions)
-- [5. Stateful Lambda Expressions and Closures](#5-stateful-lambda-expressions-and-closures)
-- [6. Lambdas with STL Algorithms](#6-lambdas-with-stl-algorithms)
-- [7. Quick Reference Summary](#7-quick-reference-summary)
+1. [Introduction](#1-introduction)
+2. [Motivation: Why C++ Needed Lambda Expressions](#2-motivation-why-c-needed-lambda-expressions)
+3. [Structure and Syntax of a Lambda Expression](#3-structure-and-syntax-of-a-lambda-expression)
+4. [Stateless Lambda Expressions](#4-stateless-lambda-expressions)
+5. [Stateful Lambda Expressions and Closures](#5-stateful-lambda-expressions-and-closures)
+6. [Lambdas with STL Algorithms](#6-lambdas-with-stl-algorithms)
+7. [Quick Reference Summary](#7-quick-reference-summary)
 
 ---
 

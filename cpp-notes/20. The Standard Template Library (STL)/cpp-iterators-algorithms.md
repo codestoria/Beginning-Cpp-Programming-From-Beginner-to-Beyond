@@ -2,25 +2,23 @@
 
 ## Table of Contents
 
-- [C++ STL Iterators, Algorithms \& Custom Types](#c-stl-iterators-algorithms--custom-types)
-  - [Table of Contents](#table-of-contents)
-  - [1. The Architectural Bridge: Why Iterators Exist](#1-the-architectural-bridge-why-iterators-exist)
-    - [The $M \\times N$ Engineering Problem](#the-m-times-n-engineering-problem)
-  - [2. Half-Open Ranges `[begin, end)` \& Iterator Variants](#2-half-open-ranges-begin-end--iterator-variants)
+1. [The Architectural Bridge: Why Iterators Exist](#1-the-architectural-bridge-why-iterators-exist)
+    - [The $M \times N$ Engineering Problem](#the-m-times-n-engineering-problem)
+2. [Half-Open Ranges `[begin, end)` & Iterator Variants](#2-half-open-ranges-begin-end--iterator-variants)
     - [Why Half-Open Ranges `[begin, end)`?](#why-half-open-ranges-begin-end)
     - [Standard, Const, and Reverse Iterators](#standard-const-and-reverse-iterators)
-  - [3. Iterator Categories \& Capability Tiers](#3-iterator-categories--capability-tiers)
+3. [Iterator Categories & Capability Tiers](#3-iterator-categories--capability-tiers)
     - [Why Categories Matter in Practice](#why-categories-matter-in-practice)
-  - [4. STL Algorithms \& Customization via Lambdas](#4-stl-algorithms--customization-via-lambdas)
+4. [STL Algorithms & Customization via Lambdas](#4-stl-algorithms--customization-via-lambdas)
     - [Injecting Custom Logic with Lambda Expressions](#injecting-custom-logic-with-lambda-expressions)
-      - [Anatomy of a Lambda Expression](#anatomy-of-a-lambda-expression)
-  - [5. Essential STL Algorithms in Practice](#5-essential-stl-algorithms-in-practice)
-    - [5.1 Searching \& Counting (`std::find`, `std::count`, `std::count_if`)](#51-searching--counting-stdfind-stdcount-stdcount_if)
+        - [Anatomy of a Lambda Expression](#anatomy-of-a-lambda-expression)
+5. [Essential STL Algorithms in Practice](#5-essential-stl-algorithms-in-practice)
+    - [5.1 Searching & Counting (`std::find`, `std::count`, `std::count_if`)](#51-searching--counting-stdfind-stdcount-stdcount_if)
     - [5.2 Quantifier Checks (`std::all_of`, `std::any_of`, `std::none_of`)](#52-quantifier-checks-stdall_of-stdany_of-stdnone_of)
-    - [5.3 Transforming \& Filtering (`std::transform`, `std::copy_if`, `std::back_inserter`)](#53-transforming--filtering-stdtransform-stdcopy_if-stdback_inserter)
+    - [5.3 Transforming & Filtering (`std::transform`, `std::copy_if`, `std::back_inserter`)](#53-transforming--filtering-stdtransform-stdcopy_if-stdback_inserter)
     - [5.4 Numeric Reduction (`std::accumulate`)](#54-numeric-reduction-stdaccumulate)
-  - [6. Using Custom Types with STL Containers \& Algorithms](#6-using-custom-types-with-stl-containers--algorithms)
-  - [7. Common Beginner Pitfalls \& Best Practices](#7-common-beginner-pitfalls--best-practices)
+6. [Using Custom Types with STL Containers & Algorithms](#6-using-custom-types-with-stl-containers--algorithms)
+7. [Common Beginner Pitfalls & Best Practices](#7-common-beginner-pitfalls--best-practices)
 
 ---
 
