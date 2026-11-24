@@ -145,7 +145,7 @@ For example, if an enumerator is assigned `-32769`, it cannot fit in a 16-bit si
 
 #### 2. Scoped `enum class` Default Underlying Type
 
-Unlike unscoped enums, a scoped `enum class` without an explicit underlying type **always defaults to `int**` across all platforms and compilers.
+Unlike unscoped enums, a scoped `enum class` without an explicit underlying type **always defaults to `int`** across all platforms and compilers.
 
 #### 3. Specifying an Explicit Underlying Type
 
@@ -488,4 +488,4 @@ Player: Sephiroth | Mode: Idle | Facing: North
     - Clarified that unscoped `enum` underlying type selection is **implementation-defined** by the C++ standard (rather than claiming a fixed compiler progression), while `enum class` is strictly guaranteed to default to `int`.
     - Refined the `switch` uniqueness rule: enumerators *can* share values in the `enum` definition, but `case` labels within a `switch` must be unique.
     - Highlighted the exact undefined-behavior risk when `static_cast`ing out-of-range integers to an enum.
-- **Added Essential Modern C++ Context:** Added a concise section on **C++20 `using enum**` (solving verbosity in `switch` statements) and **C++11 forward declarations** (explaining why `enum class` enables header decoupling), plus `constexpr std::string_view` in the final example for zero-overhead string conversion.
+- **Added Essential Modern C++ Context:** Added a concise section on **C++20 `using enum`** (solving verbosity in `switch` statements) and **C++11 forward declarations** (explaining why `enum class` enables header decoupling), plus `constexpr std::string_view` in the final example for zero-overhead string conversion.
