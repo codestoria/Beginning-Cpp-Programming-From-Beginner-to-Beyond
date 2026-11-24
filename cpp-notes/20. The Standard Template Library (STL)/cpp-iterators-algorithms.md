@@ -85,7 +85,7 @@ int main() {
 }
 ```
 
-> **Under the Hood:** Modern C++ range-based `for` loops (`for (const auto& x : nums)`) are purely syntactic sugar—the compiler lowers them into standard `.begin()` / `.end()` iterator loops behind the scenes. Notice also the loop condition `it != nums.end()`: always prefer `!=` over `<`, because linked-list and tree iterators do not support relational `<` comparisons.
+> **Under the Hood:** Modern C++ range-based `for` loops (`for (const auto& x : nums)`) are purely syntactic sugar — the compiler lowers them into standard `.begin()` / `.end()` iterator loops behind the scenes. Notice also the loop condition `it != nums.end()`: always prefer `!=` over `<`, because linked-list and tree iterators do not support relational `<` comparisons.
 
 ---
 
@@ -107,7 +107,7 @@ Every STL algorithm documents the **minimum iterator category** it requires:
 
 * `std::find` requires only an **Input Iterator**, so it works on every iterable container.
 * `std::reverse` requires a **Bidirectional Iterator**, so it works on `std::list` and `std::vector`, but fails to compile on `std::forward_list`.
-* `std::sort` (typically implemented via Introsort, a hybrid of Quicksort, Heapsort, and Insertion Sort) requires a **Random-Access Iterator** for $O(1)$ mid-point indexing. Passing `std::list` iterators to `std::sort` triggers a compile-time error—which is why `std::list` provides its own `.sort()` member function that relinks nodes in-place.
+* `std::sort` (typically implemented via Introsort, a hybrid of Quicksort, Heapsort, and Insertion Sort) requires a **Random-Access Iterator** for $O(1)$ mid-point indexing. Passing `std::list` iterators to `std::sort` triggers a compile-time error — which is why `std::list` provides its own `.sort()` member function that relinks nodes in-place.
 
 *(Tip: To advance any iterator safely by `n` steps regardless of whether it supports `+ n`, use `std::advance(it, n)` from `<iterator>`.)*
 
@@ -126,7 +126,7 @@ Every STL algorithm guarantees an explicit **worst-case or average time complexi
 
 ### Injecting Custom Logic with Lambda Expressions
 
-Many algorithms allow you to supply custom rules—such as counting numbers that are even or sorting objects by score. While C++ accepts function pointers and function objects (functors), modern C++ overwhelmingly uses **lambda expressions** because they keep logic concise and local to the call site.
+Many algorithms allow you to supply custom rules — such as counting numbers that are even or sorting objects by score. While C++ accepts function pointers and function objects (functors), modern C++ overwhelmingly uses **lambda expressions** because they keep logic concise and local to the call site.
 
 #### Anatomy of a Lambda Expression
 
@@ -342,7 +342,7 @@ int main() {
 ## 7. Common Beginner Pitfalls & Best Practices
 
 1. **Never Dereference `.end()`:** `.end()` is a past-the-end sentinel, not an element. Always verify `if (it != container.end())` before evaluating `*it`.
-2. **Watch Out for Iterator Invalidation:** Structural modifications—such as `vec.push_back()`, `vec.insert()`, or `container.erase()`—can invalidate iterators. For `std::vector`, reallocation invalidates all iterators, pointers, and references; even without reallocation, `insert` and `erase` invalidate iterators at or after the modified position. Always re-acquire iterators after modifying container structure.
-3. **Prefer Container Member Functions Over Generic Algorithms:** When an associative or node-based container provides its own member function—such as `my_set.find(key)`, `my_map.find(key)`, or `my_list.sort()`—use it. Generic `std::find` performs a linear $O(n)$ scan, whereas `std::set::find` leverages the tree structure for $O(\log n)$ lookup.
+2. **Watch Out for Iterator Invalidation:** Structural modifications — such as `vec.push_back()`, `vec.insert()`, or `container.erase()` — can invalidate iterators. For `std::vector`, reallocation invalidates all iterators, pointers, and references; even without reallocation, `insert` and `erase` invalidate iterators at or after the modified position. Always re-acquire iterators after modifying container structure.
+3. **Prefer Container Member Functions Over Generic Algorithms:** When an associative or node-based container provides its own member function — such as `my_set.find(key)`, `my_map.find(key)`, or `my_list.sort()` — use it. Generic `std::find` performs a linear $O(n)$ scan, whereas `std::set::find` leverages the tree structure for $O(\log n)$ lookup.
 4. **Match the Initial Value Type in `std::accumulate`:** Always match the literal type of the third argument (`0` vs. `0.0` vs. `0LL`) to your desired sum type to prevent silent decimal truncation or integer overflow.
 5. **Never Write Past the End of an Empty Container:** Passing `dst.begin()` of an empty `std::vector` into `std::copy` or `std::transform` writes into unallocated memory. Either pre-allocate space with `dst.resize(src.size())` or wrap the destination in `std::back_inserter(dst)`.
