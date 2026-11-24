@@ -14,6 +14,10 @@
   <img src="https://img.shields.io/badge/Status-In%20Progress-2ea44f?style=flat-square" alt="In Progress" />
 </p>
 
+<p align="center">
+  <strong>English</strong> | <a href="./README.zh-CN.md">简体中文</a>
+</p>
+
 ---
 
 ## 📖 About This Repository
