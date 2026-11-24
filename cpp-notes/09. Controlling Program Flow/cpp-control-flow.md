@@ -2,19 +2,19 @@
 
 ## Table of Contents
 
-1. **Introduction**
+- **Introduction**
    1. [Why Control Structures Matter](#introduction-why-control-structures-matter)
    2. [How to Read This Tutorial](#how-to-read-this-tutorial)
    3. [About the Code Examples](#about-the-code-examples)
 
-2. **Part 1: Selection Structures**
+- **Part 1: Selection Structures**
    1. [The `if` Statement](#1-the-if-statement)
    2. [The `if-else` Statement](#2-the-if-else-statement)
    3. [Nested `if` Statements](#3-nested-if-statements)
    4. [The `switch-case` Statement](#4-the-switch-case-statement)
    5. [The Conditional Operator (`?:`)](#5-the-conditional-operator-)
 
-3. **Part 2: Iteration Structures**
+- **Part 2: Iteration Structures**
    1. [The `for` Loop](#6-the-for-loop)
    2. [The Range-Based `for` Loop (C++11)](#7-the-range-based-for-loop-c11)
    3. [The `while` Loop](#8-the-while-loop)
@@ -23,7 +23,7 @@
    6. [Infinite Loops](#11-infinite-loops)
    7. [Nested Loops](#12-nested-loops)
 
-4. **Conclusion**
+- **Conclusion**
    1. [Summary: Choosing the Right Tool](#summary-choosing-the-right-tool)
    2. [Universal Best Practices](#universal-best-practices)
    3. [The Big Picture](#the-big-picture)
