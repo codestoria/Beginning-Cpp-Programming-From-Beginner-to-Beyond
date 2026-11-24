@@ -478,14 +478,3 @@ Player: Cloud Strife | Mode: Attack | Facing: North
 Player: Tifa Lockhart | Mode: Defense | Facing: West
 Player: Sephiroth | Mode: Idle | Facing: North
 ```
-
----
-
-### Summary of Key Improvements Made
-
-- **Fixed Structural & Typographical Errors:** Corrected `## table of vontens` into a linked, clickable **Table of Contents** with accurate section anchors.
-- **Tightened C++ Standard Accuracy:**
-    - Clarified that unscoped `enum` underlying type selection is **implementation-defined** by the C++ standard (rather than claiming a fixed compiler progression), while `enum class` is strictly guaranteed to default to `int`.
-    - Refined the `switch` uniqueness rule: enumerators *can* share values in the `enum` definition, but `case` labels within a `switch` must be unique.
-    - Highlighted the exact undefined-behavior risk when `static_cast`ing out-of-range integers to an enum.
-- **Added Essential Modern C++ Context:** Added a concise section on **C++20 `using enum`** (solving verbosity in `switch` statements) and **C++11 forward declarations** (explaining why `enum class` enables header decoupling), plus `constexpr std::string_view` in the final example for zero-overhead string conversion.
