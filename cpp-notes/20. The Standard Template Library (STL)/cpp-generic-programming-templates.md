@@ -149,7 +149,7 @@ int main() {
 
     // Note: max_value(10, 3.14) will NOT compile because T cannot be
     // deduced as both int and double simultaneously. Specifying <double>
-    // bypasses deduction and converts arguments to double:
+    // bypasses deduction and converts 10 to double (10.0) before comparing:
     double res3 = max_value<double>(10, 3.14);
 
     std::cout << res1 << " | " << res2 << " | " << res3 << "\n";
@@ -298,11 +298,11 @@ Suppose you want to design a safe, fixed-size array wrapper that stores its elem
 Passing the size through a constructor parameter will not work because constructor arguments are evaluated at *runtime*:
 
 ```cpp
-// ❌ Impossible for stack allocation:
+// ❌ Standard C++ forbids variable-length arrays (VLAs):
 class BrokenArray {
 public:
     BrokenArray(std::size_t n) {
-        int data[n]; // Standard C++ forbids variable-length stack arrays!
+        int data[n]; // Non-standard compiler extension in some toolchains, not valid ISO C++
     }
 };
 ```

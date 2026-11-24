@@ -184,7 +184,7 @@ Each node stores a value alongside two pointers: `prev` and `next`.
 A minimal linked list designed for strict memory constraints, where each node stores only a `next` pointer.
 
 - Moves forward only (`push_front`, `pop_front`).
-- Provides **no `.back()`**, **no `.push_back()`**, and **no `.size()`** method (omitting the size counter ensures `splice_after` operations remain strictly $O(1)$ without counting nodes).
+- Provides **no `.back()`**, **no `.push_back()`**, and **no `.size()`** method (omitting the size counter avoids extra bookkeeping overhead on list node operations and `splice_after`).
 - Inserts and erases elements *after* a given iterator via `.insert_after()` and `.erase_after()`.
 
 ---
@@ -342,6 +342,8 @@ int main() {
 | **`std::list`** | — | $O(1)$ | $O(1)$ | $O(1)$ *(with iterator)* | $O(n)$ |
 | **`std::set` / `std::map`** | — | — | — | $O(\log n)$ | $O(\log n)$ |
 | **`std::unordered_set` / `_map`** | — | — | — | $O(1)$ avg / $O(n)$ worst | $O(1)$ avg / $O(n)$ worst |
+| **`std::stack` / `std::queue`** | — | `push`/`pop` $O(1)$ *(queue)* | `push`/`pop` $O(1)$ *(stack/queue)* | — | — |
+| **`std::priority_queue`** | — | — | `push`/`pop` $O(\log n)$ | — | `top()` $O(1)$ |
 
 ### Practical Decision Checklist
 

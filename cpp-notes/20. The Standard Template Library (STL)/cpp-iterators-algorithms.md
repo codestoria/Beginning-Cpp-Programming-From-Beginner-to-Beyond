@@ -314,7 +314,8 @@ public:
         return id == other.id;
     }
 
-    // Enables ordering containers & algorithms (std::set, std::map, std::sort)
+    // Enables ordering containers & algorithms (std::set, std::map, std::sort);
+    // std::set treats two keys as equivalent when neither is '<' the other.
     bool operator<(const Student& other) const {
         return id < other.id;
     }
@@ -322,6 +323,7 @@ public:
 
 int main() {
     // 1. std::set automatically keeps Students ordered by id via operator<
+    // (and deduplicates by equivalence, not operator==)
     std::set<Student> roster { {"Alice", 102}, {"Bob", 101} };
 
     // 2. For std::set, prefer member .find() (O(log n), uses equivalence via operator<)
