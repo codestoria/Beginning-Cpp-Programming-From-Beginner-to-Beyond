@@ -31,6 +31,8 @@ This tutorial explains:
 
 The goal is not just to show you *what* C++ does, but to explain *why* it behaves the way it does. Once you understand the reasoning behind the rules, you will be able to read and write C++ expressions with confidence and avoid the most common pitfalls.
 
+*Note: Most code snippets in this tutorial are fragments rather than standalone programs; they assume standard headers (such as `<iostream>`) and `std::` names (or `using namespace std;`) are available.*
+
 ---
 
 ## Expressions and Statements
@@ -607,9 +609,9 @@ There are also bitwise compound operators (`&=`, `|=`, `^=`, `<<=`, `>>=`), whic
 int a = 10;
 int b = 2, c = 3;
 
-a += 1;      // a = a + 1       → 11
-a /= 5;      // a = a / 5       → 2
-a *= b + c;  // a = a * (2 + 3) → 2 * 5 = 10 (the whole RHS is evaluated first)
+a += 1;      // a = a + 1 (10 + 1) → 11
+a /= 5;      // a = a / 5 (11 / 5) → 2 (integer division truncates)
+a *= b + c;  // a = a * (2 + 3)    → 2 * 5 = 10 (the whole RHS is evaluated first)
 ```
 
 The last example is important. The right-hand side is always evaluated **in full** before the operation is applied. Think of the right-hand side as if it were wrapped in parentheses:
