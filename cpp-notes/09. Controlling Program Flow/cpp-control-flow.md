@@ -873,10 +873,10 @@ while (i <= 5) {
     std::cout << i << " ";   // infinite: i stays 1
 }
 
-// Off-by-one in a down-counting loop
+// Mutating i in the wrong direction inside a down-counting loop
 for (int i = 10; i > 0; i--) {
     std::cout << i << " ";
-    i++;   // incrementing in a decrementing loop — never reaches 0
+    i++;   // net +1 per iteration — never reaches 0
 }
 ```
 
