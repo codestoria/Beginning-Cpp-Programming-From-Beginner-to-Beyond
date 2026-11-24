@@ -162,7 +162,7 @@ These are **declarations only** — the method bodies must be supplied (see Sect
 
 Here:
 - `name`, `health`, and `xp` are **attributes** (instance variables).
-- `talk` and `isDead` are **methods**. ...
+- `talk` and `isDead` are **methods**.
 
 The in-class initializers (`{"Player"}`, `{100}`, `{0}`) are covered more fully in Section 3.5; they ensure that members are not left uninitialized.
 
