@@ -2,31 +2,43 @@
 
 ## Table of Contents
 
-1. [The Architectural Bridge: Why Iterators Exist](#1-the-architectural-bridge-why-iterators-exist)
-2. [Half-Open Ranges `[begin, end)` & Iterator Variants](#2-half-open-ranges-begin-end--iterator-variants)
-3. [Iterator Categories & Capability Tiers](#3-iterator-categories--capability-tiers)
-4. [STL Algorithms & Customization via Lambdas](#4-stl-algorithms--customization-via-lambdas)
-5. [Essential STL Algorithms in Practice](#5-essential-stl-algorithms-in-practice)
-6. [Using Custom Types with STL Containers & Algorithms](#6-using-custom-types-with-stl-containers--algorithms)
-7. [Common Beginner Pitfalls & Best Practices](#7-common-beginner-pitfalls--best-practices)
+- [C++ STL Iterators, Algorithms \& Custom Types](#c-stl-iterators-algorithms--custom-types)
+  - [Table of Contents](#table-of-contents)
+  - [1. The Architectural Bridge: Why Iterators Exist](#1-the-architectural-bridge-why-iterators-exist)
+    - [The $M \\times N$ Engineering Problem](#the-m-times-n-engineering-problem)
+  - [2. Half-Open Ranges `[begin, end)` \& Iterator Variants](#2-half-open-ranges-begin-end--iterator-variants)
+    - [Why Half-Open Ranges `[begin, end)`?](#why-half-open-ranges-begin-end)
+    - [Standard, Const, and Reverse Iterators](#standard-const-and-reverse-iterators)
+  - [3. Iterator Categories \& Capability Tiers](#3-iterator-categories--capability-tiers)
+    - [Why Categories Matter in Practice](#why-categories-matter-in-practice)
+  - [4. STL Algorithms \& Customization via Lambdas](#4-stl-algorithms--customization-via-lambdas)
+    - [Injecting Custom Logic with Lambda Expressions](#injecting-custom-logic-with-lambda-expressions)
+      - [Anatomy of a Lambda Expression](#anatomy-of-a-lambda-expression)
+  - [5. Essential STL Algorithms in Practice](#5-essential-stl-algorithms-in-practice)
+    - [5.1 Searching \& Counting (`std::find`, `std::count`, `std::count_if`)](#51-searching--counting-stdfind-stdcount-stdcount_if)
+    - [5.2 Quantifier Checks (`std::all_of`, `std::any_of`, `std::none_of`)](#52-quantifier-checks-stdall_of-stdany_of-stdnone_of)
+    - [5.3 Transforming \& Filtering (`std::transform`, `std::copy_if`, `std::back_inserter`)](#53-transforming--filtering-stdtransform-stdcopy_if-stdback_inserter)
+    - [5.4 Numeric Reduction (`std::accumulate`)](#54-numeric-reduction-stdaccumulate)
+  - [6. Using Custom Types with STL Containers \& Algorithms](#6-using-custom-types-with-stl-containers--algorithms)
+  - [7. Common Beginner Pitfalls \& Best Practices](#7-common-beginner-pitfalls--best-practices)
 
 ---
 
 ## 1. The Architectural Bridge: Why Iterators Exist
 
 C++ Standard Template Library (STL) containers organize memory in fundamentally different ways:
-* `std::vector` stores elements in a **contiguous block of memory**.
-* `std::list` scatters elements across heap-allocated nodes linked by pointers.
-* `std::set` and `std::map` organize elements inside **balanced binary search trees**.
+- `std::vector` stores elements in a **contiguous block of memory**.
+- `std::list` scatters elements across heap-allocated nodes linked by pointers.
+- `std::set` and `std::map` organize elements inside **balanced binary search trees**.
 
 ### The $M \times N$ Engineering Problem
 
 Suppose the STL provides $M$ containers and $N$ algorithms (searching, sorting, counting, reversing). If every algorithm were written directly against each container's internal layout, library authors would have to write and maintain $M \times N$ separate implementations.
 
 **Iterators solve this decoupling problem.** An iterator is an object that acts as a **generalized pointer**, exposing a uniform interface regardless of how the underlying container stores data:
-* `*it` accesses the element at the current position.
-* `++it` advances to the next element.
-* `it1 == it2` / `it1 != it2` checks whether two iterators refer to the same position.
+- `*it` accesses the element at the current position.
+- `++it` advances to the next element.
+- `it1 == it2` / `it1 != it2` checks whether two iterators refer to the same position.
 
 Because STL algorithms operate exclusively on iterators rather than containers directly, complexity drops from $M \times N$ to **$M + N$**: **a single algorithm implementation can process dozens of different container types.**
 
@@ -35,8 +47,8 @@ Because STL algorithms operate exclusively on iterators rather than containers d
 ## 2. Half-Open Ranges `[begin, end)` & Iterator Variants
 
 Every iterable STL container exposes two boundary member functions:
-* **`.begin()`**: Returns an iterator pointing directly to the **first element**.
-* **`.end()`**: Returns a sentinel iterator pointing **one position past the last element**.
+- **`.begin()`**: Returns an iterator pointing directly to the **first element**.
+- **`.end()`**: Returns a sentinel iterator pointing **one position past the last element**.
 
 ```text
 Container:  [ 10 ]  [ 20 ]  [ 30 ]  [ 40 ]   [ PAST-THE-END ]
@@ -105,9 +117,9 @@ Not all memory layouts support the same operations. Jumping forward by 5 positio
 
 Every STL algorithm documents the **minimum iterator category** it requires:
 
-* `std::find` requires only an **Input Iterator**, so it works on every iterable container.
-* `std::reverse` requires a **Bidirectional Iterator**, so it works on `std::list` and `std::vector`, but fails to compile on `std::forward_list`.
-* `std::sort` (typically implemented via Introsort, a hybrid of Quicksort, Heapsort, and Insertion Sort) requires a **Random-Access Iterator** for $O(1)$ mid-point indexing. Passing `std::list` iterators to `std::sort` triggers a compile-time error — which is why `std::list` provides its own `.sort()` member function that relinks nodes in-place.
+- `std::find` requires only an **Input Iterator**, so it works on every iterable container.
+- `std::reverse` requires a **Bidirectional Iterator**, so it works on `std::list` and `std::vector`, but fails to compile on `std::forward_list`.
+- `std::sort` (typically implemented via Introsort, a hybrid of Quicksort, Heapsort, and Insertion Sort) requires a **Random-Access Iterator** for $O(1)$ mid-point indexing. Passing `std::list` iterators to `std::sort` triggers a compile-time error — which is why `std::list` provides its own `.sort()` member function that relinks nodes in-place.
 
 *(Tip: To advance any iterator safely by `n` steps regardless of whether it supports `+ n`, use `std::advance(it, n)` from `<iterator>`.)*
 
@@ -134,9 +146,9 @@ Many algorithms allow you to supply custom rules — such as counting numbers th
 [ capture_list ] ( parameter_list ) { function_body }
 ```
 
-* **`[ capture_list ]`**: Controls which local variables from the enclosing scope the lambda can access (`[]` captures nothing; `[=]` captures used variables by value; `[&]` captures by reference; `[threshold]` captures a specific variable by value).
-* **`( parameter_list )`**: Arguments passed into the lambda by the algorithm (typically an element from the range).
-* **`{ function_body }`**: The code executed for each invocation. A callable that returns a `bool` to test a condition is known in STL terminology as a **predicate**.
+- **`[ capture_list ]`**: Controls which local variables from the enclosing scope the lambda can access (`[]` captures nothing; `[=]` captures used variables by value; `[&]` captures by reference; `[threshold]` captures a specific variable by value).
+- **`( parameter_list )`**: Arguments passed into the lambda by the algorithm (typically an element from the range).
+- **`{ function_body }`**: The code executed for each invocation. A callable that returns a `bool` to test a condition is known in STL terminology as a **predicate**.
 
 ```cpp
 #include <algorithm>
@@ -219,8 +231,8 @@ int main() {
 
 ### 5.3 Transforming & Filtering (`std::transform`, `std::copy_if`, `std::back_inserter`)
 
-* **`std::transform`** reads each element from `[first, last)`, applies a function, and writes the result starting at a destination iterator (which may be the same range for in-place transformation).
-* **`std::back_inserter(container)`** (from `<iterator>`) wraps a container in an output iterator whose assignment operator calls `container.push_back(...)`, letting algorithms grow an empty container dynamically.
+- **`std::transform`** reads each element from `[first, last)`, applies a function, and writes the result starting at a destination iterator (which may be the same range for in-place transformation).
+- **`std::back_inserter(container)`** (from `<iterator>`) wraps a container in an output iterator whose assignment operator calls `container.push_back(...)`, letting algorithms grow an empty container dynamically.
 
 ```cpp
 #include <algorithm>
@@ -271,7 +283,7 @@ int main() {
     // silently truncate fractional parts at every step.
     double total = std::accumulate(prices.begin(), prices.end(), 0.0);
 
-    std::cout << "Total: " << total << "\n"; // Output: 36
+    std::cout << "Total: " << total << "\n";  // Output: 36
     return 0;
 }
 ```
@@ -282,8 +294,8 @@ int main() {
 
 When you store user-defined `struct` or `class` objects inside STL containers or pass them to algorithms, the STL relies on standard comparison operators to establish identity and order:
 
-* **Equality (`operator==`):** Used by `std::find`, `std::count`, and `std::replace` to determine whether two objects match.
-* **Strict Weak Ordering (`operator<`):** Used by `std::sort`, `std::set`, `std::map`, and `std::priority_queue` to order elements consistently (if $a < b$, then $b < a$ must be false).
+- **Equality (`operator==`):** Used by `std::find`, `std::count`, and `std::replace` to determine whether two objects match.
+- **Strict Weak Ordering (`operator<`):** Used by `std::sort`, `std::set`, `std::map`, and `std::priority_queue` to order elements consistently (if $a < b$, then $b < a$ must be false).
 
 ```cpp
 #include <algorithm>

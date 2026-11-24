@@ -1,6 +1,7 @@
 # C++ Enumerations: From Raw Constants to Type-Safe States
 
 ## Table of Contents
+
 1. [Motivation: Why Do We Need Enumerations?](#1-motivation-why-do-we-need-enumerations)
 2. [Syntax, Initialization, and Memory Representation](#2-syntax-initialization-and-memory-representation)
 3. [Unscoped Enumerations (`enum`) and Their Pitfalls](#3-unscoped-enumerations-enum-and-their-pitfalls)
@@ -14,6 +15,7 @@
 ## 1. Motivation: Why Do We Need Enumerations?
 
 ### What Is an Enumeration?
+
 An **enumeration** (commonly abbreviated as **enum**) is a user-defined data type consisting of a fixed set of named integral constants, called **enumerators**.
 
 Whenever a variable should hold only one value from a small, predefined set of mutually exclusive options, an enumeration is the clearest and safest way to model it. Common examples include:
@@ -26,6 +28,7 @@ First introduced in Pascal in 1970, enumerations were adopted by C and substanti
 In modern C++, they solve two fundamental engineering problems: **eliminating magic numbers** and **enforcing compile-time type safety**.
 
 ### Problem 1: Eliminating "Magic Numbers" (Readability)
+
 Without enumerations, programmers often represent states or options using raw integer literals — known as **magic numbers**.
 A magic number is an unnamed numerical constant whose domain meaning is invisible in the source code.
 
@@ -170,7 +173,8 @@ If any enumerator value falls outside the representable range of the specified u
 
 An **unscoped enumeration** is declared using the `enum` keyword alone.
 
-The term **unscoped** means that the enumerators are injected directly into the **enclosing scope** (the same scope in which the `enum` itself is defined). Consequently, you access enumerators directly by name without qualifying them with the enumeration's type name:
+The term **unscoped** means that the enumerators are injected directly into the **enclosing scope** (the same scope in which the `enum` itself is defined).
+Consequently, you access enumerators directly by name without qualifying them with the enumeration's type name:
 
 ```cpp
 enum Direction { North, South, East, West };
@@ -275,20 +279,21 @@ std::istream& operator>>(std::istream& is, State& state) {
 }
 ```
 
-> **Warning on `static_cast` and Invalid Values:** C++ permits `static_cast<Direction>(100)` even when no enumerator has the value `100`. If an enumeration has a fixed underlying type (or if `100` exceeds the representable range of an unfixed underlying type), assigning an out-of-range integer causes **undefined behavior** (or leaves the enum holding an unexpected state that bypasses all `case` branches). Always validate raw integers before casting them to an enum.
+> **Warning on `static_cast` and Invalid Values:** C++ permits `static_cast<Direction>(100)` even when no enumerator has the value `100`. If the value falls outside the representable range of the enumeration's underlying type (or outside the valid range of an unscoped enum without a fixed underlying type), casting can result in **undefined behavior** or leave the enum holding an unexpected value that bypasses all `case` branches. Also note that if an enum uses `std::uint8_t` (an alias for `unsigned char`), streaming via `std::istream` reads a single character rather than a decimal number. Always validate raw input before casting to an enum.
 
 ### Two Major Design Flaws of Unscoped Enumerations
 
 Despite their convenience, unscoped enumerations suffer from two severe language-level flaws:
 
 1. **Scope Pollution (Name Collisions):** Because enumerators leak into the enclosing scope, two unscoped enumerations in the same scope cannot declare enumerators with the same name.
+
 ```cpp
 enum Whale { Beluga, Blue, Orca };
 enum Shark { Hammerhead, Blue, Great_White };  // COMPILE ERROR: redeclaration of 'Blue'
 ```
 
-
 2. **Accidental Cross-Type Comparisons:** Because unscoped enumerators silently convert to integers, C++ allows comparing enumerators from completely unrelated types.
+
 ```cpp
 enum Whale { Beluga = 1, Orca = 2 };
 enum Shark { Hammerhead = 1, Great_White = 2 };
@@ -297,9 +302,6 @@ if (Beluga == Hammerhead) {
     // Evaluates to true (1 == 1)!
     // Semantically nonsensical, yet compiles without error (may only trigger a compiler warning).
 }
-```
-
-
 
 ---
 
@@ -367,7 +369,7 @@ enum class Direction { North, South, East, West };
 
 std::string to_string(Direction dir) {
     switch (dir) {
-        using enum Direction; // Valid only inside this switch block
+        using enum Direction;  // Valid only inside this switch block
         case North: return "North";
         case South: return "South";
         case East:  return "East";
@@ -385,7 +387,7 @@ Because the compiler knows the size of an `enum class` in advance (it defaults t
 
 ```cpp
 // In header file (player.hpp) — no need to expose all enumerators yet
-enum class Player_State; // Forward declaration (underlying type is int)
+enum class Player_State;  // Forward declaration (underlying type is int)
 enum class Error_Code : std::uint8_t;  // Forward declaration with explicit size
 
 void handle_state(Player_State state);
@@ -461,7 +463,7 @@ int main() {
     // Type-safe, self-documenting object construction
     Player p1{"Cloud Strife", Player::Mode::Attack, Player::Direction::North};
     Player p2{"Tifa Lockhart", Player::Mode::Defense, Player::Direction::West};
-    Player p3{"Sephiroth"}; // Uses default arguments: Mode::Idle, Direction::North
+    Player p3{"Sephiroth"};  // Uses default arguments: Mode::Idle, Direction::North
 
     std::cout << p1 << '\n'
               << p2 << '\n'

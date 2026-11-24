@@ -2,13 +2,27 @@
 
 ## Table of Contents
 
-1. [Introduction to the C++ STL](#1-introduction-to-the-c-stl)
-2. [What Is Generic Programming?](#2-what-is-generic-programming)
-3. [Attempt 1: Preprocessor Macros (And Why They Fail)](#3-attempt-1-preprocessor-macros-and-why-they-fail)
-4. [Attempt 2: Function Templates (The Modern C++ Way)](#4-attempt-2-function-templates-the-modern-c-way)
-5. [Class Templates & The Header-Only Rule](#5-class-templates--the-header-only-rule)
-6. [Non-Type Template Parameters (`std::array` Motivation)](#6-non-type-template-parameters-stdarray-motivation)
-7. [Summary & Key Takeaways](#7-summary--key-takeaways)
+- [C++ Generic Programming \& Templates](#c-generic-programming--templates)
+  - [Table of Contents](#table-of-contents)
+  - [1. Introduction to the C++ STL](#1-introduction-to-the-c-stl)
+    - [Why Learn the STL?](#why-learn-the-stl)
+  - [2. What Is Generic Programming?](#2-what-is-generic-programming)
+    - [The Core Problem: Static Typing vs. Code Duplication](#the-core-problem-static-typing-vs-code-duplication)
+  - [3. Attempt 1: Preprocessor Macros (And Why They Fail)](#3-attempt-1-preprocessor-macros-and-why-they-fail)
+    - [How Macros Work](#how-macros-work)
+    - [When Are Macros Acceptable Today?](#when-are-macros-acceptable-today)
+  - [4. Attempt 2: Function Templates (The Modern C++ Way)](#4-attempt-2-function-templates-the-modern-c-way)
+    - [Syntax \& Compilation Model](#syntax--compilation-model)
+    - [Template Instantiation (Explicit vs. Deduced)](#template-instantiation-explicit-vs-deduced)
+    - [Type Requirements (Syntactic \& Semantic Contracts)](#type-requirements-syntactic--semantic-contracts)
+    - [Multiple Template Parameters](#multiple-template-parameters)
+  - [5. Class Templates \& The Header-Only Rule](#5-class-templates--the-header-only-rule)
+    - [Building a Generic Class](#building-a-generic-class)
+    - [Why Templates Must Live in Header Files](#why-templates-must-live-in-header-files)
+  - [6. Non-Type Template Parameters (`std::array` Motivation)](#6-non-type-template-parameters-stdarray-motivation)
+    - [The Motivation: Fixed-Size Stack Arrays](#the-motivation-fixed-size-stack-arrays)
+    - [Real-World Application: `std::array<T, N>`](#real-world-application-stdarrayt-n)
+  - [7. Summary \& Key Takeaways](#7-summary--key-takeaways)
 
 ---
 
@@ -22,9 +36,9 @@ Without the STL, every time you needed a dynamically resizing array or a sorting
 
 More importantly, the STL is built around a **unified architectural model** consisting of three decoupled parts:
 
-* **Containers** store and manage collections of data (e.g., `std::vector`, `std::map`).
-* **Iterators** act as generalized pointers that provide a uniform interface to traverse container elements.
-* **Algorithms** process data ranges through iterators without needing to know what underlying container holds the data (e.g., `std::sort`, `std::find`).
+- **Containers** store and manage collections of data (e.g., `std::vector`, `std::map`).
+- **Iterators** act as generalized pointers that provide a uniform interface to traverse container elements.
+- **Algorithms** process data ranges through iterators without needing to know what underlying container holds the data (e.g., `std::sort`, `std::find`).
 
 Because these three components are decoupled, learning how one container, one iterator, and one algorithm interact gives you the mental model required to use almost the entire library.
 
@@ -112,8 +126,8 @@ T max_value(T a, T b) {
 }
 ```
 
-* **`template <typename T>`** introduces a **template parameter list**, telling the compiler that `T` is a placeholder for a type to be supplied later. *(Note: You may see `template <class T>` in older codebases. In a template parameter list, `typename` and `class` are interchangeable, though `typename` is often preferred for clarity because `T` can be a primitive type like `int`; `typename` also has a distinct role when naming dependent types inside templates.)*
-* **Crucial Mental Model:** A template by itself generates **no executable machine code**. It is purely a blueprint stored in compiler memory. Concrete functions are only generated when you **instantiate** (use) the template with actual types.
+- **`template <typename T>`** introduces a **template parameter list**, telling the compiler that `T` is a placeholder for a type to be supplied later. *(Note: You may see `template <class T>` in older codebases. In a template parameter list, `typename` and `class` are interchangeable, though `typename` is often preferred for clarity because `T` can be a primitive type like `int`; `typename` also has a distinct role when naming dependent types inside templates.)*
+- **Crucial Mental Model:** A template by itself generates **no executable machine code**. It is purely a blueprint stored in compiler memory. Concrete functions are only generated when you **instantiate** (use) the template with actual types.
 
 ### Template Instantiation (Explicit vs. Deduced)
 
@@ -159,8 +173,8 @@ Because templates are compiled against concrete types during instantiation, **an
 
 Look back at `max_value`: its body executes `a > b`.
 
-* Fundamental types (`int`, `double`, `char`) support `>` natively.
-* If you pass a user-defined `struct` or `class`, compilation will **fail** unless that type defines `operator>`:
+- Fundamental types (`int`, `double`, `char`) support `>` natively.
+- If you pass a user-defined `struct` or `class`, compilation will **fail** unless that type defines `operator>`:
 
 ```cpp
 #include <iostream>
@@ -185,7 +199,7 @@ int main() {
     Player p1{"Alice", 150};
     Player p2{"Bob", 200};
 
-    Player winner = max_value(p1, p2); // Compiles cleanly!
+    Player winner = max_value(p1, p2);  // Compiles cleanly!
     std::cout << "Winner: " << winner.name << "\n";
     return 0;
 }
@@ -211,7 +225,7 @@ void print_pair(const T1& first, const T2& second) {
 }
 
 int main() {
-    print_pair(42, std::string{"The Answer"}); // T1 = int, T2 = std::string
+    print_pair(42, std::string{"The Answer"});  // T1 = int, T2 = std::string
     return 0;
 }
 ```
@@ -250,7 +264,7 @@ int main() {
     Item<std::string> title_item{"Course", "C++ STL"};
 
     // Since C++17, Class Template Argument Deduction (CTAD) can also deduce T:
-    Item auto_item{"Pi", 3.14159}; // Deduces Item<double>
+    Item auto_item{"Pi", 3.14159};  // Deduces Item<double>
 
     std::cout << score_item.get_name() << ": " << score_item.get_value() << "\n";
     std::cout << title_item.get_name() << ": " << title_item.get_value() << "\n";

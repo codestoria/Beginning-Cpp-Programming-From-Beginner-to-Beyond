@@ -2,13 +2,21 @@
 
 ## Table of Contents
 
-1. [Why String Streams Exist](#1-why-string-streams-exist)
-2. [Three String Stream Classes (`<sstream>`)](#2-three-string-stream-classes-sstream)
-3. [Parsing Data from Strings (`std::istringstream`)](#3-parsing-data-from-strings-stdistringstream)
-4. [Building Formatted Strings (`std::ostringstream`)](#4-building-formatted-strings-stdostringstream)
-5. [Under the Hood: Stream State Flags and Buffer Recovery](#5-under-the-hood-stream-state-flags-and-buffer-recovery)
-6. [Real-World Application: Crash-Proof User Input Validation](#6-real-world-application-crash-proof-user-input-validation)
-7. [Summary and Best Practices](#7-summary-and-best-practices)
+- [String Streams, Stream States, and Input Validation](#string-streams-stream-states-and-input-validation)
+  - [Table of Contents](#table-of-contents)
+  - [1. Why String Streams Exist](#1-why-string-streams-exist)
+  - [2. Three String Stream Classes (`<sstream>`)](#2-three-string-stream-classes-sstream)
+  - [3. Parsing Data from Strings (`std::istringstream`)](#3-parsing-data-from-strings-stdistringstream)
+    - [Extracting Whitespace-Separated Tokens](#extracting-whitespace-separated-tokens)
+    - [Parsing Delimited Text (Such as CSV) with `std::getline()`](#parsing-delimited-text-such-as-csv-with-stdgetline)
+  - [4. Building Formatted Strings (`std::ostringstream`)](#4-building-formatted-strings-stdostringstream)
+    - [Reusing a String Stream Object Safely](#reusing-a-string-stream-object-safely)
+  - [5. Under the Hood: Stream State Flags and Buffer Recovery](#5-under-the-hood-stream-state-flags-and-buffer-recovery)
+    - [Why Raw `std::cin >> number` Causes Cascading Failures](#why-raw-stdcin--number-causes-cascading-failures)
+    - [Why Mixing `>>` and `std::getline()` Produces an Empty Line](#why-mixing--and-stdgetline-produces-an-empty-line)
+  - [6. Real-World Application: Crash-Proof User Input Validation](#6-real-world-application-crash-proof-user-input-validation)
+    - [Tracing Three Sample Inputs](#tracing-three-sample-inputs)
+  - [7. Summary and Best Practices](#7-summary-and-best-practices)
 
 ---
 
@@ -18,9 +26,9 @@ In C++, a **stream** is a uniform abstraction that represents a sequence of char
 
 However, data in a program does not always come straight from a keyboard or a file. Often, data is **already stored inside a `std::string` in memory**, and you need stream-like capabilities on that string:
 
-* **Splitting and parsing structured text:** Suppose your program reads a line such as `"Sensor_A 42 98.6"` or `"Alice,Engineering,95000"` from a file as a single `std::string`. You want to break that string into a sensor name, an integer count, and a floating-point temperature — or split comma-separated fields — without writing manual character-by-character index loops.
-* **Assembling formatted text in memory:** Suppose you want to build a neatly aligned report row or a formatted log message with fixed decimal places (`std::fixed` and `std::setprecision` from `<iomanip>`), store it in a `std::string` first, and pass that `std::string` to a logger, GUI label, or network function.
-* **Validating user input safely:** When a user types text at the keyboard, raw `>>` extraction into a number can fail and lock up `std::cin`. Reading a full line into a `std::string` first and parsing it afterward gives you a clean, controllable validation step.
+- **Splitting and parsing structured text:** Suppose your program reads a line such as `"Sensor_A 42 98.6"` or `"Alice,Engineering,95000"` from a file as a single `std::string`. You want to break that string into a sensor name, an integer count, and a floating-point temperature — or split comma-separated fields — without writing manual character-by-character index loops.
+- **Assembling formatted text in memory:** Suppose you want to build a neatly aligned report row or a formatted log message with fixed decimal places (`std::fixed` and `std::setprecision` from `<iomanip>`), store it in a `std::string` first, and pass that `std::string` to a logger, GUI label, or network function.
+- **Validating user input safely:** When a user types text at the keyboard, raw `>>` extraction into a number can fail and lock up `std::cin`. Reading a full line into a `std::string` first and parsing it afterward gives you a clean, controllable validation step.
 
 **String streams** solve these problems by letting a `std::string` act as the underlying character source or destination of a stream. Because string stream classes inherit from the standard stream interfaces (`std::istream` and `std::ostream`), you can parse and format strings using the exact same `>>`, `<<`, `std::getline()`, and `<iomanip>` manipulators you already use on consoles and files.
 
@@ -46,8 +54,8 @@ Choosing `std::istringstream` for reading and `std::ostringstream` for writing m
 
 When you construct a `std::istringstream` from a `std::string`, the stream reads characters from that string just as `std::ifstream` reads characters from a file:
 
-* The extraction operator `>>` automatically skips leading whitespace (spaces, tabs, and newlines).
-* It reads characters that match the target variable's type and stops before the next whitespace character or an invalid character for that type.
+- The extraction operator `>>` automatically skips leading whitespace (spaces, tabs, and newlines).
+- It reads characters that match the target variable's type and stops before the next whitespace character or an invalid character for that type.
 
 ```cpp
 #include <iostream>
@@ -129,7 +137,7 @@ std::string format_invoice_line(const std::string& item, int quantity, double un
         << std::fixed << std::setprecision(2)
         << std::setw(10) << (quantity * unit_price);
 
-    return oss.str(); // Return a std::string copy of the formatted output
+    return oss.str();  // Return a std::string copy of the formatted output
 }
 
 int main() {
@@ -147,8 +155,8 @@ int main() {
 Creating a new `std::ostringstream` inside a small helper or loop is clean and safe. If you do reuse the same stream variable across multiple iterations, remember that `.str("")` only replaces the stored string content — it does **not** clear error state flags if a previous operation failed. Always pair `.str("")` with `.clear()`:
 
 ```cpp
-oss.str(""); // Clear stored string content
-oss.clear(); // Reset stream state flags (such as failbit or eofbit)
+oss.str("");  // Clear stored string content
+oss.clear();  // Reset stream state flags (such as failbit or eofbit)
 ```
 
 ---
@@ -266,16 +274,16 @@ int main() {
 
 ### Tracing Three Sample Inputs
 
-* **Input `"hello"`:** `parser >> value` fails (`false`), so the `if` condition is `false`. The function prints the error message and loops again.
-* **Input `"25 items"`:** `parser >> value` extracts `25` (`true`), then `parser >> extra` extracts `'i'` (`true`). Because `!(parser >> extra)` is `false`, the input is rejected and the loop repeats.
-* **Input `"  25  "`:** `parser >> value` skips leading spaces and extracts `25` (`true`). Then `parser >> extra` skips trailing spaces and hits the end of the string (`false`), making `!(parser >> extra)` `true`. The function returns `25`.
+- **Input `"hello"`:** `parser >> value` fails (`false`), so the `if` condition is `false`. The function prints the error message and loops again.
+- **Input `"25 items"`:** `parser >> value` extracts `25` (`true`), then `parser >> extra` extracts `'i'` (`true`). Because `!(parser >> extra)` is `false`, the input is rejected and the loop repeats.
+- **Input `"  25  "`:** `parser >> value` skips leading spaces and extracts `25` (`true`). Then `parser >> extra` skips trailing spaces and hits the end of the string (`false`), making `!(parser >> extra)` `true`. The function returns `25`.
 
 ---
 
 ## 7. Summary and Best Practices
 
-* **Use string streams for in-memory stream work:** Include `<sstream>` and use `std::istringstream` to parse strings and `std::ostringstream` to format strings with `.str()`.
-* **Combine `std::istringstream` and `std::getline(iss, field, delim)`** when splitting delimited records such as CSV lines.
-* **Understand stream state flags:** A failed extraction sets `failbit` and halts further reads on that stream until `.clear()` is called.
-* **Clear leftover newlines between `>>` and `std::getline()`** using `std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n')`.
-* **Validate user input via `std::getline()` + `std::istringstream`** and check for unexpected trailing characters so malformed entries are caught cleanly without locking up `std::cin`.
+- **Use string streams for in-memory stream work:** Include `<sstream>` and use `std::istringstream` to parse strings and `std::ostringstream` to format strings with `.str()`.
+- **Combine `std::istringstream` and `std::getline(iss, field, delim)`** when splitting delimited records such as CSV lines.
+- **Understand stream state flags:** A failed extraction sets `failbit` and halts further reads on that stream until `.clear()` is called.
+- **Clear leftover newlines between `>>` and `std::getline()`** using `std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n')`.
+- **Validate user input via `std::getline()` + `std::istringstream`** and check for unexpected trailing characters so malformed entries are caught cleanly without locking up `std::cin`.

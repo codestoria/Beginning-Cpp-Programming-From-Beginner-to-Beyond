@@ -2,20 +2,32 @@
 
 ## Table of Contents
 
-1. [Overview of STL Container Families](#1-overview-of-stl-container-families)
-2. [Common Container Operations & Rules](#2-common-container-operations--rules)
-3. [Sequence Containers (Order-Preserving)](#3-sequence-containers-order-preserving)
-   - [3.1 `std::vector` (Dynamic Contiguous Array)](#31-stdvector-dynamic-contiguous-array)
-   - [3.2 `std::deque` (Double-Ended Queue)](#32-stddeque-double-ended-queue)
-   - [3.3 `std::list` & `std::forward_list` (Linked Lists)](#33-stdlist--stdforward_list-linked-lists)
-4. [Associative Containers (Key-Based Lookup)](#4-associative-containers-key-based-lookup)
-   - [4.1 `std::set` & `std::multiset`](#41-stdset--stdmultiset)
-   - [4.2 `std::map` & `std::multimap`](#42-stdmap--stdmultimap)
-5. [Container Adapters (Restricted Interfaces)](#5-container-adapters-restricted-interfaces)
-   - [5.1 `std::stack` (LIFO)](#51-stdstack-lifo)
-   - [5.2 `std::queue` (FIFO)](#52-stdqueue-fifo)
-   - [5.3 `std::priority_queue` (Heap)](#53-stdpriority_queue-heap)
-6. [How to Choose the Right Container](#6-how-to-choose-the-right-container)
+- [C++ STL Containers in Depth](#c-stl-containers-in-depth)
+  - [Table of Contents](#table-of-contents)
+  - [1. Overview of STL Container Families](#1-overview-of-stl-container-families)
+  - [2. Common Container Operations \& Rules](#2-common-container-operations--rules)
+    - [Value Semantics \& Automatic RAII Cleanup](#value-semantics--automatic-raii-cleanup)
+  - [3. Sequence Containers (Order-Preserving)](#3-sequence-containers-order-preserving)
+    - [3.1 `std::vector` (Dynamic Contiguous Array)](#31-stdvector-dynamic-contiguous-array)
+      - [Why `size()` Differs from `capacity()` (Amortized $O(1)$ Growth)](#why-size-differs-from-capacity-amortized-o1-growth)
+      - [Performance Profile \& Key Operations](#performance-profile--key-operations)
+    - [3.2 `std::deque` (Double-Ended Queue)](#32-stddeque-double-ended-queue)
+      - [The Motivation](#the-motivation)
+      - [Performance Profile \& Key Operations](#performance-profile--key-operations-1)
+    - [3.3 `std::list` \& `std::forward_list` (Linked Lists)](#33-stdlist--stdforward_list-linked-lists)
+      - [The Motivation](#the-motivation-1)
+      - [`std::list` (Doubly-Linked List)](#stdlist-doubly-linked-list)
+      - [`std::forward_list` (Singly-Linked List)](#stdforward_list-singly-linked-list)
+  - [4. Associative Containers (Key-Based Lookup)](#4-associative-containers-key-based-lookup)
+    - [4.1 `std::set` \& `std::multiset`](#41-stdset--stdmultiset)
+    - [4.2 `std::map` \& `std::multimap`](#42-stdmap--stdmultimap)
+  - [5. Container Adapters (Restricted Interfaces)](#5-container-adapters-restricted-interfaces)
+    - [5.1 `std::stack` (LIFO)](#51-stdstack-lifo)
+    - [5.2 `std::queue` (FIFO)](#52-stdqueue-fifo)
+    - [5.3 `std::priority_queue` (Heap)](#53-stdpriority_queue-heap)
+  - [6. How to Choose the Right Container](#6-how-to-choose-the-right-container)
+    - [Time-Complexity Quick Reference](#time-complexity-quick-reference)
+    - [Practical Decision Checklist](#practical-decision-checklist)
 
 ---
 
@@ -37,15 +49,15 @@ In software engineering, no single data structure excels at every operation: a l
 
 Because the STL is built around uniform interfaces, most containers share a consistent vocabulary of member functions:
 
-* **Capacity Queries:**
-  * `.size()` returns the number of elements currently stored.
-  * `.empty()` returns `true` if the container holds zero elements. *(Best practice: Always prefer `.empty()` over `.size() == 0`, as `.empty()` is guaranteed $O(1)$ across every standard container.)*
-* **Modifiers:**
-  * `.insert(...)` and `.erase(...)` add or remove elements.
-  * `.clear()` destroys all elements, leaving `.size() == 0`.
-  * `.swap(other)` exchanges the internal buffers of two containers of the exact same type in $O(1)$ time (by swapping internal pointers rather than copying elements).
-* **Boundary Iterators:** `.begin()` points to the first element; `.end()` points **one position past** the last element (never dereference `.end()`).
-* **Lexicographical Comparisons:** Operators `==`, `!=`, `<`, `<=`, `>`, and `>=` compare two containers element-by-element from beginning to end.
+- **Capacity Queries:**
+  - `.size()` returns the number of elements currently stored.
+  - `.empty()` returns `true` if the container holds zero elements. *(Best practice: Always prefer `.empty()` over `.size() == 0`, as `.empty()` is guaranteed $O(1)$ across every standard container.)*
+- **Modifiers:**
+  - `.insert(...)` and `.erase(...)` add or remove elements.
+  - `.clear()` destroys all elements, leaving `.size() == 0`.
+  - `.swap(other)` exchanges the internal buffers of two containers of the exact same type in $O(1)$ time (by swapping internal pointers rather than copying elements).
+- **Boundary Iterators:** `.begin()` points to the first element; `.end()` points **one position past** the last element (never dereference `.end()`).
+- **Lexicographical Comparisons:** Operators `==`, `!=`, `<`, `<=`, `>`, and `>=` compare two containers element-by-element from beginning to end.
 
 ### Value Semantics & Automatic RAII Cleanup
 
@@ -76,8 +88,8 @@ Contiguous Memory:  [ 10 | 20 | 30 | __ | __ ]
 
 Allocating new heap memory on every single `.push_back()` would be prohibitively slow. Instead, `std::vector` separates logical length from allocated storage:
 
-* **`.size()`**: The number of active elements currently inside the vector.
-* **`.capacity()`**: The maximum number of elements the currently allocated memory block can hold before needing a reallocation.
+- **`.size()`**: The number of active elements currently inside the vector.
+- **`.capacity()`**: The maximum number of elements the currently allocated memory block can hold before needing a reallocation.
 
 When `.size() == .capacity()` and you append another element:
 
@@ -92,9 +104,9 @@ Because geometric growth ensures expensive reallocations happen exponentially le
 
 #### Performance Profile & Key Operations
 
-* **Random Access ($O(1)$):** `vec[i]` performs direct pointer arithmetic (`base + i`) with zero overhead (out-of-bounds access causes undefined behavior). `vec.at(i)` checks bounds and throws `std::out_of_range` if `i >= vec.size()`.
-* **Back Operations ($O(1)$ amortized):** `vec.push_back(val)` appends an element; `vec.emplace_back(args...)` constructs the element directly inside the vector's memory buffer, avoiding temporary objects; `vec.pop_back()` removes the last element.
-* **Front/Middle Insert & Erase ($O(n)$):** Slow, because preserving memory contiguity requires shifting every subsequent element left or right.
+- **Random Access ($O(1)$):** `vec[i]` performs direct pointer arithmetic (`base + i`) with zero overhead (out-of-bounds access causes undefined behavior). `vec.at(i)` checks bounds and throws `std::out_of_range` if `i >= vec.size()`.
+- **Back Operations ($O(1)$ amortized):** `vec.push_back(val)` appends an element; `vec.emplace_back(args...)` constructs the element directly inside the vector's memory buffer, avoiding temporary objects; `vec.pop_back()` removes the last element.
+- **Front/Middle Insert & Erase ($O(n)$):** Slow, because preserving memory contiguity requires shifting every subsequent element left or right.
 
 ```cpp
 #include <iostream>
@@ -131,9 +143,9 @@ When you push to either end and the edge chunk is full, `std::deque` simply allo
 
 #### Performance Profile & Key Operations
 
-* **Both Ends ($O(1)$ amortized):** Supports `push_back()`, `pop_back()`, `emplace_back()` and `push_front()`, `pop_front()`, `emplace_front()` (occasional pointer-table growth involves copying pointers).
-* **Random Access ($O(1)$):** Supports `[]` and `.at()`, though slightly slower than `std::vector` due to two-step pointer indirection (map lookup + chunk offset).
-* **Middle Insert & Erase ($O(n)$):** Still requires shifting elements within chunks, and invalidates existing iterators.
+- **Both Ends ($O(1)$ amortized):** Supports `push_back()`, `pop_back()`, `emplace_back()` and `push_front()`, `pop_front()`, `emplace_front()` (occasional pointer-table growth involves copying pointers).
+- **Random Access ($O(1)$):** Supports `[]` and `.at()`, though slightly slower than `std::vector` due to two-step pointer indirection (map lookup + chunk offset).
+- **Middle Insert & Erase ($O(n)$):** Still requires shifting elements within chunks, and invalidates existing iterators.
 
 ```cpp
 #include <deque>
@@ -163,19 +175,19 @@ If an application frequently inserts or removes items in the **middle** of a lar
 
 Each node stores a value alongside two pointers: `prev` and `next`.
 
-* **Insert/Erase Anywhere ($O(1)$):** Given an iterator to a position, inserting or erasing only rewires adjacent pointers — no elements ever move in memory.
-* **Strong Iterator Stability:** Inserting or erasing elements **never invalidates** iterators or references to other elements (only iterators pointing directly to an erased node become invalid).
-* **No Random Access ($O(n)$ traversal):** Because nodes are scattered across the heap, `[]` and `.at()` do not exist. Reaching the $k$-th element requires walking $k$ pointers sequentially.
-* **Memory & Cache Trade-off:** Every node incurs two pointers of memory overhead (16 bytes on 64-bit systems), and non-contiguous memory causes frequent CPU cache misses — meaning iterating over a `std::list` is noticeably slower than iterating over a `std::vector`.
-* **Member Sort:** Always call `my_list.sort()` instead of `std::sort()`, because `std::sort()` requires random-access iterators.
+- **Insert/Erase Anywhere ($O(1)$):** Given an iterator to a position, inserting or erasing only rewires adjacent pointers — no elements ever move in memory.
+- **Strong Iterator Stability:** Inserting or erasing elements **never invalidates** iterators or references to other elements (only iterators pointing directly to an erased node become invalid).
+- **No Random Access ($O(n)$ traversal):** Because nodes are scattered across the heap, `[]` and `.at()` do not exist. Reaching the $k$-th element requires walking $k$ pointers sequentially.
+- **Memory & Cache Trade-off:** Every node incurs two pointers of memory overhead (16 bytes on 64-bit systems), and non-contiguous memory causes frequent CPU cache misses — meaning iterating over a `std::list` is noticeably slower than iterating over a `std::vector`.
+- **Member Sort:** Always call `my_list.sort()` instead of `std::sort()`, because `std::sort()` requires random-access iterators.
 
 #### `std::forward_list` (Singly-Linked List)
 
 A minimal linked list designed for strict memory constraints, where each node stores only a `next` pointer.
 
-* Moves forward only (`push_front`, `pop_front`).
-* Provides **no `.back()**`, **no `.push_back()**`, and **no `.size()**` method (omitting the size counter ensures `splice_after` operations remain strictly $O(1)$ without counting nodes).
-* Inserts and erases elements *after* a given iterator via `.insert_after()` and `.erase_after()`.
+- Moves forward only (`push_front`, `pop_front`).
+- Provides **no `.back()`**, **no `.push_back()`**, and **no `.size()`** method (omitting the size counter ensures `splice_after` operations remain strictly $O(1)$ without counting nodes).
+- Inserts and erases elements *after* a given iterator via `.insert_after()` and `.erase_after()`.
 
 ---
 
@@ -192,9 +204,9 @@ While sequence containers locate elements by *position*, associative containers 
 
 A `std::set` stores a collection of **unique, sorted keys** (the element itself is the key).
 
-* **Automatic Deduplication:** Inserting an existing key is a no-op. `.insert(val)` returns a `std::pair<iterator, bool>`, where `.second` is `true` if insertion succeeded and `false` if the key already existed.
-* **Logarithmic Lookup ($O(\log n)$):** Always prefer the member function `my_set.find(key)` over the generic `std::find()`. The member function walks the binary tree in $O(\log n)$ steps, whereas generic `std::find()` performs a linear $O(n)$ scan.
-* **Read-Only Keys:** Elements in a `std::set` are immutable (`const`). Modifying a key in-place could violate the binary search tree's sorted invariant; instead, erase the old value and insert the updated one.
+- **Automatic Deduplication:** Inserting an existing key is a no-op. `.insert(val)` returns a `std::pair<iterator, bool>`, where `.second` is `true` if insertion succeeded and `false` if the key already existed.
+- **Logarithmic Lookup ($O(\log n)$):** Always prefer the member function `my_set.find(key)` over the generic `std::find()`. The member function walks the binary tree in $O(\log n)$ steps, whereas generic `std::find()` performs a linear $O(n)$ scan.
+- **Read-Only Keys:** Elements in a `std::set` are immutable (`const`). Modifying a key in-place could violate the binary search tree's sorted invariant; instead, erase the old value and insert the updated one.
 
 **`std::multiset`** behaves identically to `std::set`, except it **permits duplicate keys**. Calling `.count(key)` returns the exact number of matching elements.
 
@@ -255,7 +267,7 @@ int main() {
 > **Classic Beginner Pitfall — `map[key]` Mutates the Map:**
 > Evaluating `int x = grades["Unknown"];` when `"Unknown"` is not in the map **automatically inserts `"Unknown"` with a default-constructed value (`0`)** and returns a reference to it! Consequently, `operator[]` cannot be used on a `const std::map`. Whenever you want to query a key without modifying the map, use `.find(key)`, `.contains(key)` (C++20+), or `.at(key)` (which throws `std::out_of_range` if the key does not exist).
 
-**`std::multimap`** allows multiple values to share the same key. Because a single key can correspond to several entries, `std::multimap` **does not provide `operator[]` or `.at()**`; you insert with `.insert({key, val})` and locate ranges with `.equal_range(key)`.
+**`std::multimap`** allows multiple values to share the same key. Because a single key can correspond to several entries, `std::multimap` **does not provide `operator[]` or `.at()`**; you insert with `.insert({key, val})` and locate ranges with `.equal_range(key)`.
 
 ---
 
@@ -271,9 +283,9 @@ Container adapters are not standalone data structures with new memory layouts. I
 
 Enforces **Last-In, First-Out (LIFO)** access — like a vertical stack of plates. Wraps `std::deque` by default.
 
-* `.push(val)` / `.emplace(args...)`: Places a new element onto the top of the stack ($O(1)$).
-* `.top()`: Returns a reference to the top element without removing it ($O(1)$).
-* `.pop()`: Removes the top element ($O(1)$). *(Note: `.pop()` returns `void` rather than the popped value to guarantee strong exception safety — call `.top()` first if you need the value.)*
+- `.push(val)` / `.emplace(args...)`: Places a new element onto the top of the stack ($O(1)$).
+- `.top()`: Returns a reference to the top element without removing it ($O(1)$).
+- `.pop()`: Removes the top element ($O(1)$). *(Note: `.pop()` returns `void` rather than the popped value to guarantee strong exception safety — call `.top()` first if you need the value.)*
 
 ### 5.2 `std::queue` (FIFO)
 
@@ -281,19 +293,19 @@ Enforces **Last-In, First-Out (LIFO)** access — like a vertical stack of plate
 
 Enforces **First-In, First-Out (FIFO)** access — like a ticket queue. Wraps `std::deque` by default.
 
-* `.push(val)` / `.emplace(args...)`: Adds an element to the **back** of the queue ($O(1)$).
-* `.front()` / `.back()`: Inspects the oldest or newest element without removing it ($O(1)$).
-* `.pop()`: Removes the element at the **front** of the queue ($O(1)$, returns `void`).
+- `.push(val)` / `.emplace(args...)`: Adds an element to the **back** of the queue ($O(1)$).
+- `.front()` / `.back()`: Inspects the oldest or newest element without removing it ($O(1)$).
+- `.pop()`: Removes the element at the **front** of the queue ($O(1)$, returns `void`).
 
 ### 5.3 `std::priority_queue` (Heap)
 
 **Header:** `#include <queue>`
 
-Wraps `std::vector` by default and maintains elements in a **binary max-heap**. Regardless of insertion order, the **largest element is always accessible at `.top()**`:
+Wraps `std::vector` by default and maintains elements in a **binary max-heap**. Regardless of insertion order, the **largest element is always accessible at `.top()`**:
 
-* `.push(val)` / `.emplace(args...)`: Inserts an element and restores the heap invariant in **$O(\log n)$** time.
-* `.top()`: Inspects the maximum element in **$O(1)$** time.
-* `.pop()`: Removes the maximum element and re-heapifies in **$O(\log n)$** time.
+- `.push(val)` / `.emplace(args...)`: Inserts an element and restores the heap invariant in **$O(\log n)$** time.
+- `.top()`: Inspects the maximum element in **$O(1)$** time.
+- `.pop()`: Removes the maximum element and re-heapifies in **$O(\log n)$** time.
 
 ```cpp
 #include <functional>
