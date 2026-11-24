@@ -119,7 +119,7 @@ Every STL algorithm documents the **minimum iterator category** it requires:
 - `std::reverse` requires a **Bidirectional Iterator**, so it works on `std::list` and `std::vector`, but fails to compile on `std::forward_list`.
 - `std::sort` (typically implemented via Introsort, a hybrid of Quicksort, Heapsort, and Insertion Sort) requires a **Random-Access Iterator** for $O(1)$ mid-point indexing. Passing `std::list` iterators to `std::sort` triggers a compile-time error — which is why `std::list` provides its own `.sort()` member function that relinks nodes in-place.
 
-*(Tip: To advance any iterator safely by `n` steps regardless of whether it supports `+ n`, use `std::advance(it, n)` from `<iterator>`.)*
+> Tip: To advance any iterator safely by `n` steps regardless of whether it supports `+ n`, use `std::advance(it, n)` from `<iterator>`.
 
 ---
 

@@ -35,7 +35,7 @@ A magic number is an unnamed numerical constant whose domain meaning is invisibl
 Consider the following rocket launch control routine:
 
 ```cpp
-// What do 0, 1, 2, 3, 4, and 5 actually mean?
+// What do state values (0, 1, 2) and sequence codes (3, 4, 5) actually mean?
 void control_launch(int state) {
     if (state == 0) {
         initiate_sequence(3);
@@ -302,6 +302,7 @@ if (Beluga == Hammerhead) {
     // Evaluates to true (1 == 1)!
     // Semantically nonsensical, yet compiles without error (may only trigger a compiler warning).
 }
+```
 
 ---
 
@@ -337,7 +338,7 @@ int raw_int = static_cast<int>(Whale::Beluga);
 auto exact_raw = static_cast<std::underlying_type_t<Whale>>(Whale::Beluga);
 ```
 
-*(Note: C++23 further simplifies this with `std::to_underlying(Whale::Beluga)` in `<utility>`.)*
+> Note: C++23 further simplifies this with `std::to_underlying(Whale::Beluga)` in `<utility>`.
 
 ---
 
@@ -365,6 +366,8 @@ Inside a `switch` statement with many cases, repeatedly typing `Direction::` can
 C++20 introduced `using enum` to bring a scoped enumeration's enumerators into a **local block scope** without sacrificing type safety outside that block:
 
 ```cpp
+#include <string>
+
 enum class Direction { North, South, East, West };
 
 std::string to_string(Direction dir) {
@@ -386,6 +389,8 @@ Outside the `switch` block, `North` remains hidden, preserving full encapsulatio
 Because the compiler knows the size of an `enum class` in advance (it defaults to `int` unless specified otherwise), you can **forward-declare** a scoped enumeration in header files to reduce compile-time dependencies:
 
 ```cpp
+#include <cstdint>
+
 // In header file (player.hpp) — no need to expose all enumerators yet
 enum class Player_State;  // Forward declaration (underlying type is int)
 enum class Error_Code : std::uint8_t;  // Forward declaration with explicit size
@@ -393,7 +398,7 @@ enum class Error_Code : std::uint8_t;  // Forward declaration with explicit size
 void handle_state(Player_State state);
 ```
 
-*(By contrast, an unscoped `enum` can only be forward-declared if you explicitly specify its underlying type, such as `enum Legacy_State : int;`, because otherwise the compiler cannot know how many bytes to reserve for it.)*
+By contrast, an unscoped `enum` can only be forward-declared if you explicitly specify its underlying type, such as `enum Legacy_State : int;`, because otherwise the compiler cannot know how many bytes to reserve for it.
 
 ---
 
