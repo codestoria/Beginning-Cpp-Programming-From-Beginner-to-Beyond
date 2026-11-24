@@ -112,7 +112,7 @@ Understanding these properties is essential to using arrays correctly.
 
 The syntax for declaring an array is:
 
-```
+```text
 type name[size];
 ```
 
@@ -375,6 +375,8 @@ std::vector<type> name;
 
 #### Common declaration styles
 
+*(The code snippets below assume `using namespace std;` is in scope; otherwise prefix with `std::`.)*
+
 **Empty vector:**
 
 ```cpp
@@ -530,7 +532,7 @@ std::cout << test_scores.at(10);  // index 10 is out of range → exception
 
 The error message will resemble:
 
-```
+```text
 terminate called after throwing an instance of 'std::out_of_range'
   what():  vector::_M_range_check: __n (which is 10) >= this->size() (which is 5)
 ```
@@ -628,7 +630,7 @@ In this tutorial, you learned:
    - Declare with `type name[size];`
    - Initialize with `{value1, value2, ...}` — partial initialization fills the rest with zeros.
    - Access with `name[index]`.
-   - Understand the memory model: the array name is the address of the first element, and indexing is simple pointer arithmetic.
+   - Understand the memory model: in most expressions, the array name decays to a pointer to the first element (with exceptions such as `sizeof` and `&`), and indexing is simple pointer arithmetic.
    - Multi-dimensional arrays use additional square brackets: `name[rows][cols]`.
 
 3. **Vectors** are dynamic, object-oriented containers from the Standard Template Library.
