@@ -818,12 +818,14 @@ Think of it as: *"Skip the rest of this iteration and move on to the next."*
 When executed, `break` **terminates the loop entirely** and transfers control to the statement immediately following the loop.
 
 ```cpp
+std::vector<int> data = {10, 20, -1, 30, -99, 40};
+
 for (int val : data) {
     if (val == -99) {
-        break;      // stop processing entirely
+        break;     // stop processing entirely
     }
     if (val == -1) {
-        continue;   // skip this noisy value
+        continue;  // skip this noisy value
     }
     std::cout << val << " ";
 }

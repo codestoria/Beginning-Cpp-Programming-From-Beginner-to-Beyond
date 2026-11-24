@@ -605,10 +605,11 @@ There are also bitwise compound operators (`&=`, `|=`, `^=`, `<<=`, `>>=`), whic
 
 ```cpp
 int a = 10;
+int b = 2, c = 3;
 
-a += 1;        // a = a + 1       → 11
-a /= 5;        // a = a / 5       → 2
-a *= b + c;    // a = a * (b + c) — the whole RHS is evaluated first
+a += 1;      // a = a + 1       → 11
+a /= 5;      // a = a / 5       → 2
+a *= b + c;  // a = a * (2 + 3) → 2 * 5 = 10 (the whole RHS is evaluated first)
 ```
 
 The last example is important. The right-hand side is always evaluated **in full** before the operation is applied. Think of the right-hand side as if it were wrapped in parentheses:
