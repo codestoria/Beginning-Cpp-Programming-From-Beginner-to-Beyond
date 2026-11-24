@@ -347,8 +347,8 @@ auto exact_raw = static_cast<std::underlying_type_t<Whale>>(Whale::Beluga);
 | **Type Name** | Optional (allows anonymous enums) | **Mandatory** |
 | **Enumerator Access** | Unqualified (`North`) | Scope-qualified (`Direction::North`) |
 | **Scope Pollution** | Yes (injects names into enclosing scope) | **No** (contained within `Name::`) |
-| **Default Underlying Type** | Implementation-defined integral type | **Guaranteed `int**` |
-| **Implicit Conversion to `int**` | Yes (automatic) | **No** (requires explicit `static_cast`) |
+| **Default Underlying Type** | Implementation-defined integral type | **Guaranteed `int`** |
+| **Implicit Conversion to `int`** | Yes (automatic) | **No** (requires explicit `static_cast`) |
 | **Cross-Enum Comparison** | Allowed (compares underlying integers) | **Disallowed** (compile-time error) |
 | **Forward Declaration** | Allowed only if underlying type is specified | **Always allowed** (defaults to `int`) |
 | **Recommended Usage** | Interfacing with C APIs or legacy code | **Default choice in all modern C++** |
