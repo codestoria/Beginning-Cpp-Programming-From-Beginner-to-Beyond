@@ -135,7 +135,7 @@ int* p = nullptr;  // p is a null pointer: it points to no object
 
 `nullptr` is the null pointer value: it explicitly means "points to no object or function." It is a well-defined "pointing nowhere" state, very different from "pointing anywhere." You can safely check `if (p != nullptr)` before dereferencing.
 
-> **Precision note:** the C++ standard does not guarantee that the null pointer's numeric representation is `0`, nor that address `0` is inaccessible on every platform. What *is* guaranteed is that dereferencing a null pointer is undefined behavior.
+> **Precision note:** The C++ standard does not guarantee that the null pointer's numeric representation is `0`, nor that address `0` is inaccessible on every platform. What *is* guaranteed is that dereferencing a null pointer is undefined behavior.
 
 **2. Initialize to the address of an existing variable:**
 
@@ -464,6 +464,7 @@ This is why pointer arithmetic is type-aware: `p + 1` means "the address of the 
 You can add or subtract integers from pointers:
 
 ```cpp
+int arr[5] = {10, 20, 30, 40, 50};
 int* p = arr;    // points to arr[0]
 int* q = p + 2;  // points to arr[2] (2 elements ahead)
 int* r = p - 1;  // one element before arr[0]: undefined behavior — do not do this
@@ -539,6 +540,7 @@ The `const` qualifier gives you fine-grained control over what can be modified t
 ### 1. Pointer to Constant
 
 ```cpp
+int x = 5, y = 20;
 const int* p = &x;
 ```
 
@@ -552,6 +554,7 @@ Read as: "`p` is a pointer to a `const int`."
 ### 2. Constant Pointer
 
 ```cpp
+int x = 5, y = 20;
 int* const p = &x;
 ```
 
@@ -565,6 +568,7 @@ Read as: "`p` is a `const` pointer to an `int`."
 ### 3. Constant Pointer to Constant
 
 ```cpp
+int x = 5, y = 20;
 const int* const p = &x;
 ```
 
@@ -638,9 +642,11 @@ You can pass pointers to complex objects like vectors:
 
 ```cpp
 void display(const std::vector<std::string>* v) {
+    std::cout << "Count: " << v->size() << '\n';
     for (const auto& s : *v) {  // dereference v to get the vector
         std::cout << s << " ";
     }
+    std::cout << '\n';
 }
 
 int main() {
@@ -865,7 +871,7 @@ std::string{"Frank"};   // temporary std::string: an r-value (prvalue)
 f();                    // call to a function returning by value: an r-value
 ```
 
-> Note: a string literal such as `"Frank"` is **not** an r-value — it is an l-value of type `const char[6]`. It is the temporary `std::string` constructed from it that is an r-value.
+> Note: A string literal such as `"Frank"` is **not** an r-value — it is an l-value of type `const char[6]`. It is the temporary `std::string` constructed from it that is an r-value.
 
 For the **built-in** assignment operator, the left operand must be a modifiable l-value, so an r-value cannot appear on the left (hence the name). Class types can overload `operator=` so that the **left-hand operand** may be an r-value (unless the overload is ref-qualified to accept only l-values); the built-in restriction that the left operand must be a modifiable l-value does not apply to overloaded assignment operators.
 

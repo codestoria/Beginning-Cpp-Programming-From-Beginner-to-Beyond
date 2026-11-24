@@ -185,7 +185,7 @@ Any text in double quotes is a **string literal**, and every string literal is a
 Two facts about string literals:
 
 1. **They are constants.** You cannot modify the characters of a literal; doing so is undefined behavior.
-2. **The compiler silently appends `'\0'`.** You write 10 visible characters; the compiler allocates 11 bytes.
+2. **The compiler silently appends `'\0'`.** You write 10 characters (including the two spaces); the compiler allocates 11 bytes.
 
 ```
 Index:   0   1   2   3   4   5   6   7   8   9   10
@@ -355,8 +355,9 @@ cin.getline(fullName, 50);  // reads up to 49 chars, or until Enter
 The second argument is the buffer size. `getline` reads at most `size - 1` characters and appends `'\0'`. If the line is longer, `getline` sets the stream's failbit — you must clear it before reading again:
 
 ```cpp
-cin.clear();
-cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+// requires #include <limits>
+std::cin.clear();
+std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 ```
 
 ### 5.7 Converting strings to numbers: `<cstdlib>`

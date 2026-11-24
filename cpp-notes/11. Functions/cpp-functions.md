@@ -962,7 +962,7 @@ int main() {
    - `x` is a **copy** to `result` (`30`).
    - `y` is a **copy** of `a` (`10`).
    - `z` is a **copy** of `b` (`20`).
-5. `function2` computes `x = x + y + z = 30 + 10 + 20 = 60`. Because `x` is an alias for `result`, **`result` becomes `60`**.
+5. `function2` computes `x = x + y + z = 30 + 10 + 20 = 60`. Because `x` is a local copy of `result` (passed by value), modifying `x` only changes `function2`'s local `x`; **`result` in `function1` remains `30`**.
 6. `function2` returns; its frame is popped.
 7. `function1` returns `result` (`60`); its frame is popped.
 8. `main` assigns `60` to `z`, prints `60`, and exits.
@@ -1119,7 +1119,7 @@ The `n <= 1` check handles both base cases in one test.
 
 ### Why `fibonacci(40)` Is Slow
 
-`fibonacci(n)` makes **two** recursive calls, each of which makes two more, and so on. The number of calls grows exponentially — roughly with the golden ratio `φ ≈ 1.618` raised to the power `n`. Calculating `fibonacci(40)` requires on the order of **300 million** function calls, which takes noticeable wall-clock time even on a fast machine.
+`fibonacci(n)` makes **two** recursive calls, each of which makes two more, and so on. The number of calls grows exponentially — roughly with the golden ratio `φ ≈ 1.618` raised to the power `n`. Calculating `fibonacci(40)` requires **over 300 million** function calls (about 331 million), which takes noticeable wall-clock time even on a fast machine.
 
 This is the classic warning: **recursion can be expensive** because every call pushes a new frame, and poorly-structured recursive functions re-solve the same subproblems over and over. (A technique called *memoization* — caching previously computed results — fixes this, and is covered separately.)
 
