@@ -19,15 +19,15 @@ Variables stored in random-access memory (RAM) are temporary: the moment a progr
 
 In C++, input and output (I/O) are built around a single abstraction called a **stream**. Conceptually, a stream is an ordered sequence of characters — or raw bytes — flowing between your program and an external source or destination:
 
-* **Input streams** move data *into* your program (typically via the extraction operator `>>`, line readers, or character readers).
-* **Output streams** move data *out of* your program (typically via the insertion operator `<<` or character writers).
+- **Input streams** move data *into* your program (typically via the extraction operator `>>`, line readers, or character readers).
+- **Output streams** move data *out of* your program (typically via the insertion operator `<<` or character writers).
 
 ### Why File Streams Share the Same Familiar Interface
 
 Rather than inventing separate functions for keyboards, screens, and disk files, C++ organizes streams into a related family of classes. File stream classes in the `<fstream>` header build directly on the standard input and output stream interfaces (`std::istream` and `std::ostream`):
 
-* `std::ifstream` provides input operations such as `>>`, `std::getline()`, and `.get()`.
-* `std::ofstream` provides output operations such as `<<`, `.put()`, and standard stream formatting manipulators (such as `std::fixed` and `std::setprecision` from `<iomanip>`).
+- `std::ifstream` provides input operations such as `>>`, `std::getline()`, and `.get()`.
+- `std::ofstream` provides output operations such as `<<`, `.put()`, and standard stream formatting manipulators (such as `std::fixed` and `std::setprecision` from `<iomanip>`).
 
 Because the reading and writing operations are consistent across streams, learning file I/O is primarily about learning how to **connect** a stream to a file on disk, **check** that the connection succeeded, and **release** the file cleanly when finished.
 
@@ -284,8 +284,8 @@ int main() {
 ## 6. Text Mode vs. Binary Mode: Copying Files Accurately
 
 Different operating systems use different conventions for line endings in text files:
-* Unix-like systems (Linux and macOS) typically use a single line feed character (`\n`).
-* Windows traditionally uses a carriage return followed by a line feed (`\r\n`).
+- Unix-like systems (Linux and macOS) typically use a single line feed character (`\n`).
+- Windows traditionally uses a carriage return followed by a line feed (`\r\n`).
 
 When a file is opened in **text mode** (the default), C++ may translate between `'\n'` in your program and the platform's line-ending convention on disk. When a file is opened in **binary mode** (`std::ios::binary`), C++ disables that translation and transfers raw bytes unchanged.
 
@@ -336,8 +336,8 @@ A common beginner hurdle is seeing a file-open failure even when the target file
 
 ### Relative Paths vs. Absolute Paths
 
-* **Relative path** (for example, `"data.txt"` or `"../data.txt"`): Resolved relative to the program's **current working directory** — the folder from which the program is launched or configured to run. Relative paths are portable across machines when paired with a sensible project layout.
-* **Absolute path** (for example, `"C:\\Users\\Alex\\Documents\\data.txt"`): Starts from the root of a drive or filesystem. Hardcoding absolute paths breaks as soon as the project is moved or run on another computer.
+- **Relative path** (for example, `"data.txt"` or `"../data.txt"`): Resolved relative to the program's **current working directory** — the folder from which the program is launched or configured to run. Relative paths are portable across machines when paired with a sensible project layout.
+- **Absolute path** (for example, `"C:\\Users\\Alex\\Documents\\data.txt"`): Starts from the root of a drive or filesystem. Hardcoding absolute paths breaks as soon as the project is moved or run on another computer.
 
 ### Forward Slashes (`/`) vs. Backslashes (`\`)
 

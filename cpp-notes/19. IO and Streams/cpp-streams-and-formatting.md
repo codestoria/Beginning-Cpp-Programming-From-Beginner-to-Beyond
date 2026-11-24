@@ -2,14 +2,24 @@
 
 ## Table of Contents
 
-1. [Why Streams Exist: The Core Abstraction](#1-why-streams-exist-the-core-abstraction)
-2. [How Output Buffers Work (`\n` vs. `std::endl`)](#2-how-output-buffers-work-n-vs-stdendl)
-3. [Formatting Mechanics: Manipulators and Persistence](#3-formatting-mechanics-manipulators-and-persistence)
-4. [Formatting Booleans and Integers](#4-formatting-booleans-and-integers)
-5. [Formatting Floating-Point Numbers](#5-formatting-floating-point-numbers)
-6. [Layout Control: Width, Alignment, and Fill](#6-layout-control-width-alignment-and-fill)
-7. [Putting It All Together: A Clean Report Table](#7-putting-it-all-together-a-clean-report-table)
-8. [Best Practices and Quick Reference](#8-best-practices-and-quick-reference)
+- [C++ Stream Fundamentals and Output Formatting](#c-stream-fundamentals-and-output-formatting)
+  - [Table of Contents](#table-of-contents)
+  - [1. Why Streams Exist: The Core Abstraction](#1-why-streams-exist-the-core-abstraction)
+    - [Why This Design Matters](#why-this-design-matters)
+    - [Standard Stream Objects and Headers](#standard-stream-objects-and-headers)
+  - [2. How Output Buffers Work (`\n` vs. `std::endl`)](#2-how-output-buffers-work-n-vs-stdendl)
+    - [Why You Should Prefer `'\n'` Over `std::endl`](#why-you-should-prefer-n-over-stdendl)
+  - [3. Formatting Mechanics: Manipulators and Persistence](#3-formatting-mechanics-manipulators-and-persistence)
+    - [Two Ways to Control Stream Formatting](#two-ways-to-control-stream-formatting)
+    - [The Central Rule: Persistent vs. One-Time Settings](#the-central-rule-persistent-vs-one-time-settings)
+  - [4. Formatting Booleans and Integers](#4-formatting-booleans-and-integers)
+    - [Boolean Formatting (`boolalpha`)](#boolean-formatting-boolalpha)
+    - [Integer Bases and Visual Flags](#integer-bases-and-visual-flags)
+  - [5. Formatting Floating-Point Numbers](#5-formatting-floating-point-numbers)
+    - [Why `setprecision(n)` Changes Meaning](#why-setprecisionn-changes-meaning)
+  - [6. Layout Control: Width, Alignment, and Fill](#6-layout-control-width-alignment-and-fill)
+  - [7. Putting It All Together: A Clean Report Table](#7-putting-it-all-together-a-clean-report-table)
+  - [8. Best Practices and Quick Reference](#8-best-practices-and-quick-reference)
 
 ---
 
@@ -20,8 +30,8 @@ A C++ program stores and manipulates data inside computer memory, yet it must re
 To avoid this fragmentation, C++ provides a single, unified abstraction: the **stream**.
 
 A **stream** is an ordered sequence of characters (or raw bytes) flowing between your program and an external source or destination. A helpful mental model is a conveyor belt:
-* **Input streams** carry data *into* your program using the **extraction operator (`>>`)**.
-* **Output streams** carry data *out* of your program using the **insertion operator (`<<`)**.
+- **Input streams** carry data *into* your program using the **extraction operator (`>>`)**.
+- **Output streams** carry data *out* of your program using the **insertion operator (`<<`)**.
 
 Because `>>` and `<<` return a reference to the stream itself, you can chain multiple operations cleanly in a single statement, such as `std::cout << "Count: " << 42 << '\n';`.
 
@@ -62,8 +72,8 @@ A common beginner habit is ending every printed line with `std::endl`, assuming 
 
 In interactive programs with a few lines of output, that extra flush is barely noticeable. However, inside a loop that prints tens of thousands of lines — or writes to a file — forcing a flush on every single line defeats the purpose of buffering and can noticeably slow down execution.
 
-* Use `'\n'` when you simply want to move to the next line while letting buffering do its job.
-* Use `std::flush` (or `std::endl` when appropriate) only when you specifically need the output to appear right now — for example, right before a step that might crash or freeze.
+- Use `'\n'` when you simply want to move to the next line while letting buffering do its job.
+- Use `std::flush` (or `std::endl` when appropriate) only when you specifically need the output to appear right now — for example, right before a step that might crash or freeze.
 
 ---
 
@@ -79,8 +89,8 @@ C++ lets you change formatting settings in two ways that modify the exact same u
    ```cpp
    std::cout << std::setw(10) << 42;
    ```
-   * **Zero-argument manipulators** (such as `std::boolalpha`, `std::hex`, `std::fixed`, and `std::left`) are available through `<iostream>`.
-   * **Parameterized manipulators** (such as `std::setw(n)`, `std::setprecision(n)`, and `std::setfill(c)`) require `#include <iomanip>`.
+   - **Zero-argument manipulators** (such as `std::boolalpha`, `std::hex`, `std::fixed`, and `std::left`) are available through `<iostream>`.
+   - **Parameterized manipulators** (such as `std::setw(n)`, `std::setprecision(n)`, and `std::setfill(c)`) require `#include <iomanip>`.
 
 2. **Member Functions (Direct State Calls):** Methods invoked directly on the stream object (such as `std::cout.width(10);`). While useful when saving and restoring state in reusable functions (as shown in Section 7), inline manipulators are generally clearer for everyday formatting.
 
@@ -88,8 +98,8 @@ C++ lets you change formatting settings in two ways that modify the exact same u
 
 Every formatting setting in a C++ stream falls into one of two categories. Keeping this distinction straight prevents most stream-formatting bugs:
 
-* **Persistent Settings:** Act like a **mode switch**. Once enabled, the setting stays active for *every subsequent insertion* on that stream until you explicitly change it or switch it back.
-* **One-Time Settings:** Act like a **single-use slot**. The setting applies *only to the very next item* inserted into the stream, and then resets automatically right after that item is formatted.
+- **Persistent Settings:** Act like a **mode switch**. Once enabled, the setting stays active for *every subsequent insertion* on that stream until you explicitly change it or switch it back.
+- **One-Time Settings:** Act like a **single-use slot**. The setting applies *only to the very next item* inserted into the stream, and then resets automatically right after that item is formatted.
 
 > **Why does this distinction exist?** Some preferences describe an ongoing mode — such as printing `bool` values as words or formatting floating-point numbers with two decimal places — so keeping them active across multiple outputs saves repetition. By contrast, a field width describes the space reserved for *one* upcoming item; resetting it automatically after that item is printed prevents a width meant for a narrow column from accidentally squeezing or distorting unrelated values later in the program.
 
@@ -101,8 +111,8 @@ Every formatting setting in a C++ stream falls into one of two categories. Keepi
 
 By default, a stream formats `true` as `1` and `false` as `0` because `bool` is an integral type in C++. In status messages, configuration dumps, or user-facing reports, `true` and `false` are often easier to read.
 
-* **Manipulators:** `std::boolalpha` (print `true`/`false`) and `std::noboolalpha` (revert to `1`/`0`).
-* **Persistence:** **Persistent.**
+- **Manipulators:** `std::boolalpha` (print `true`/`false`) and `std::noboolalpha` (revert to `1`/`0`).
+- **Persistence:** **Persistent.**
 
 ```cpp
 #include <iostream>
@@ -124,11 +134,11 @@ int main() {
 
 Changing the numeric base of an integer changes only how its text representation is generated; the integer variable itself still stores the same numeric value.
 
-* **Base Selectors (`std::dec`, `std::hex`, `std::oct`):** Switch between base 10 (decimal, the default), base 16 (hexadecimal), and base 8 (octal). *(Note: The C++ standard library provides no `std::bin` stream manipulator; for binary representation, use `std::bitset` from `<bitset>`.)*
-* **Base Prefixes (`std::showbase`):** Prepends `0x` to hexadecimal numbers and `0` to octal numbers so readers can tell the base apart from decimal output. *(Note: `0` is only prepended to nonzero octal values; `0` itself prints as `0`.)*
-* **Uppercase (`std::uppercase`):** Prints hexadecimal digits `A`–`F` in uppercase (along with `0X` when `std::showbase` is active) and uses uppercase `E` in scientific notation.
-* **Explicit Plus Sign (`std::showpos`):** Prepends `+` to non-negative decimal values so positive and negative signs line up or stand out clearly. It has no effect on `std::hex` or `std::oct` output.
-* **Persistence:** All of the manipulators above are **persistent**.
+- **Base Selectors (`std::dec`, `std::hex`, `std::oct`):** Switch between base 10 (decimal, the default), base 16 (hexadecimal), and base 8 (octal). *(Note: The C++ standard library provides no `std::bin` stream manipulator; for binary representation, use `std::bitset` from `<bitset>`.)*
+- **Base Prefixes (`std::showbase`):** Prepends `0x` to hexadecimal numbers and `0` to octal numbers so readers can tell the base apart from decimal output. *(Note: `0` is only prepended to nonzero octal values; `0` itself prints as `0`.)*
+- **Uppercase (`std::uppercase`):** Prints hexadecimal digits `A`–`F` in uppercase (along with `0X` when `std::showbase` is active) and uses uppercase `E` in scientific notation.
+- **Explicit Plus Sign (`std::showpos`):** Prepends `+` to non-negative decimal values so positive and negative signs line up or stand out clearly. It has no effect on `std::hex` or `std::oct` output.
+- **Persistence:** All of the manipulators above are **persistent**.
 
 ```cpp
 #include <iostream>
@@ -165,7 +175,7 @@ Because different notation modes measure different parts of a number, **the mean
 | **Fixed-Point** | `std::fixed` | Number of digits **after the decimal point**. |
 | **Scientific** | `std::scientific` | Number of digits **after the decimal point** in the significand (mantissa). |
 
-* **Persistence:** `std::setprecision(n)`, `std::defaultfloat`, `std::fixed`, `std::scientific`, and `std::showpoint` (along with `std::noshowpoint`) are all **persistent**.
+> **Persistence:** `std::setprecision(n)`, `std::defaultfloat`, `std::fixed`, `std::scientific`, and `std::showpoint` (along with `std::noshowpoint`) are all **persistent**.
 
 ```cpp
 #include <iomanip>
@@ -201,14 +211,14 @@ int main() {
 When printing columns of text or numbers, plain output easily becomes uneven because strings and numbers vary in length. C++ gives you three coordinated tools to shape a field:
 
 1. **Field Width (`std::setw(n)`):** Sets a minimum character width of `n` for the **next** single item inserted into the stream. If the formatted item already takes `n` or more characters, C++ does **not** chop off your data; it prints the full item so no information is lost.
-   * **Persistence:** **One-time only.** You must place `std::setw(n)` right before *each* item that needs a minimum width.
+   - **Persistence:** **One-time only.** You must place `std::setw(n)` right before *each* item that needs a minimum width.
 2. **Alignment (`std::left`, `std::right`, `std::internal`):** Determines where the content sits when it is narrower than the field width.
-   * `std::right` (default): Places padding on the left so values right-align (helpful for numbers).
-   * `std::left`: Places padding on the right so values left-align (helpful for labels and names).
-   * `std::internal`: Places a leading sign (`+` or `-`) or base prefix (`0x`/`0X`) at the left edge of the field, puts padding in between, and aligns the digits at the right edge.
-   * **Persistence:** **Persistent.**
+   - `std::right` (default): Places padding on the left so values right-align (helpful for numbers).
+   - `std::left`: Places padding on the right so values left-align (helpful for labels and names).
+   - `std::internal`: Places a leading sign (`+` or `-`) or base prefix (`0x`/`0X`) at the left edge of the field, puts padding in between, and aligns the digits at the right edge.
+   - **Persistence:** **Persistent.**
 3. **Fill Character (`std::setfill(c)`):** Chooses the character `c` used for padding instead of a space (`' '`). Setting a fill character only becomes visible when a field width (`std::setw`) creates extra padding space.
-   * **Persistence:** **Persistent.**
+   - **Persistence:** **Persistent.**
 
 ```cpp
 #include <iomanip>
