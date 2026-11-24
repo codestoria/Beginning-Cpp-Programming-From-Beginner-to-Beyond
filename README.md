@@ -61,6 +61,7 @@ You can watch the course lectures on Bilibili for free:
 | **19** | I/O and Streams | [Note](./cpp-notes/19.%20IO%20and%20Streams) | Code |
 | **20** | The Standard Template Library (STL) | [Note](./cpp-notes/20.%20The%20Standard%20Template%20Library%20%28STL%29) | Code |
 | **21** | Lambda Expressions | [Note](./cpp-notes/21.%20Lambda%20Expressions) | Code |
+| **23** | Bonus Section — Enumerations | [Note](./cpp-notes/23.%20Bonus%20Section%20-%20Enumerations) | Code |
 
 ---
 
