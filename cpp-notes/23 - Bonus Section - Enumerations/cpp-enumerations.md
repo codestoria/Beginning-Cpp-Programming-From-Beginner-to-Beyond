@@ -17,15 +17,17 @@
 An **enumeration** (commonly abbreviated as **enum**) is a user-defined data type consisting of a fixed set of named integral constants, called **enumerators**.
 
 Whenever a variable should hold only one value from a small, predefined set of mutually exclusive options, an enumeration is the clearest and safest way to model it. Common examples include:
-* **Days of the week:** `Monday`, `Tuesday`, `Wednesday`, `Thursday`, `Friday`, `Saturday`, `Sunday`
-* **Compass directions:** `North`, `South`, `East`, `West`
-* **Card suits:** `Hearts`, `Diamonds`, `Clubs`, `Spades`
-* **System or game states:** `Idle`, `Attack`, `Defend`
+- **Days of the week:** `Monday`, `Tuesday`, `Wednesday`, `Thursday`, `Friday`, `Saturday`, `Sunday`
+- **Compass directions:** `North`, `South`, `East`, `West`
+- **Card suits:** `Hearts`, `Diamonds`, `Clubs`, `Spades`
+- **System or game states:** `Idle`, `Attack`, `Defend`
 
-First introduced in Pascal in 1970, enumerations were adopted by C and substantially modernized in C++11 and C++20. In modern C++, they solve two fundamental engineering problems: **eliminating magic numbers** and **enforcing compile-time type safety**.
+First introduced in Pascal in 1970, enumerations were adopted by C and substantially modernized in C++11 and C++20.
+In modern C++, they solve two fundamental engineering problems: **eliminating magic numbers** and **enforcing compile-time type safety**.
 
 ### Problem 1: Eliminating "Magic Numbers" (Readability)
-Without enumerations, programmers often represent states or options using raw integer literals—known as **magic numbers**. A magic number is an unnamed numerical constant whose domain meaning is invisible in the source code.
+Without enumerations, programmers often represent states or options using raw integer literals — known as **magic numbers**.
+A magic number is an unnamed numerical constant whose domain meaning is invisible in the source code.
 
 Consider the following rocket launch control routine:
 
@@ -42,7 +44,8 @@ void control_launch(int state) {
 }
 ```
 
-If a sensor detects an anomaly and you must abort the launch immediately, should you pass `0`, `1`, or `2`? Without external documentation or inspecting the implementation of `initiate_sequence()`, the code offers no clue.
+If a sensor detects an anomaly and you must abort the launch immediately, should you pass `0`, `1`, or `2`?
+Without external documentation or inspecting the implementation of `initiate_sequence()`, the code offers no clue.
 
 Replacing raw integers with enumerations makes the intent self-documenting:
 
@@ -65,14 +68,14 @@ The mapping between system conditions and control actions is now explicit direct
 
 ### Problem 2: Preventing Logic Bugs (Type Safety)
 
-Representing distinct concepts with plain `int` values does not just hurt readability—it disables the compiler's type checking.
+Representing distinct concepts with plain `int` values does not just hurt readability — it disables the compiler's type checking.
 
 Suppose two modules in your codebase expose the following functions:
 
 1. `int get_rocket_state()` — returns `0` (`Engine_Failure`), `1` (`Inclement_Weather`), or `2` (`Nominal`).
 2. `int get_breakroom_fridge_state()` — returns `0` (`Closed`) or `1` (`Open`).
 
-If a developer accidentally passes `get_breakroom_fridge_state()` into `control_launch(int state)`, **the code compiles without a single warning**. Because both functions operate on `int`, the compiler treats them as interchangeable—allowing a refrigerator door to determine whether a rocket launches.
+If a developer accidentally passes `get_breakroom_fridge_state()` into `control_launch(int state)`, **the code compiles without a single warning**. Because both functions operate on `int`, the compiler treats them as interchangeable — allowing a refrigerator door to determine whether a rocket launches.
 
 Enumerations prevent this class of bugs through **type safety**. When `control_launch` accepts a parameter of type `State`, the compiler rejects any argument that is not a valid `State` enumerator (such as a raw `int` or an enumerator from `Sequence`), catching the logic error at compile time rather than in production.
 
@@ -94,9 +97,7 @@ enum [class|struct] [Name] [: Underlying_Type] {
 
 1. **Enumeration Key (`enum` or `enum class` / `enum struct`):** Introduces the enumeration and determines whether its enumerators are unscoped or scoped (covered in Sections 3 and 4).
 2. **Type Name (Optional for unscoped `enum`, mandatory for `enum class`):** Names the custom data type. As a naming convention, the type name should form an **"is-a"** relationship with its enumerators (for example, `Color` for `Red`, `Green`, and `Blue`, because *Red is a Color*).
-* *Note on Anonymous Enumerations:* Omitting the name in an unscoped `enum` creates an **anonymous enumeration**. Because the type has no name, you cannot declare variables or function parameters of that type, forfeiting type safety. Anonymous enums are generally used only in legacy codebases to define compile-time integer constants (a role now better served by `constexpr`).
-
-
+    - *Note on Anonymous Enumerations:* Omitting the name in an unscoped `enum` creates an **anonymous enumeration**. Because the type has no name, you cannot declare variables or function parameters of that type, forfeiting type safety. Anonymous enums are generally used only in legacy codebases to define compile-time integer constants (a role now better served by `constexpr`).
 3. **Underlying Type (Optional):** Preceded by a colon (`:`), this explicitly specifies the integral type (such as `int`, `unsigned int`, or `std::uint8_t`) used to store the enumerators in memory.
 4. **Enumerator List:** A comma-separated list of named constants enclosed in curly braces `{}`. (A trailing comma after the last enumerator is valid in C++11 and later.)
 
@@ -104,7 +105,7 @@ enum [class|struct] [Name] [: Underlying_Type] {
 
 Under the hood, every enumerator corresponds to a compile-time integral constant. You can let the compiler assign values automatically, specify them manually, or combine both approaches:
 
-* **Implicit Initialization:** By default, the first enumerator receives the value `0`, and each subsequent enumerator increments the previous value by `1`.
+- **Implicit Initialization:** By default, the first enumerator receives the value `0`, and each subsequent enumerator increments the previous value by `1`.
 ```cpp
 enum Color {
     Red,    // 0
@@ -113,8 +114,7 @@ enum Color {
 };
 ```
 
-
-* **Explicit Initialization:** You can assign specific integral values—including negative numbers or duplicate values—to any enumerator.
+- **Explicit Initialization:** You can assign specific integral values — including negative numbers or duplicate values — to any enumerator.
 ```cpp
 enum Http_Status {
     OK = 200,
@@ -123,8 +123,7 @@ enum Http_Status {
 };
 ```
 
-
-* **Mixed Initialization:** Whenever an enumerator lacks an explicit initializer, the compiler assigns it the value of the immediately preceding enumerator plus `1`.
+- **Mixed Initialization:** Whenever an enumerator lacks an explicit initializer, the compiler assigns it the value of the immediately preceding enumerator plus `1`.
 ```cpp
 enum Direction {
     North = 1,   // 1
@@ -133,8 +132,6 @@ enum Direction {
     West         // 12 (11 + 1)
 };
 ```
-
-
 
 ### Underlying Type Deduction and Memory Control
 
@@ -152,7 +149,8 @@ Unlike unscoped enums, a scoped `enum class` without an explicit underlying type
 
 #### 3. Specifying an Explicit Underlying Type
 
-In memory-constrained environments (such as embedded firmware, network packet headers, or large arrays), a 4-byte `int` may waste space when an enum holds only a few states. You can enforce an exact byte width using fixed-width integer types from `<cstdint>`:
+In memory-constrained environments (such as embedded firmware, network packet headers, or large arrays), a 4-byte `int` may waste space when an enum holds only a few states.
+You can enforce an exact byte width using fixed-width integer types from `<cstdint>`:
 
 ```cpp
 #include <cstdint>
@@ -215,7 +213,7 @@ Unscoped enumerations **implicitly convert** (promote) to their underlying integ
 
 #### Printing Enumerators (`std::cout`)
 
-Because `std::ostream` (`std::cout`) has built-in overloads for integers—and because unscoped enums implicitly convert to integers—passing an unscoped enumerator to `std::cout` prints its **numeric value**, not its identifier name:
+Because `std::ostream` (`std::cout`) has built-in overloads for integers — and because unscoped enums implicitly convert to integers — passing an unscoped enumerator to `std::cout` prints its **numeric value**, not its identifier name:
 
 ```cpp
 Direction d = West;
@@ -307,11 +305,11 @@ if (Beluga == Hammerhead) {
 
 ## 4. Scoped Enumerations (`enum class`): The Modern Standard
 
-To eliminate scope pollution and weak type checking, C++11 introduced **scoped enumerations** (also known as **strongly typed enums**). They are declared with `enum class` (or `enum struct`, which is 100% identical in semantics—`enum class` is the universal community convention).
+To eliminate scope pollution and weak type checking, C++11 introduced **scoped enumerations** (also known as **strongly typed enums**). They are declared with `enum class` (or `enum struct`, which is 100% identical in semantics — `enum class` is the universal community convention).
 
 ```cpp
 enum class Whale { Beluga, Blue, Orca };
-enum class Shark { Hammerhead, Blue, Great_White }; // Valid: 'Blue' is scoped to each type
+enum class Shark { Hammerhead, Blue, Great_White };  // Valid: 'Blue' is scoped to each type
 ```
 
 ### Three Defining Guarantees of `enum class`
@@ -322,14 +320,12 @@ Whale my_whale = Whale::Blue;
 Shark my_shark = Shark::Blue;
 ```
 
-
 2. **No Implicit Conversion to Integers:** Scoped enumerators **never** implicitly convert to `int` or any other arithmetic type. This prevents accidental numeric arithmetic, cross-type comparisons, and unintended integer printing:
 ```cpp
 if (Whale::Beluga == Shark::Hammerhead) { ... }  // COMPILE ERROR: no match for operator==
 int x = Whale::Beluga;                           // COMPILE ERROR: cannot convert 'Whale' to 'int'
 std::cout << Whale::Beluga;                      // COMPILE ERROR: no match for operator<<
 ```
-
 
 3. **Explicit Conversion When Needed:** When you intentionally need the underlying numeric value (for example, to index into an array or serialize to a binary protocol), you must perform an explicit `static_cast`:
 ```cpp
@@ -338,7 +334,6 @@ int raw_int = static_cast<int>(Whale::Beluga);
 // Or, in generic/maintainable code, deduce the exact underlying type:
 auto exact_raw = static_cast<std::underlying_type_t<Whale>>(Whale::Beluga);
 ```
-
 
 *(Note: C++23 further simplifies this with `std::to_underlying(Whale::Beluga)` in `<utility>`.)*
 
@@ -364,7 +359,8 @@ auto exact_raw = static_cast<std::underlying_type_t<Whale>>(Whale::Beluga);
 
 ### Reducing Verbosity with `using enum` (C++20)
 
-Inside a `switch` statement with many cases, repeatedly typing `Direction::` can feel verbose. C++20 introduced `using enum` to bring a scoped enumeration's enumerators into a **local block scope** without sacrificing type safety outside that block:
+Inside a `switch` statement with many cases, repeatedly typing `Direction::` can feel verbose.
+C++20 introduced `using enum` to bring a scoped enumeration's enumerators into a **local block scope** without sacrificing type safety outside that block:
 
 ```cpp
 enum class Direction { North, South, East, West };
@@ -390,7 +386,7 @@ Because the compiler knows the size of an `enum class` in advance (it defaults t
 ```cpp
 // In header file (player.hpp) — no need to expose all enumerators yet
 enum class Player_State; // Forward declaration (underlying type is int)
-enum class Error_Code : std::uint8_t; // Forward declaration with explicit size
+enum class Error_Code : std::uint8_t;  // Forward declaration with explicit size
 
 void handle_state(Player_State state);
 ```
@@ -401,7 +397,8 @@ void handle_state(Player_State state);
 
 ## 7. Complete Practical Example
 
-In modern C++, scoped enumerations are commonly nested inside classes when the states belong exclusively to that class's domain. The following complete program models a game `Player` with nested `enum class` types, string conversion helpers, and custom stream output.
+In modern C++, scoped enumerations are commonly nested inside classes when the states belong exclusively to that class's domain.
+The following complete program models a game `Player` with nested `enum class` types, string conversion helpers, and custom stream output.
 
 ```cpp
 #include <iostream>
@@ -486,9 +483,9 @@ Player: Sephiroth | Mode: Idle | Facing: North
 
 ### Summary of Key Improvements Made
 
-* **Fixed Structural & Typographical Errors:** Corrected `## table of vontens` into a linked, clickable **Table of Contents** with accurate section anchors.
-* **Tightened C++ Standard Accuracy:**
-* Clarified that unscoped `enum` underlying type selection is **implementation-defined** by the C++ standard (rather than claiming a fixed compiler progression), while `enum class` is strictly guaranteed to default to `int`.
-* Refined the `switch` uniqueness rule: enumerators *can* share values in the `enum` definition, but `case` labels within a `switch` must be unique.
-* Highlighted the exact undefined-behavior risk when `static_cast`ing out-of-range integers to an enum.
-* **Added Essential Modern C++ Context:** Added a concise section on **C++20 `using enum**` (solving verbosity in `switch` statements) and **C++11 forward declarations** (explaining why `enum class` enables header decoupling), plus `constexpr std::string_view` in the final example for zero-overhead string conversion.
+- **Fixed Structural & Typographical Errors:** Corrected `## table of vontens` into a linked, clickable **Table of Contents** with accurate section anchors.
+- **Tightened C++ Standard Accuracy:**
+    - Clarified that unscoped `enum` underlying type selection is **implementation-defined** by the C++ standard (rather than claiming a fixed compiler progression), while `enum class` is strictly guaranteed to default to `int`.
+    - Refined the `switch` uniqueness rule: enumerators *can* share values in the `enum` definition, but `case` labels within a `switch` must be unique.
+    - Highlighted the exact undefined-behavior risk when `static_cast`ing out-of-range integers to an enum.
+- **Added Essential Modern C++ Context:** Added a concise section on **C++20 `using enum**` (solving verbosity in `switch` statements) and **C++11 forward declarations** (explaining why `enum class` enables header decoupling), plus `constexpr std::string_view` in the final example for zero-overhead string conversion.
