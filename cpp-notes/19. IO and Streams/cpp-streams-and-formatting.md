@@ -15,7 +15,7 @@
 
 ## 1. Why Streams Exist: The Core Abstraction
 
-A C++ program stores and manipulates data inside computer memory, yet it must regularly communicate with the outside world—reading keystrokes, printing results to a terminal, saving records to a disk file, or assembling text inside a string. If every input/output (I/O) source or destination required its own separate functions and rules, learning, writing, and maintaining C++ code would quickly become repetitive and error-prone.
+A C++ program stores and manipulates data inside computer memory, yet it must regularly communicate with the outside world — reading keystrokes, printing results to a terminal, saving records to a disk file, or assembling text inside a string. If every input/output (I/O) source or destination required its own separate functions and rules, learning, writing, and maintaining C++ code would quickly become repetitive and error-prone.
 
 To avoid this fragmentation, C++ provides a single, unified abstraction: the **stream**.
 
@@ -27,7 +27,7 @@ Because `>>` and `<<` return a reference to the stream itself, you can chain mul
 
 ### Why This Design Matters
 
-In C++, different stream types—such as console streams, file streams (`std::ofstream`, `std::ifstream`), and string streams (`std::ostringstream`, `std::istringstream`)—are built on a shared class hierarchy (`std::basic_istream` and `std::basic_ostream`). As a result, they expose the same core formatting and I/O interface. Once you understand how formatting and insertion work on `std::cout`, you can apply those same concepts to files and in-memory strings with minimal friction.
+In C++, different stream types — such as console streams, file streams (`std::ofstream`, `std::ifstream`), and string streams (`std::ostringstream`, `std::istringstream`) — are built on a shared class hierarchy (`std::basic_istream` and `std::basic_ostream`). As a result, they expose the same core formatting and I/O interface. Once you understand how formatting and insertion work on `std::cout`, you can apply those same concepts to files and in-memory strings with minimal friction.
 
 ### Standard Stream Objects and Headers
 
@@ -46,7 +46,7 @@ Including `<iostream>` gives you access to four standard stream objects connecte
 
 Sending bytes from your program to a terminal display or a file on disk is much slower than executing instructions in CPU registers and RAM. If every `<<` operation immediately triggered an operating system write for a single character, output-heavy programs would spend much of their time waiting on I/O.
 
-To solve this performance bottleneck, buffered output streams accumulate outgoing characters in a temporary memory region called a **buffer**. Writing to memory is fast, and the stream only **flushes** the buffer—pushing its accumulated contents out to the underlying device—when a trigger occurs:
+To solve this performance bottleneck, buffered output streams accumulate outgoing characters in a temporary memory region called a **buffer**. Writing to memory is fast, and the stream only **flushes** the buffer — pushing its accumulated contents out to the underlying device — when a trigger occurs:
 
 1. **The buffer fills up:** Once the buffer reaches capacity, its contents are flushed to make room for new data.
 2. **Normal program termination:** When `main()` returns normally (or `std::exit` is called), open output streams flush their buffers automatically. *(Note: An abrupt crash or `std::abort` may skip flushing buffered streams such as `std::cout`.)*
@@ -60,10 +60,10 @@ A common beginner habit is ending every printed line with `std::endl`, assuming 
 1. It inserts the newline character `'\n'` into the stream.
 2. It explicitly **flushes** the output buffer.
 
-In interactive programs with a few lines of output, that extra flush is barely noticeable. However, inside a loop that prints tens of thousands of lines—or writes to a file—forcing a flush on every single line defeats the purpose of buffering and can noticeably slow down execution.
+In interactive programs with a few lines of output, that extra flush is barely noticeable. However, inside a loop that prints tens of thousands of lines — or writes to a file — forcing a flush on every single line defeats the purpose of buffering and can noticeably slow down execution.
 
 * Use `'\n'` when you simply want to move to the next line while letting buffering do its job.
-* Use `std::flush` (or `std::endl` when appropriate) only when you specifically need the output to appear right now—for example, right before a step that might crash or freeze.
+* Use `std::flush` (or `std::endl` when appropriate) only when you specifically need the output to appear right now — for example, right before a step that might crash or freeze.
 
 ---
 
@@ -91,7 +91,7 @@ Every formatting setting in a C++ stream falls into one of two categories. Keepi
 * **Persistent Settings:** Act like a **mode switch**. Once enabled, the setting stays active for *every subsequent insertion* on that stream until you explicitly change it or switch it back.
 * **One-Time Settings:** Act like a **single-use slot**. The setting applies *only to the very next item* inserted into the stream, and then resets automatically right after that item is formatted.
 
-> **Why does this distinction exist?** Some preferences describe an ongoing mode—such as printing `bool` values as words or formatting floating-point numbers with two decimal places—so keeping them active across multiple outputs saves repetition. By contrast, a field width describes the space reserved for *one* upcoming item; resetting it automatically after that item is printed prevents a width meant for a narrow column from accidentally squeezing or distorting unrelated values later in the program.
+> **Why does this distinction exist?** Some preferences describe an ongoing mode — such as printing `bool` values as words or formatting floating-point numbers with two decimal places — so keeping them active across multiple outputs saves repetition. By contrast, a field width describes the space reserved for *one* upcoming item; resetting it automatically after that item is printed prevents a width meant for a narrow column from accidentally squeezing or distorting unrelated values later in the program.
 
 ---
 
