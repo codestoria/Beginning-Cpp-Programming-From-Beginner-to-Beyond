@@ -30,7 +30,7 @@ This tutorial is self-contained and written for beginners who want to understand
 ## 2. Motivation: Why C++ Needed Lambda Expressions
 
 ### Life Before C++11: Functions and Function Objects
-Many C++ functions—especially algorithms in the Standard Template Library (STL)—accept custom behavior as an argument. For example, a sorting algorithm needs to know *how* to compare two elements, and a transformation algorithm needs to know *what* operation to apply to each element.
+Many C++ functions — especially algorithms in the Standard Template Library (STL) — accept custom behavior as an argument. For example, a sorting algorithm needs to know *how* to compare two elements, and a transformation algorithm needs to know *what* operation to apply to each element.
 
 Before C++11, developers primarily passed custom behavior using two mechanisms:
 
@@ -96,7 +96,7 @@ int main() {
 ### Choosing Between a Lambda and a Function Object
 Lambdas complement function objects rather than replacing them completely:
 
-* **Prefer a lambda expression** when the behavior is short—typically one or a few statements—and is needed only at a specific call site.
+* **Prefer a lambda expression** when the behavior is short — typically one or a few statements — and is needed only at a specific call site.
 * **Prefer a named function object (or a regular named function)** when the logic is substantial, needs a clear domain name, or is reused across many parts of a program.
 
 Understanding function objects pays off directly because **the C++ compiler implements every lambda expression by generating an unnamed class (called a closure type) with an overloaded `operator()`**. Lambdas are a cleaner way to write callable objects without manually authoring the boilerplate class yourself.
@@ -117,7 +117,7 @@ Each component serves a distinct role:
 
 1. **Capture List `[ ... ]` (Required):** Starts the lambda expression and controls whether and how variables from the enclosing scope are captured. An empty capture list `[]` captures nothing from the surrounding scope.
 2. **Parameter List `( ... )` (Optional when empty):** Specifies the arguments passed when the lambda is called, similar to a function's parameter list. If the lambda takes no parameters and has no specifiers or explicit return type, you may omit `()` (for example, `[]{ std::cout << "Hello\n"; }`).
-3. **Specifiers (Optional):** Keywords placed after the parameter list that modify how the lambda behaves—most notably `mutable` (covered in Section 5), `constexpr`, or `noexcept` (C++17+).
+3. **Specifiers (Optional):** Keywords placed after the parameter list that modify how the lambda behaves — most notably `mutable` (covered in Section 5), `constexpr`, or `noexcept` (C++17+).
 4. **Return Type `-> Type` (Optional):** Explicitly declares the return type. When omitted, the compiler deduces the return type from `return` statements (or deduces `void` if there is no `return` statement). Providing an explicit return type is helpful when you want to enforce a specific return type or when deduction is unclear.
 5. **Body `{ ... }` (Required):** Contains the statements executed whenever the lambda is invoked.
 
@@ -248,7 +248,7 @@ Keep in mind that any expression inside the lambda body (such as `<<`) must be v
 ### Predicates and Returning Lambdas from Functions
 A **predicate** is a callable (such as a function, function object, or lambda) that accepts one or more arguments and returns a `bool` (`true` or `false`). **Predicate lambdas** are especially useful because they separate *the condition being tested* from *the control flow that iterates or searches* over data.
 
-A function can also **return a lambda**—most cleanly by using `auto` as the function's return type (C++14+) so the caller receives the exact closure type without type-erasure overhead:
+A function can also **return a lambda** — most cleanly by using `auto` as the function's return type (C++14+) so the caller receives the exact closure type without type-erasure overhead:
 
 ```cpp
 #include <iostream>
@@ -295,7 +295,7 @@ A **stateful lambda expression** has a **non-empty capture list**. It captures a
 
 When you write a stateful lambda, the compiler performs two key steps:
 
-1. It generates an unnamed class—the **closure type**—and adds a **data member** for each captured local variable.
+1. It generates an unnamed class — the **closure type** — and adds a **data member** for each captured local variable.
 2. When the lambda expression is evaluated (for example, when initializing a variable with `auto fn = [...] { ... };`), the compiler constructs a **closure object** and initializes those data members from the enclosing variables at that moment.
 
 Calling the lambda variable simply calls `operator()` on that closure object. Because capture initialization happens when the closure object is **created**, subsequent calls to the lambda reuse its stored members rather than re-reading the outer variables' initial values.
@@ -311,7 +311,7 @@ There are two fundamental ways to capture a local variable `x`:
        x += 100;  // Modifies only the lambda's internal copy of x
    };
    ```
-   Even with `mutable`, modifying a by-value capture changes only the closure's internal copy—the caller's original variable `x` remains unchanged.
+   Even with `mutable`, modifying a by-value capture changes only the closure's internal copy — the caller's original variable `x` remains unchanged.
 
 2. **Capture by reference (`[&x]`):** Stores a reference to the caller's variable `x` inside the closure. Modifying `x` inside the lambda modifies the caller's variable `x` directly. Because the reference itself is not being rebound, modifying the referenced object does not require `mutable`. However, you must ensure the referenced variable **outlives** the lambda; otherwise, calling the lambda later produces a dangling reference and undefined behavior.
 
@@ -369,7 +369,7 @@ int main() {
 ### Capturing `this` Inside Member Functions
 Inside a non-static member function of a class, data members and member functions are accessed through the implicit `this` pointer. To access class members from a lambda inside a member function, capture `this` (`[this]`).
 
-* **Best practice:** Write **`[this]`** explicitly rather than relying on `[=]` to capture member access. In C++20, implicitly capturing `this` via `[=]` is deprecated because `[=]` suggests copying values, whereas capturing `this` actually captures a pointer to the enclosing object. Being explicit makes the lifetime dependency on the object clear, and you must ensure the object outlives the lambda—otherwise calling it later causes undefined behavior due to a dangling pointer (C++17 also supports `[*this]` to copy the enclosing object by value when needed).
+* **Best practice:** Write **`[this]`** explicitly rather than relying on `[=]` to capture member access. In C++20, implicitly capturing `this` via `[=]` is deprecated because `[=]` suggests copying values, whereas capturing `this` actually captures a pointer to the enclosing object. Being explicit makes the lifetime dependency on the object clear, and you must ensure the object outlives the lambda — otherwise calling it later causes undefined behavior due to a dangling pointer (C++17 also supports `[*this]` to copy the enclosing object by value when needed).
 
 ```cpp
 #include <algorithm>
