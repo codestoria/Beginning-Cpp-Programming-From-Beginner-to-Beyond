@@ -18,7 +18,7 @@ In C++, a **stream** is a uniform abstraction that represents a sequence of char
 
 However, data in a program does not always come straight from a keyboard or a file. Often, data is **already stored inside a `std::string` in memory**, and you need stream-like capabilities on that string:
 
-* **Splitting and parsing structured text:** Suppose your program reads a line such as `"Sensor_A 42 98.6"` or `"Alice,Engineering,95000"` from a file as a single `std::string`. You want to break that string into a sensor name, an integer count, and a floating-point temperature—or split comma-separated fields—without writing manual character-by-character index loops.
+* **Splitting and parsing structured text:** Suppose your program reads a line such as `"Sensor_A 42 98.6"` or `"Alice,Engineering,95000"` from a file as a single `std::string`. You want to break that string into a sensor name, an integer count, and a floating-point temperature — or split comma-separated fields — without writing manual character-by-character index loops.
 * **Assembling formatted text in memory:** Suppose you want to build a neatly aligned report row or a formatted log message with fixed decimal places (`std::fixed` and `std::setprecision` from `<iomanip>`), store it in a `std::string` first, and pass that `std::string` to a logger, GUI label, or network function.
 * **Validating user input safely:** When a user types text at the keyboard, raw `>>` extraction into a number can fail and lock up `std::cin`. Reading a full line into a `std::string` first and parsing it afterward gives you a clean, controllable validation step.
 
@@ -82,7 +82,7 @@ int main() {
 
 The `>>` operator treats any whitespace as a separator, which is not suitable when fields are separated by a specific character like a comma (`,`) or when a field itself may contain spaces.
 
-`std::getline()` works on **any** `std::istream`—including `std::istringstream`—and accepts an optional third argument specifying a custom **delimiter** character. When a delimiter is given, `std::getline()` reads characters up to (and consumes) that delimiter instead of stopping only at `'\n'`.
+`std::getline()` works on **any** `std::istream` — including `std::istringstream` — and accepts an optional third argument specifying a custom **delimiter** character. When a delimiter is given, `std::getline()` reads characters up to (and consumes) that delimiter instead of stopping only at `'\n'`.
 
 ```cpp
 #include <iostream>
@@ -144,7 +144,7 @@ int main() {
 
 ### Reusing a String Stream Object Safely
 
-Creating a new `std::ostringstream` inside a small helper or loop is clean and safe. If you do reuse the same stream variable across multiple iterations, remember that `.str("")` only replaces the stored string content—it does **not** clear error state flags if a previous operation failed. Always pair `.str("")` with `.clear()`:
+Creating a new `std::ostringstream` inside a small helper or loop is clean and safe. If you do reuse the same stream variable across multiple iterations, remember that `.str("")` only replaces the stored string content — it does **not** clear error state flags if a previous operation failed. Always pair `.str("")` with `.clear()`:
 
 ```cpp
 oss.str(""); // Clear stored string content
@@ -155,7 +155,7 @@ oss.clear(); // Reset stream state flags (such as failbit or eofbit)
 
 ## 5. Under the Hood: Stream State Flags and Buffer Recovery
 
-To understand why naive console input code breaks—and why string streams help fix it—you need to look at how a C++ stream tracks its health. Every stream maintains internal **state flags** that record whether recent operations succeeded, reached the end of input, or encountered an error:
+To understand why naive console input code breaks — and why string streams help fix it — you need to look at how a C++ stream tracks its health. Every stream maintains internal **state flags** that record whether recent operations succeeded, reached the end of input, or encountered an error:
 
 | State Flag | Query Method | Meaning | Effect on Future Stream Operations |
 | :--- | :--- | :--- | :--- |
@@ -216,8 +216,8 @@ int main() {
 
 Using `std::getline(std::cin, line)` together with `std::istringstream` avoids corrupting `std::cin`'s state on bad input:
 
-1. **Read the entire line into a `std::string` with `std::getline()`:** `std::getline()` reads whatever the user typed—even `"abc"` or `"12xyz"`—and consumes the trailing `'\n'`. `std::cin` does not fail on non-numeric text because `std::string` accepts any characters on the line.
-2. **Parse inside a local `std::istringstream`:** Each attempt creates a fresh `std::istringstream` from `raw_line`. If parsing fails, only that temporary `istringstream` enters a failed state—`std::cin` stays clean for the next prompt.
+1. **Read the entire line into a `std::string` with `std::getline()`:** `std::getline()` reads whatever the user typed — even `"abc"` or `"12xyz"` — and consumes the trailing `'\n'`. `std::cin` does not fail on non-numeric text because `std::string` accepts any characters on the line.
+2. **Parse inside a local `std::istringstream`:** Each attempt creates a fresh `std::istringstream` from `raw_line`. If parsing fails, only that temporary `istringstream` enters a failed state — `std::cin` stays clean for the next prompt.
 3. **Reject trailing non-whitespace characters:** Extracting into `int value` alone accepts `"42abc"` by reading `42` and stopping at `'a'`. Attempting a second extraction into `char extra` checks whether any non-whitespace character follows the integer. If `parser >> extra` succeeds, extra characters were present, so the input is rejected.
 
 ```cpp
