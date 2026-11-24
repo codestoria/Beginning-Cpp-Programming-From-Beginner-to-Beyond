@@ -407,7 +407,7 @@ It depends on the data:
 
 But always keep the **limits** in mind, especially when doing arithmetic. A result that does not fit in the destination variable can produce surprising results, depending on the types involved:
 
-- **Unsigned integer** arithmetic wraps modulo \(2^N\) (well-defined).
+- **Unsigned integer** arithmetic wraps modulo $2^N$ (well-defined).
 - **Signed integer** arithmetic overflow is **undefined behavior**.
 - **Converting** an out-of-range value to a signed type is **implementation-defined** (in practice you often get a truncated value, e.g. a negative number).
 
