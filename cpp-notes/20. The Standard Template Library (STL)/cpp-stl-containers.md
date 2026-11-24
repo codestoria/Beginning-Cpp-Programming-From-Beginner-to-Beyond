@@ -51,7 +51,7 @@ Because the STL is built around uniform interfaces, most containers share a cons
 
 STL containers operate using **value semantics**: when you add an object to a container, **the container stores its own copy** (or moves the object into its storage via move semantics). Consequently:
 1. Any custom class stored in a container must be copy-constructible or move-constructible (move-only types like `std::unique_ptr` work with move/emplace operations, though operations requiring copies will not compile).
-2. The container owns its elements' lifetimes—when the container goes out of scope or is destroyed, it automatically invokes the destructor of every stored element and releases all heap memory (**RAII**), preventing memory leaks.
+2. The container owns its elements' lifetimes — when the container goes out of scope or is destroyed, it automatically invokes the destructor of every stored element and releases all heap memory (**RAII**), preventing memory leaks.
 
 ---
 
@@ -127,7 +127,7 @@ Map Array:   [ ptr0 ] --------> [ __ | __ | 10 | 20 ]  (Chunk 0: room to grow le
              [ ptr1 ] --------> [ 30 | 40 | 50 | __ ]  (Chunk 1: room to grow right!)
 ```
 
-When you push to either end and the edge chunk is full, `std::deque` simply allocates a new fixed-size chunk and links it into the map—never copying existing elements.
+When you push to either end and the edge chunk is full, `std::deque` simply allocates a new fixed-size chunk and links it into the map — never copying existing elements.
 
 #### Performance Profile & Key Operations
 
@@ -163,10 +163,10 @@ If an application frequently inserts or removes items in the **middle** of a lar
 
 Each node stores a value alongside two pointers: `prev` and `next`.
 
-* **Insert/Erase Anywhere ($O(1)$):** Given an iterator to a position, inserting or erasing only rewires adjacent pointers—no elements ever move in memory.
+* **Insert/Erase Anywhere ($O(1)$):** Given an iterator to a position, inserting or erasing only rewires adjacent pointers — no elements ever move in memory.
 * **Strong Iterator Stability:** Inserting or erasing elements **never invalidates** iterators or references to other elements (only iterators pointing directly to an erased node become invalid).
 * **No Random Access ($O(n)$ traversal):** Because nodes are scattered across the heap, `[]` and `.at()` do not exist. Reaching the $k$-th element requires walking $k$ pointers sequentially.
-* **Memory & Cache Trade-off:** Every node incurs two pointers of memory overhead (16 bytes on 64-bit systems), and non-contiguous memory causes frequent CPU cache misses—meaning iterating over a `std::list` is noticeably slower than iterating over a `std::vector`.
+* **Memory & Cache Trade-off:** Every node incurs two pointers of memory overhead (16 bytes on 64-bit systems), and non-contiguous memory causes frequent CPU cache misses — meaning iterating over a `std::list` is noticeably slower than iterating over a `std::vector`.
 * **Member Sort:** Always call `my_list.sort()` instead of `std::sort()`, because `std::sort()` requires random-access iterators.
 
 #### `std::forward_list` (Singly-Linked List)
@@ -269,17 +269,17 @@ Container adapters are not standalone data structures with new memory layouts. I
 
 **Header:** `#include <stack>`
 
-Enforces **Last-In, First-Out (LIFO)** access—like a vertical stack of plates. Wraps `std::deque` by default.
+Enforces **Last-In, First-Out (LIFO)** access — like a vertical stack of plates. Wraps `std::deque` by default.
 
 * `.push(val)` / `.emplace(args...)`: Places a new element onto the top of the stack ($O(1)$).
 * `.top()`: Returns a reference to the top element without removing it ($O(1)$).
-* `.pop()`: Removes the top element ($O(1)$). *(Note: `.pop()` returns `void` rather than the popped value to guarantee strong exception safety—call `.top()` first if you need the value.)*
+* `.pop()`: Removes the top element ($O(1)$). *(Note: `.pop()` returns `void` rather than the popped value to guarantee strong exception safety — call `.top()` first if you need the value.)*
 
 ### 5.2 `std::queue` (FIFO)
 
 **Header:** `#include <queue>`
 
-Enforces **First-In, First-Out (FIFO)** access—like a ticket queue. Wraps `std::deque` by default.
+Enforces **First-In, First-Out (FIFO)** access — like a ticket queue. Wraps `std::deque` by default.
 
 * `.push(val)` / `.emplace(args...)`: Adds an element to the **back** of the queue ($O(1)$).
 * `.front()` / `.back()`: Inspects the oldest or newest element without removing it ($O(1)$).
