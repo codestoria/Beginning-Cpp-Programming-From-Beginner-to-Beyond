@@ -18,7 +18,7 @@ The **C++ Standard Template Library (STL)** is a foundational collection of reus
 
 ### Why Learn the STL?
 
-Without the STL, every time you needed a dynamically resizing array or a sorting routine, you would have to implement it from scratch—risking memory leaks, subtle edge-case bugs, and inconsistent performance. The STL eliminates this burden by offering production-grade components refined over decades.
+Without the STL, every time you needed a dynamically resizing array or a sorting routine, you would have to implement it from scratch — risking memory leaks, subtle edge-case bugs, and inconsistent performance. The STL eliminates this burden by offering production-grade components refined over decades.
 
 More importantly, the STL is built around a **unified architectural model** consisting of three decoupled parts:
 
@@ -61,7 +61,7 @@ char max_value(char a, char b)       { return (a > b) ? a : b; }
 
 This violates the **DRY (Don't Repeat Yourself)** principle. Every overload duplicates identical logic; if you discover a bug or want to refine the algorithm, you must update every copy manually.
 
-**The Engineering Goal:** Write **a single, type-independent code blueprint** and let the compiler automatically generate type-specific machine code on demand **at compile time**—preserving full type safety with **zero runtime overhead**.
+**The Engineering Goal:** Write **a single, type-independent code blueprint** and let the compiler automatically generate type-specific machine code on demand **at compile time** — preserving full type safety with **zero runtime overhead**.
 
 ---
 
@@ -95,7 +95,7 @@ int result = 100 / SQUARE(2 + 3);
 ```
 
 
-3. **Multiple Evaluation Side Effects:** Calling `MAX(++x, ++y)` expands to `((++x) > (++y) ? (++x) : (++y))`. Whichever variable is larger gets evaluated—and therefore incremented—**twice**, corrupting program state.
+3. **Multiple Evaluation Side Effects:** Calling `MAX(++x, ++y)` expands to `((++x) > (++y) ? (++x) : (++y))`. Whichever variable is larger gets evaluated — and therefore incremented — **twice**, corrupting program state.
 
 ### When Are Macros Acceptable Today?
 
@@ -158,7 +158,7 @@ int main() {
 
 ```
 
-Behind the scenes, the compiler generates two completely independent, type-safe functions—one accepting `int` and one accepting `double`—just as if you had written both overloads by hand.
+Behind the scenes, the compiler generates two completely independent, type-safe functions — one accepting `int` and one accepting `double` — just as if you had written both overloads by hand.
 
 ### Type Requirements (Syntactic & Semantic Contracts)
 
@@ -230,7 +230,7 @@ int main() {
 
 ## 5. Class Templates & The Header-Only Rule
 
-Just as function templates act as blueprints for functions, **class templates** act as blueprints for classes. Every STL container—such as `std::vector<int>` or `std::map<std::string, double>`—is a class template.
+Just as function templates act as blueprints for functions, **class templates** act as blueprints for classes. Every STL container — such as `std::vector<int>` or `std::map<std::string, double>` — is a class template.
 
 ### Building a Generic Class
 
@@ -351,7 +351,7 @@ This exact mechanism powers C++11's **`std::array<T, N>`**. Whenever you manage 
 
 ## 7. Summary & Key Takeaways
 
-1. **Generic Programming** lets you write a single type-independent blueprint that the compiler instantiates into concrete, type-safe code at compile time—eliminating code duplication with zero runtime overhead.
+1. **Generic Programming** lets you write a single type-independent blueprint that the compiler instantiates into concrete, type-safe code at compile time — eliminating code duplication with zero runtime overhead.
 2. **Avoid Preprocessor Macros** for generic logic; macros perform blind text substitution without respecting C++ types, scoping, operator precedence, or single evaluation.
 3. **Compile-Time Blueprints:** Function and class templates produce no machine code until they are instantiated with concrete types (either explicitly via `<T>` or via compiler type deduction).
 4. **Type Requirements:** Any type substituted for a template parameter must support every operation (such as `>`, `==`, or `<<`) executed inside the template body.
