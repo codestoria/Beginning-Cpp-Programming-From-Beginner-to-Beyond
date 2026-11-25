@@ -2,7 +2,7 @@
 
 ## Table of Contents
 
-1. [The Architectural Bridge: Why Iterators Exist](#1-the-architectural-bridge-why-iterators-exist)
+1. [Why Iterators Exist](#1-why-iterators-exist)
     - [The $M \times N$ Engineering Problem](#the-m-times-n-engineering-problem)
 2. [Half-Open Ranges `[begin, end)` & Iterator Variants](#2-half-open-ranges-begin-end--iterator-variants)
     - [Why Half-Open Ranges `[begin, end)`?](#why-half-open-ranges-begin-end)
@@ -22,7 +22,7 @@
 
 ---
 
-## 1. The Architectural Bridge: Why Iterators Exist
+## 1. Why Iterators Exist
 
 C++ Standard Template Library (STL) containers organize memory in fundamentally different ways:
 - `std::vector` stores elements in a **contiguous block of memory**.
