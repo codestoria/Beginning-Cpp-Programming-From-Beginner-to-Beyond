@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create zip archive of notes
-        run: zip -r cpp-notes-latest.zip cpp-notes -x "*.DS_Store"
+        run: zip -r cpp-notes.zip cpp-notes -x "*.DS_Store"
 
       - name: Publish rolling release asset
         uses: softprops/action-gh-release@v2
@@ -31,5 +31,5 @@ jobs:
           tag_name: cpp-notes-latest
           name: Latest C++ Notes Archive
           body: "Automatically built from `cpp-notes/` on `main` (`${{ github.sha }}`)."
-          files: cpp-notes-latest.zip
+          files: cpp-notes.zip
           make_latest: false
