@@ -22,7 +22,7 @@
 
 ## 📖 About This Repository
 
-My coursework and projects from the Udemy course *Beginning C++ Programming - From Beginner to Beyond* — covering C++ fundamentals, control flow, functions, arrays and vectors, pointers and references, object-oriented programming, inheritance and polymorphism, STL, templates, exception handling, file I/O, and modern C++ features.
+My coursework and notes from the Udemy course *Beginning C++ Programming - From Beginner to Beyond* — covering C++ fundamentals, control flow, functions, arrays and vectors, pointers and references, object-oriented programming, inheritance and polymorphism, STL, templates, exception handling, file I/O, and modern C++ features.
 
 Each section in this repository is organized to pair **conceptual notes** with **runnable code**, making it easy to review core mechanics, language edge cases, and practical exercises later.
 
