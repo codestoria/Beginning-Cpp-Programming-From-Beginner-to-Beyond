@@ -198,7 +198,7 @@ You create a C-style string by declaring a `char` array:
 
 ```cpp
 char name1[6] = {'F', 'r', 'a', 'n', 'k', '\0'};  // explicit
-char name2[6] = "Frank";                            // compiler adds '\0'
+char name2[6] = "Frank";                          // compiler adds '\0'
 ```
 
 Important properties:
