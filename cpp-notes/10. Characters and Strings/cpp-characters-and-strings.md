@@ -50,7 +50,7 @@ This is why you can perform arithmetic on characters:
 
 ```cpp
 char c = 'A';
-c = c + 1;           // c now holds 'B' (integer 66)
+c = c + 1;  // c now holds 'B' (integer 66)
 ```
 
 The single quotes (`'A'`) tell the compiler "this is a character literal." Do not confuse `'A'` (a `char`) with `"A"` (a *string* literal, which is a `const char[2]` containing `'A'` and `'\0'`). We will return to this distinction shortly.
@@ -100,7 +100,8 @@ When processing text, you constantly need to ask questions about individual char
 - Is it uppercase or lowercase?
 - Is it whitespace?
 
-You *could* write these checks yourself (`c >= 'a' && c <= 'z'`), but that is tedious, easy to get wrong, and not portable to non-ASCII character sets. The `<cctype>` header provides tested, efficient functions for exactly this job.
+You *could* write these checks yourself (`c >= 'a' && c <= 'z'`), but that is tedious, easy to get wrong, and not portable to non-ASCII character sets.
+The `<cctype>` header provides tested, efficient functions for exactly this job.
 
 ```cpp
 #include <cctype>
@@ -158,7 +159,9 @@ A is a letter
 Lowercase: a
 ```
 
-> **Technical note.** `<cctype>` functions take an `int` argument representing a character value. Passing a plain `char` works for ASCII, but if `char` is signed and the character's byte value is above 127 (so the `char` value is negative), the result is technically undefined. For fully portable code, cast first: `isalpha(static_cast<unsigned char>(c))`. This matters for non-ASCII text; for English text it is a non-issue.
+> **Technical note.** `<cctype>` functions take an `int` argument representing a character value.
+> Passing a plain `char` works for ASCII, but if `char` is signed and the character's byte value is above 127 (so the `char` value is negative), the result is technically undefined.
+> For fully portable code, cast first: `isalpha(static_cast<unsigned char>(c))`. This matters for non-ASCII text; for English text it is a non-issue.
 
 ---
 
@@ -172,7 +175,8 @@ A **C-style string** is:
 - implemented as an **array of `char`**,
 - **terminated by a null character** (`'\0'`, integer 0).
 
-Because the string ends at the null character, C-style strings are also called **null-terminated** or **zero-terminated** strings. The null is a *sentinel*: functions that process the string have no other way to know where it stops.
+Because the string ends at the null character, C-style strings are also called **null-terminated** or **zero-terminated** strings.
+The null is a *sentinel*: functions that process the string have no other way to know where it stops.
 
 ### 4.2 String literals
 
