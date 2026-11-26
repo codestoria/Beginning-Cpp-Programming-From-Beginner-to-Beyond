@@ -17,13 +17,13 @@ int main()
         case Direction::left:
             cout << "Going left" << endl;
             break;
-        case right:
+        case Direction::right:
             cout << "Going right" << endl;
             break;
-        case up:
+        case Direction::up:
             cout << "Going up" << endl;
             break;
-        case down:
+        case Direction::down:
             cout << "Going down" << endl;
             break;
         default:
