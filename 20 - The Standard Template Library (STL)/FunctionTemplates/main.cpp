@@ -1,5 +1,6 @@
 // Section 20
 // Function templates - Generic function definitions for multiple data types
+
 #include <iostream>
 #include <string>
 

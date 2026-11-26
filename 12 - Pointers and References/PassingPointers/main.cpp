@@ -6,7 +6,9 @@
 using namespace std;
 
 void double_data(int *int_ptr) {
-    *int_ptr *= 2;
+    if (int_ptr != nullptr) {
+        *int_ptr *= 2;
+    }
 }
 
 int main() {

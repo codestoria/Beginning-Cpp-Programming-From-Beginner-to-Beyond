@@ -22,19 +22,27 @@ void display(const int *const array, size_t size) {
 
 int main() {
     int *my_array {nullptr};
-    size_t size;
+    size_t size {0};
     int init_value {};
 
     cout << "\nHow many integers would you like to allocate? ";
-    cin >> size;
+    if (!(cin >> size) || size == 0) {
+        cerr << "Invalid array size." << endl;
+        return 1;
+    }
+
     cout << "What value would you like them initialized to? ";
-    cin >> init_value;
+    if (!(cin >> init_value)) {
+        cerr << "Invalid initial value." << endl;
+        return 1;
+    }
 
     my_array = create_array(size, init_value);
     cout << "\n--------------------------------------" << endl;
 
     display(my_array, size);
     delete[] my_array;
+    my_array = nullptr;
 
     return 0;
 }

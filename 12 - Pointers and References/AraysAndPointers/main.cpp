@@ -1,3 +1,6 @@
+// Section 12
+// Arrays and Pointers
+
 #include <iostream>
 
 using namespace std;

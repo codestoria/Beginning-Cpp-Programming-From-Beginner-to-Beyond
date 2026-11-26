@@ -1,5 +1,6 @@
 // Section 20
 // Algorithms
+
 #include <iostream>
 #include <iomanip>
 #include <cctype>

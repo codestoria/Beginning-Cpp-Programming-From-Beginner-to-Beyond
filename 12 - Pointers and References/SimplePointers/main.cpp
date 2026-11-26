@@ -13,8 +13,10 @@ int main() {
     cout << "size of num is: " << sizeof num << endl;
     cout << "Address of num is: " << &num << endl;
 
-    int *p;  // p is a pointer to an int
-    cout << "\nValue of p is: " << p << endl;  // garbage value
+    int *p;  // p is an uninitialized pointer to an int
+    // Note: reading an uninitialized pointer is Undefined Behavior (UB) in C++;
+    // often prints a leftover stack value in practice, not guaranteed by the standard.
+    cout << "\nValue of p is: " << p << endl;
     cout << "Address of p is: " << &p << endl;
     cout << "size of p is: " << sizeof p << endl;
 

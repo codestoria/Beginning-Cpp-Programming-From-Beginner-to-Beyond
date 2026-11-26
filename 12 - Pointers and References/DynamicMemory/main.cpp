@@ -7,20 +7,25 @@ using namespace std;
 
 int main() {
     int *int_ptr {nullptr};
-    int_ptr = new int;        // allocate the int on the heap
-    cout << int_ptr << endl;  // use it
-    delete int_ptr;           // release it
+    int_ptr = new int;                       // allocate the int on the heap
+    cout << "int_ptr: " << int_ptr << endl;  // print heap address
+    delete int_ptr;                          // release it
 
-    size_t size {0};
+    long long input_size {0};
     double *temp_ptr {nullptr};
 
     cout << "How many temps? ";
-    cin >> size;
+    if (!(cin >> input_size) || input_size < 0) {
+        cerr << "Invalid size." << endl;
+        return 1;
+    }
 
-    temp_ptr = new double[size];  // allocate the storage on the heap
-    cout << temp_ptr << endl;     // use it
-    delete[] temp_ptr;            // release it
+    size_t size = static_cast<size_t>(input_size);
+    temp_ptr = new double[size];               // allocate the storage on the heap
+    cout << "temp_ptr: " << temp_ptr << endl;  // print heap address
+    delete[] temp_ptr;                         // release it
 
     cout << endl;
+
     return 0;
 }

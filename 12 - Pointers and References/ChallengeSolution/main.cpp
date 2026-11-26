@@ -15,6 +15,7 @@
 
 #include <iostream>
 #include <cstddef>
+#include <limits>
 
 using namespace std;
 
@@ -37,6 +38,9 @@ This function expects:
 ********************************************************************/
 int *apply_all(const int *const arr1, size_t size1,
                const int *const arr2, size_t size2) {
+    if (size1 > 0 && size2 > SIZE_MAX / size1) {
+        return nullptr;
+    }
     int *new_array = new int[size1 * size2];
 
     size_t position {0};
@@ -59,11 +63,10 @@ This function expects:
     in the array.
 ********************************************************************/
 void print(const int *const arr, size_t size) {
-    cout << "[ ";
+    cout << "[";
     for (size_t i {0}; i < size; ++i)
-        cout << arr[i] << " ";
-    cout << "]";
-    cout << endl;
+        cout << " " << arr[i];
+    cout << " ]" << endl;
 }
 
 int main() {

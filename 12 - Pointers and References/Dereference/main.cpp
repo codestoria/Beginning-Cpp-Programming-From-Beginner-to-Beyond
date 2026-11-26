@@ -47,7 +47,7 @@ int main() {
     cout << "First stooge: " << (*vector_ptr).at(0) << endl;  // Larry
 
     cout << "Stooges: ";
-    for (auto stooge : *vector_ptr)
+    for (const auto &stooge : *vector_ptr)
         cout << stooge << " ";
     cout << endl;
 

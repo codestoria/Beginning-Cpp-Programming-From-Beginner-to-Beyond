@@ -1,6 +1,7 @@
 // Section 20
 // Challenge 1 - Solution
 // Identifying palindrome strings using a deque
+
 #include <cctype>
 #include <deque>
 #include <iostream>

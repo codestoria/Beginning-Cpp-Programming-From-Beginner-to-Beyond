@@ -1,5 +1,6 @@
 // Section 20
 // Stack
+
 #include <iostream>
 #include <stack>
 #include <vector>
