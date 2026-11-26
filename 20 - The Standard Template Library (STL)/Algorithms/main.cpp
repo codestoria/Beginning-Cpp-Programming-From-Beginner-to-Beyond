@@ -30,8 +30,8 @@ void find_test() {
     std::cout << "\n========================" << std::endl;
 
     std::vector<int> vec {1, 2, 3, 4, 5};
-    auto loc = std::find(std::begin(vec), std::end(vec), 1);
 
+    auto loc = std::find(std::begin(vec), std::end(vec), 1);
     if (loc != std::end(vec))
         std::cout << "Found the number: " << *loc << std::endl;
     else
@@ -64,6 +64,7 @@ void count_if_test() {
     std::cout << "\n========================" << std::endl;
 
     std::vector<int> vec {1, 2, 3, 4, 5, 1, 2, 1, 100};
+
     // Count even values
     int num = std::count_if(vec.begin(), vec.end(), [](int x) { return x % 2 == 0; });
     std::cout << num << " even numbers found" << std::endl;
@@ -82,6 +83,7 @@ void replace_test() {
     std::cout << "\n========================" << std::endl;
 
     std::vector<int> vec {1, 2, 3, 4, 5, 1, 2, 1};
+
     for (auto i : vec) {
         std::cout << i << " ";
     }
@@ -97,6 +99,7 @@ void replace_test() {
 // Check whether every element satisfies the predicate with std::all_of
 void all_of_test() {
     std::vector<int> vec1 {1, 3, 5, 7, 9, 1, 3, 13, 19, 5};
+
     if (std::all_of(vec1.begin(), vec1.end(), [](int x) { return x > 10; }))
         std::cout << "All the elements are > 10" << std::endl;
     else
@@ -114,6 +117,7 @@ void string_transform_test() {
 
     std::string str1 {"This is a test"};
     std::cout << "Before transform: " << str1 << std::endl;
+
     std::transform(str1.begin(), str1.end(), str1.begin(), [](unsigned char c) {
         return static_cast<char>(std::toupper(c));
     });
