@@ -18,7 +18,7 @@ For the purposes of this assignment, we will only consider alpha characters and 
 So, "A Santa at NASA" will be processed as:
 `ASANTAATNASA`
 
-A common method to solve this problem is to compare the string to its reverse, and if they are equal, then it must be a palindrome. However, we will use a deque.
+A common method to solve this problem is to compare the string to its reverse, and if they are equal, then it must be a palindrome. However, we will use a stack and a queue.
 
 I am providing the main driver for you, which will automatically run several test cases. Your challenge is to write the following function:
 

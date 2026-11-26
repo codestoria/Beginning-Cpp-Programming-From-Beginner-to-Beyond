@@ -61,7 +61,7 @@
 | **19** | I/O and Streams（I/O 与流） | [笔记](./cpp-notes/19.%20IO%20and%20Streams) | 代码 |
 | **20** | The Standard Template Library (STL)（标准模板库 STL） | [笔记](./cpp-notes/20.%20The%20Standard%20Template%20Library%20%28STL%29) | [代码](./20%20-%20The%20Standard%20Template%20Library%20%28STL%29/) |
 | **21** | Lambda Expressions（Lambda 表达式） | [笔记](./cpp-notes/21.%20Lambda%20Expressions) | 代码 |
-| **23** | Bonus Section — Enumerations（补充章节：枚举） | [笔记](./cpp-notes/23.%20Bonus%20Section%20-%20Enumerations) | 代码 |
+| **23** | Enumerations（枚举） | [笔记](./cpp-notes/23.%20Bonus%20Section%20-%20Enumerations) | 代码 |
 
 ---
 
