@@ -52,14 +52,14 @@ You can watch the course lectures on Bilibili for free:
 | **10** | Characters and Strings | [Note](./cpp-notes/10.%20Characters%20and%20Strings) | [Code](./10%20-%20Characters%20and%20Strings) |
 | **11** | Functions | [Note](./cpp-notes/11.%20Functions) | [Code](./11%20-%20Functions) |
 | **12** | Pointers and References | [Note](./cpp-notes/12.%20Pointers%20and%20References) | [Code](./12%20-%20Pointers%20and%20References) |
-| **13** | OOP — Classes and Objects | [Note](./cpp-notes/13.%20OOP%20-%20Classes%20and%20Objects) | Code |
+| **13** | OOP — Classes and Objects | [Note](./cpp-notes/13.%20OOP%20-%20Classes%20and%20Objects) | [Code](./13%20-%20OOP%20-%20Classes%20and%20Objects/) |
 | **14** | Operator Overloading | [Note](./cpp-notes/14.%20Operator%20Overloading) | Code |
 | **15** | Inheritance | [Note](./cpp-notes/15.%20Inheritance) | Code |
 | **16** | Polymorphism | [Note](./cpp-notes/16.%20Polymorphism) | Code |
 | **17** | Smart Pointers | [Note](./cpp-notes/17.%20Smart%20Pointers) | Code |
 | **18** | Exception Handling | [Note](./cpp-notes/18.%20Exception%20Handling) | Code |
 | **19** | I/O and Streams | [Note](./cpp-notes/19.%20IO%20and%20Streams) | Code |
-| **20** | The Standard Template Library (STL) | [Note](./cpp-notes/20.%20The%20Standard%20Template%20Library%20%28STL%29) | Code |
+| **20** | The Standard Template Library (STL) | [Note](./cpp-notes/20.%20The%20Standard%20Template%20Library%20%28STL%29) | [Code](./20%20-%20The%20Standard%20Template%20Library%20%28STL%29/) |
 | **21** | Lambda Expressions | [Note](./cpp-notes/21.%20Lambda%20Expressions) | Code |
 | **23** | Bonus Section — Enumerations | [Note](./cpp-notes/23.%20Bonus%20Section%20-%20Enumerations) | Code |
 

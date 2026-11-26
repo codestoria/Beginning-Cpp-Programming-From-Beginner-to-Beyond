@@ -52,14 +52,14 @@
 | **10** | Characters and Strings（字符与字符串） | [笔记](./cpp-notes/10.%20Characters%20and%20Strings) | [代码](./10%20-%20Characters%20and%20Strings) |
 | **11** | Functions（函数） | [笔记](./cpp-notes/11.%20Functions) | [代码](./11%20-%20Functions) |
 | **12** | Pointers and References（指针与引用） | [笔记](./cpp-notes/12.%20Pointers%20and%20References) | [代码](./12%20-%20Pointers%20and%20References) |
-| **13** | OOP — Classes and Objects（面向对象：类与对象） | [笔记](./cpp-notes/13.%20OOP%20-%20Classes%20and%20Objects) | 代码 |
+| **13** | OOP — Classes and Objects（面向对象：类与对象） | [笔记](./cpp-notes/13.%20OOP%20-%20Classes%20and%20Objects) | [代码](./13%20-%20OOP%20-%20Classes%20and%20Objects/) |
 | **14** | Operator Overloading（运算符重载） | [笔记](./cpp-notes/14.%20Operator%20Overloading) | 代码 |
 | **15** | Inheritance（继承） | [笔记](./cpp-notes/15.%20Inheritance) | 代码 |
 | **16** | Polymorphism（多态） | [笔记](./cpp-notes/16.%20Polymorphism) | 代码 |
 | **17** | Smart Pointers（智能指针） | [笔记](./cpp-notes/17.%20Smart%20Pointers) | 代码 |
 | **18** | Exception Handling（异常处理） | [笔记](./cpp-notes/18.%20Exception%20Handling) | 代码 |
 | **19** | I/O and Streams（I/O 与流） | [笔记](./cpp-notes/19.%20IO%20and%20Streams) | 代码 |
-| **20** | The Standard Template Library (STL)（标准模板库 STL） | [笔记](./cpp-notes/20.%20The%20Standard%20Template%20Library%20%28STL%29) | 代码 |
+| **20** | The Standard Template Library (STL)（标准模板库 STL） | [笔记](./cpp-notes/20.%20The%20Standard%20Template%20Library%20%28STL%29) | [代码](./20%20-%20The%20Standard%20Template%20Library%20%28STL%29/) |
 | **21** | Lambda Expressions（Lambda 表达式） | [笔记](./cpp-notes/21.%20Lambda%20Expressions) | 代码 |
 | **23** | Bonus Section — Enumerations（补充章节：枚举） | [笔记](./cpp-notes/23.%20Bonus%20Section%20-%20Enumerations) | 代码 |
 
