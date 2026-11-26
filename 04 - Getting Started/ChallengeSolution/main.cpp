@@ -2,6 +2,7 @@
  * @file main.cpp
  * @brief Section 4 Challenge: read a favorite number (1-100) and print the formatted response.
  */
+
 #include <iostream>
 
 int main() {
