@@ -15,6 +15,7 @@
 
 #include <iostream>
 #include <cstddef>
+#include <cstdint>
 #include <limits>
 
 using namespace std;
