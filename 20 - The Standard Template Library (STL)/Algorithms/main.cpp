@@ -1,6 +1,7 @@
 // Section 20
 // Algorithms
 #include <iostream>
+#include <iomanip>
 #include <cctype>
 #include <vector>
 #include <list>
@@ -85,13 +86,13 @@ void replace_test() {
     std::vector<int> vec {1, 2, 3, 4, 5, 1, 2, 1};
 
     for (auto i : vec) {
-        std::cout << i << " ";
+        std::cout << std::setw(3) << i << " ";
     }
     std::cout << std::endl;
 
     std::replace(vec.begin(), vec.end(), 1, 100);
     for (auto i : vec) {
-        std::cout << i << " ";
+        std::cout << std::setw(3) << i << " ";
     }
     std::cout << std::endl;
 }
