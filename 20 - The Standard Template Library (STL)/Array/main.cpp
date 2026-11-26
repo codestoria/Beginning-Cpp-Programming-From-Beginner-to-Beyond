@@ -36,6 +36,7 @@ void test1()
     arr1[0] = 1000;
     arr1.at(1) = 2000;
     display(arr1);
+
     std::cout << "Front of arr2: " << arr2.front() << std::endl;  // 10
     std::cout << "Back of arr2: " << arr2.back() << std::endl;    // 50
 }
@@ -64,6 +65,7 @@ void test3()
 {
     std::cout << "\nTest3 =========================" << std::endl;
     std::array<int, 5> arr1{1, 2, 3, 4, 5};
+
     int *ptr = arr1.data();  // Obtain pointer to the underlying raw array storage
     std::cout << ptr << std::endl;
     *ptr = 10000;  // Modify first element through raw pointer
@@ -85,8 +87,10 @@ void test5()
 {
     std::cout << "\nTest5 =========================" << std::endl;
     std::array<int, 5> arr1{2, 1, 4, 5, 3};
+
     std::array<int, 5>::iterator min_num = std::min_element(arr1.begin(), arr1.end());
     auto max_num = std::max_element(arr1.begin(), arr1.end());
+
     std::cout << "min: " << *min_num << " , max: " << *max_num << std::endl;
 }
 
@@ -94,6 +98,7 @@ void test6()
 {
     std::cout << "\nTest6 =========================" << std::endl;
     std::array<int, 5> arr1{2, 1, 3, 3, 5};
+
     auto adjacent = std::adjacent_find(arr1.begin(), arr1.end());  // Find first pair of equal adjacent elements
     if (adjacent != arr1.end())
     {
@@ -132,7 +137,6 @@ void test9()
     // Count elements whose value satisfies: greater than 10 and less than 200
     int count = std::count_if(arr1.begin(), arr1.end(),
         [](int x) { return x > 10 && x < 200; });
-
     std::cout << "Found : " << count << " matches" << std::endl;
 }
 
