@@ -24,7 +24,7 @@ void test1()
     std::array<int, 5> arr2;
 
     display(arr1);
-    display(arr2);  // Elements are default‑uninitialized and hold garbage values
+    display(arr2);  // Default-initialized with indeterminate values; reading them is UB in C++
 
     arr2 = {10, 20, 30, 40, 50};
     display(arr1);

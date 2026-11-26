@@ -79,7 +79,7 @@ void test2() {
     if (it != grades.end())  // Key "Moe" exists
     {
         it->second.insert(1000);  // Insert 1000 into Moe's grade set
-        // it->first = key, it->second = associated set<int>
+        // it->first is const key (cannot be assigned), it->second is associated set<int>
     }
     display(grades);
 }

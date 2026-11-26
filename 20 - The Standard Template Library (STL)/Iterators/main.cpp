@@ -37,7 +37,7 @@ void test1() {
 
 void test2() {
     std::cout << "\n=============================" << std::endl;
-    // Print all vector elements using a forward iterator
+    // Print all vector elements using a random-access iterator
     std::vector<int> nums1 {1, 2, 3, 4, 5};
 
     std::vector<int>::iterator it = nums1.begin();
