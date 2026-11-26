@@ -81,6 +81,9 @@ void test4()
 
     std::sort(arr1.begin(), arr1.end());  // Sort array elements in ascending order
     display(arr1);
+
+    std::sort(arr1.rbegin(), arr1.rend());  // Sort array elements in descending order
+    display(arr1);
 }
 
 void test5()
