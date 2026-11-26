@@ -52,6 +52,9 @@ int main()
 
     cout << "Enter an amount in cents: ";
     cin >> change_amount;
+    if (change_amount < 0) {
+        change_amount = 0;  // clamp negative input to zero per problem assumption
+    }
 
     int balance {}, dollars {}, quarters {}, dimes {}, nickels {}, pennies {};
 

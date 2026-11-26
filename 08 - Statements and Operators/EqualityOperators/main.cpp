@@ -37,6 +37,7 @@ int main()
 
     cout << "Enter two doubles separated by a space: ";
     cin >> double1 >> double2;
+    // Note: direct == / != on double can be affected by floating-point rounding after arithmetic
     equal_result = (double1 == double2);
     not_equal_result = (double1 != double2);
     cout << "Comparison result (equal): " << equal_result << endl;

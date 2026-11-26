@@ -5,10 +5,10 @@
     -   subtraction
     *   multiplication
     /   division
-    %   modulo or remainder  (works only with integers)
+    %   remainder (truncates toward zero in C++; integer types only)
 
-    +, -, * and /  operators are overloaded to work with multiple types such as int, double, etc.
-    %  only for integer types
+    +, -, * and /  work with multiple numeric types such as int, double, etc.
+    %  works only with integer types (not floating-point types like double)
 */
 
 #include <iostream>
