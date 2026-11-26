@@ -91,6 +91,7 @@ void replace_test() {
     std::cout << std::endl;
 
     std::replace(vec.begin(), vec.end(), 1, 100);
+
     for (auto i : vec) {
         std::cout << std::setw(3) << i << " ";
     }
