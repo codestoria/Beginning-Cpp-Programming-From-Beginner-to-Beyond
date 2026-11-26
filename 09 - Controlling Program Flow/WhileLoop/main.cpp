@@ -24,7 +24,7 @@ int main()
     cin >> count_up_num;
 
     int i {1};
-    while (count_up_num >= i) {
+    while (i <= count_up_num) {
         cout << i << endl;
         ++i;
     }

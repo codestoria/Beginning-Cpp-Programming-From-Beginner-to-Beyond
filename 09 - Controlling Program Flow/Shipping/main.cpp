@@ -34,7 +34,10 @@ int main()
 
     cout << "Welcome to the package cost calculator" << endl;
     cout << "Enter length, width, and height of the package separated by spaces: ";
-    cin >> length >> width >> height;
+    if (!(cin >> length >> width >> height)) {
+        cout << "Invalid input - please enter integers only" << endl;
+        return 1;
+    }
 
     if (length > max_dimension_length ||
         width > max_dimension_length ||

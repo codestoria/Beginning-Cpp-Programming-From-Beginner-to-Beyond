@@ -20,7 +20,7 @@ int main()
     double average_temp {};
     double total {};
 
-    for (auto temp : temperatures) {
+    for (const auto &temp : temperatures) {
         total += temp;
     }
 

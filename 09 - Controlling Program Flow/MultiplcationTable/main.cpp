@@ -11,7 +11,7 @@ int main()
         for (int num2 {1}; num2 <= 10; ++num2) {
             cout << num1 << " * " << num2 << " = " << num1 * num2 << endl;
         }
-        cout << "-----------" << endl;
+        cout << "-------------" << endl;
     }
 
     cout << endl;
