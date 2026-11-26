@@ -26,7 +26,7 @@ int main()
     cout << "double: " << sizeof(double) << " bytes." << endl;
     cout << "long double: " << sizeof(long double) << " bytes." << endl;
 
-    // use values defined in <climits>
+    // Use values defined in <climits>
     cout << "========================" << endl;
 
     cout << "Minimum values:" << endl;

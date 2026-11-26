@@ -10,12 +10,12 @@
     Prompt the user for the number of rooms they would like cleaned
     and provide an estimate such as:
 
-Estimate for carpet cleaning service:
+Estimate for carpet cleaning service
 Number of rooms: 2
 Price per room: $30
 Cost: $60
 Tax: $3.6
-====================================
+===============================
 Total estimate: $63.6
 This estimate is valid for 30 days
 

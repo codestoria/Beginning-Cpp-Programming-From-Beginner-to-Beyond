@@ -9,7 +9,7 @@ int age {18};  // Global variable
 
 int main()
 {
-    int age {16};  // local variable
+    int age {16};  // Local variable
 
     cout << age << endl;
 

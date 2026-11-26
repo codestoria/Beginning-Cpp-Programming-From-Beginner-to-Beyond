@@ -29,7 +29,7 @@ int main()
     cout << "There are about " << people_on_earth << " people on earth" << endl;
 
     long long distance_to_alpha_centauri {9'461'000'000'000};
-    cout << "The distance to alpha centauri is " << distance_to_alpha_centauri << " kilometers" << endl;
+    cout << "The distance to Alpha Centauri is " << distance_to_alpha_centauri << " kilometers" << endl;
 
     /***********************************************
      *  Floating point types
@@ -47,14 +47,14 @@ int main()
      *  Boolean type
      **********************************************/
     bool game_over {false};
-    cout << "The value of gameOver is " << game_over << endl;
+    cout << "The value of game_over is " << game_over << endl;
 
     /***********************************************
-     *  Overflow example
+     *  Overflow example (intentional narrowing / overflow demo)
      **********************************************/
     short value1 {30000};
     short value2 {1000};
-    short product {value1 * value2};
+    short product {static_cast<short>(value1 * value2)};
 
     cout << "The product of " << value1 <<  " and " << value2 << " is " <<  product << endl;
 
