@@ -1,3 +1,5 @@
+// Work-in-progress demo: reads input without using favorite_number and omits the second line
+
 #include <iostream>
 
 int main()

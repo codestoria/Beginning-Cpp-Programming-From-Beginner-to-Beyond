@@ -1,3 +1,5 @@
+// Demonstrates a compiler warning: unused local variable favorite_number
+
 #include <iostream>
 
 int main() {

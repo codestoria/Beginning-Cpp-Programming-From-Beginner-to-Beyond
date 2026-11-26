@@ -1,3 +1,5 @@
+// Demonstrates a linker error: extern int x is declared without a definition
+
 #include <iostream>
 
 extern int x;

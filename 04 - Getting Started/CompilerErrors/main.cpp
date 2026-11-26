@@ -1,3 +1,5 @@
+// Demonstrates a compiler error: dividing a string literal by an integer is ill-formed
+
 #include <iostream>
 
 int main()
