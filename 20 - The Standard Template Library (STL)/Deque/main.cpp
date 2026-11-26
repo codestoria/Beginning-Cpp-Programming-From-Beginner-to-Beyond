@@ -49,7 +49,7 @@ void test2() {
 
     std::cout << "Front: " << d.front() << std::endl;
     std::cout << "Back : " << d.back() << std::endl;
-    std::cout << "Size  : " << d.size() << std::endl;
+    std::cout << "Size : " << d.size() << std::endl;
 
     d.pop_back();
     d.pop_front();
