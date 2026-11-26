@@ -7,7 +7,7 @@ int main()
 {
     // cout example
     std::cout << "Hello world!" << std::endl;
-    std::cout << "Hello";
+    std::cout << "Hello ";
     std::cout << "World" << std::endl;
 
     std::cout << "Hello world!" << std::endl;

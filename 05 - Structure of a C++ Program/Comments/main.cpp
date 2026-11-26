@@ -4,7 +4,7 @@
 /*****************************************************
  * Author Frank
  *
- * 11/11/2017 Frank - fixed bug in ...
+ * 11/11/2017 Frank - Fixed a bug in ...
  * 11/13/2017 Joe - Added function to ...
  *
  ****************************************************/
@@ -19,7 +19,7 @@
 
 int main()
 {
-    int favorite_number {0};  // stores the user's favorite number
+    int favorite_number {0};  // Stores the user's favorite number
 
     std::cout << "Enter your favorite number between 1 and 100: ";
     std::cin >> favorite_number;
