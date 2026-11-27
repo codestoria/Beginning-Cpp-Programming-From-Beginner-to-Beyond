@@ -1,0 +1,52 @@
+Section 17
+Challenge 1
+
+/***********************************************************************************************************
+Create a program that meets the following requirements:
+
+1. Write a function named make that creates and returns a unique_ptr to a vector of shared_ptrs to Test objects.
+
+2. Write a function named fill that takes a vector of shared pointers to Test objects and an int representing
+   how many Test objects to dynamically create and add to the vector.
+   This function prompts the user to enter an integer, creates a shared_ptr to a Test object initialized with
+   that integer, and adds the shared pointer to the vector.
+
+3. Write a function named display that takes a vector of shared_ptrs to Test objects and prints the data stored
+   in each Test object.
+
+4. Use the following main function exactly as provided:
+
+int main() {
+    std::unique_ptr<std::vector<std::shared_ptr<Test>>> vec_ptr;
+    vec_ptr = make();
+    std::cout << "How many data points do you want to enter: ";
+    int num;
+    std::cin >> num;
+    fill(*vec_ptr, num);
+    display(*vec_ptr);
+    return 0;
+}
+
+Sample run when the user enters 3:
+
+How many data points do you want to enter: 3
+Enter data point [1] : 10
+        Test constructor (10)
+Enter data point [2] : 20
+        Test constructor (20)
+Enter data point [3] : 30
+        Test constructor (30)
+Displaying vector data
+=======================
+10
+20
+30
+=======================
+        Test destructor (10)
+        Test destructor (20)
+        Test destructor (30)
+
+Function prototypes are provided in the starter code.
+You may modify them if you wish.
+Have fun and experiment!
+***********************************************************************************************************/
