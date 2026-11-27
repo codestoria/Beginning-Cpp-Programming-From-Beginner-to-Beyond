@@ -164,6 +164,7 @@ void test6() {
         else
             it++;  // Only advance the iterator when no element is erased
     }
+
     display(vec);
 }
 
