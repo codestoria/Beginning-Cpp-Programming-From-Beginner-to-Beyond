@@ -6,52 +6,46 @@
 
 // Template function: returns the smaller of two values of the same type T
 template <typename T>
-T min(T a, T b)
-{
+T min(T a, T b) {
     return (a < b) ? a : b;
 }
 
 // Template function: accepts two potentially different types and prints them
 template <typename T1, typename T2>
-void func(T1 a, T2 b)
-{
+void func(T1 a, T2 b) {
     std::cout << a << " " << b << std::endl;
 }
 
 // Custom user-defined type Person
-struct Person
-{
+struct Person {
     std::string name;
     int age;
 
     // Overload less‑than operator: compare Person instances by age
-    bool operator<(const Person &rhs) const
-    {
+    bool operator<(const Person &rhs) const {
         return this->age < rhs.age;
     }
 };
 
 // Overload stream insertion operator to support printing Person objects
-std::ostream &operator<<(std::ostream &os, const Person &p)
-{
+std::ostream &operator<<(std::ostream &os, const Person &p) {
     os << p.name;
     return os;
 }
 
 // Generic swap function: swaps two variables of the same type T using references
 template <typename T>
-void my_swap(T &a, T &b)
-{
+void my_swap(T &a, T &b) {
     T temp = a;
     a = b;
     b = temp;
 }
 
-int main()
-{
+int main() {
     int x{100};
     int y{200};
     std::cout << x << ", " << y << std::endl;
+
     my_swap(x, y);
     std::cout << x << ", " << y << std::endl;
 
