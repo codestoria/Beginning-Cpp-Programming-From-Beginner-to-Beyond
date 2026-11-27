@@ -8,12 +8,13 @@
 #include <iterator>
 
 class Person {
-    friend std::ostream &operator<<(std::ostream &os, const Person &p);
     std::string name;
     int age;
+    friend std::ostream &operator<<(std::ostream &os, const Person &p);
 
 public:
     Person() = default;
+
     Person(std::string name, int age)
         : name{name}, age{age} {}
 
@@ -34,8 +35,10 @@ std::ostream &operator<<(std::ostream &os, const Person &p) {
 // Use std::for_each and a lambda to print vector elements
 void display2(const std::vector<int> &vec) {
     std::cout << "[ ";
+
     std::for_each(vec.begin(), vec.end(),
         [](int x) { std::cout << x << " "; });
+
     std::cout << "]" << std::endl;
 }
 
@@ -43,8 +46,10 @@ void display2(const std::vector<int> &vec) {
 template <typename T>
 void display(const std::vector<T> &vec) {
     std::cout << "[ ";
+
     for (const auto &elem : vec)
         std::cout << elem << " ";
+
     std::cout << "]" << std::endl;
 }
 
@@ -150,6 +155,7 @@ void test6() {
     display(vec);
 
     vec = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+
     // Erase all even numbers
     auto it = vec.begin();
     while (it != vec.end()) {
@@ -213,6 +219,7 @@ void test9() {
 
     std::copy_if(vec1.begin(), vec1.end(), std::back_inserter(vec2),
         [](int x) { return x % 2 == 0; });
+
     display(vec1);
     display(vec2);
 }
@@ -229,6 +236,7 @@ void test10() {
     std::transform(vec1.begin(), vec1.end(), vec2.begin(),
         std::back_inserter(vec3),
         [](int x, int y) { return x * y; });
+
     display(vec3);
 }
 
@@ -250,6 +258,7 @@ void test11() {
     } else {
         std::cout << "Sorry, 5 not found" << std::endl;
     }
+
     display(vec1);
 }
 
