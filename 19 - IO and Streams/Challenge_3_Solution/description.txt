@@ -1,5 +1,6 @@
 Section 19
 Challenge 3
+
 Word finder
 
 Ask the user to enter a word
@@ -30,6 +31,3 @@ Enter the substring to search for: Frank
 The substring Frank was found 0 times
 
 Have fun!
-
-
-
