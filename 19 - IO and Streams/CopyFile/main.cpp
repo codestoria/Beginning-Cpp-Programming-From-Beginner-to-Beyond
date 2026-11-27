@@ -6,8 +6,8 @@
 #include <fstream>
 
 int main() {
-    std::ifstream in_file {"../poem.txt"};
-    std::ofstream out_file {"../poem_out.txt"};
+    std::ifstream in_file {"poem.txt"};
+    std::ofstream out_file {"poem_out.txt"};
 
     if (!in_file) {
         std::cerr << "Error opening input file" << std::endl;
