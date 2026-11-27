@@ -130,7 +130,7 @@ void test5() {
     std::string name;
     int age{};
     std::cout << "\nEnter the name of the next stooge: ";
-    getline(std::cin, name);
+    std::getline(std::cin, name);
     std::cout << "Enter their age: ";
     std::cin >> age;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
