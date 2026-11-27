@@ -16,7 +16,7 @@ public:
     Person() = default;
 
     Person(std::string name, int age)
-        : name{name}, age{age} {}
+        : name{std::move(name)}, age{age} {}
 
     bool operator<(const Person &rhs) const {
         return this->age < rhs.age;
