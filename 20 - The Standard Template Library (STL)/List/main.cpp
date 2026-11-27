@@ -8,11 +8,13 @@
 #include <iterator>  // For std::advance
 
 class Person {
-    friend std::ostream &operator<<(std::ostream &os, const Person &p);
     std::string name;
     int age;
+    friend std::ostream &operator<<(std::ostream &os, const Person &p);
+
 public:
     Person() : name{"Unknown"}, age{0} {}
+
     Person(std::string name, int age)
         : name{name}, age{age} {}
 
@@ -33,9 +35,11 @@ std::ostream &operator<<(std::ostream &os, const Person &p) {
 template <typename T>
 void display(const std::list<T> &l) {
     std::cout << "[ ";
+
     for (const auto &elem : l) {
         std::cout << elem << " ";
     }
+
     std::cout << "]" << std::endl;
 }
 
