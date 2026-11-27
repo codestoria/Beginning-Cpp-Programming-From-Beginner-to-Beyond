@@ -15,6 +15,7 @@ class Person {
 
 public:
     Person() = default;
+
     Person(std::string name, int age)
         : name{name}, age{age} {}
 
@@ -57,6 +58,7 @@ void count_test() {
     std::cout << "\n========================" << std::endl;
 
     std::vector<int> vec {1, 2, 3, 4, 5, 1, 2, 1};
+
     int num = std::count(vec.begin(), vec.end(), 1);
     std::cout << num << " occurrences found" << std::endl;
 }
