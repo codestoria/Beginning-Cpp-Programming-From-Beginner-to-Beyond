@@ -74,7 +74,7 @@ void test2() {
 
     l.clear();
     display(l);
-    std::cout << "Size: " << l.size() << std::endl;
+    std::cout << "Size  : " << l.size() << std::endl;
 }
 
 void test3() {
