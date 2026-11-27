@@ -56,9 +56,9 @@ You can watch the course lectures on Bilibili for free:
 | **14** | Operator Overloading | [Note](./cpp-notes/14.%20Operator%20Overloading) | Code |
 | **15** | Inheritance | [Note](./cpp-notes/15.%20Inheritance) | Code |
 | **16** | Polymorphism | [Note](./cpp-notes/16.%20Polymorphism) | Code |
-| **17** | Smart Pointers | [Note](./cpp-notes/17.%20Smart%20Pointers) | Code |
-| **18** | Exception Handling | [Note](./cpp-notes/18.%20Exception%20Handling) | Code |
-| **19** | I/O and Streams | [Note](./cpp-notes/19.%20IO%20and%20Streams) | Code |
+| **17** | Smart Pointers | [Note](./cpp-notes/17.%20Smart%20Pointers) | [Code](./17%20-%20Smart%20Pointers) |
+| **18** | Exception Handling | [Note](./cpp-notes/18.%20Exception%20Handling) | [Code](./18%20-%20Exception%20Handling) |
+| **19** | I/O and Streams | [Note](./cpp-notes/19.%20IO%20and%20Streams) | [Code](./19%20-%20IO%20and%20Streams) |
 | **20** | The Standard Template Library (STL) | [Note](./cpp-notes/20.%20The%20Standard%20Template%20Library%20%28STL%29) | [Code](./20%20-%20The%20Standard%20Template%20Library%20%28STL%29/) |
 | **21** | Lambda Expressions | [Note](./cpp-notes/21.%20Lambda%20Expressions) | Code |
 | **23** | Enumerations | [Note](./cpp-notes/23.%20Bonus%20Section%20-%20Enumerations) | Code |

@@ -56,9 +56,9 @@
 | **14** | Operator Overloading（运算符重载） | [笔记](./cpp-notes/14.%20Operator%20Overloading) | 代码 |
 | **15** | Inheritance（继承） | [笔记](./cpp-notes/15.%20Inheritance) | 代码 |
 | **16** | Polymorphism（多态） | [笔记](./cpp-notes/16.%20Polymorphism) | 代码 |
-| **17** | Smart Pointers（智能指针） | [笔记](./cpp-notes/17.%20Smart%20Pointers) | 代码 |
-| **18** | Exception Handling（异常处理） | [笔记](./cpp-notes/18.%20Exception%20Handling) | 代码 |
-| **19** | I/O and Streams（I/O 与流） | [笔记](./cpp-notes/19.%20IO%20and%20Streams) | 代码 |
+| **17** | Smart Pointers（智能指针） | [笔记](./cpp-notes/17.%20Smart%20Pointers) | [代码](./17%20-%20Smart%20Pointers) |
+| **18** | Exception Handling（异常处理） | [笔记](./cpp-notes/18.%20Exception%20Handling) | [代码](./18%20-%20Exception%20Handling) |
+| **19** | I/O and Streams（I/O 与流） | [笔记](./cpp-notes/19.%20IO%20and%20Streams) | [代码](./19%20-%20IO%20and%20Streams) |
 | **20** | The Standard Template Library (STL)（标准模板库 STL） | [笔记](./cpp-notes/20.%20The%20Standard%20Template%20Library%20%28STL%29) | [代码](./20%20-%20The%20Standard%20Template%20Library%20%28STL%29/) |
 | **21** | Lambda Expressions（Lambda 表达式） | [笔记](./cpp-notes/21.%20Lambda%20Expressions) | 代码 |
 | **23** | Enumerations（枚举） | [笔记](./cpp-notes/23.%20Bonus%20Section%20-%20Enumerations) | 代码 |
