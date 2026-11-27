@@ -10,9 +10,11 @@
 // Print all integers in a vector using a range-based for loop
 void display(const std::vector<int> &vec) {
     std::cout << "[ ";
+
     for (auto const &i : vec) {
         std::cout << i << " ";
     }
+
     std::cout << "]" << std::endl;
 }
 
@@ -38,6 +40,7 @@ void test1() {
 
 void test2() {
     std::cout << "\n=============================" << std::endl;
+
     // Print all vector elements using a random-access iterator
     std::vector<int> nums1 {1, 2, 3, 4, 5};
 
@@ -59,12 +62,12 @@ void test2() {
 
 void test3() {
     std::cout << "\n=============================" << std::endl;
+
     // Use a const_iterator; the referenced elements cannot be modified
     std::vector<int> nums1 {1, 2, 3, 4, 5};
 
     std::vector<int>::const_iterator it1 = nums1.begin();
     // auto it1 = nums1.cbegin();
-
     while (it1 != nums1.end()) {
         std::cout << *it1 << std::endl;
         it1++;
@@ -79,8 +82,11 @@ void test3() {
 }
 
 void test4() {
+    std::cout << "\n=============================" << std::endl;
+
     // Reverse iterator: traverses the vector from last element toward first
     std::vector<int> vec {1, 2, 3, 4};
+
     auto it1 = vec.rbegin();  // Reverse iterator starting at element 4
     while (it1 != vec.rend()) {
         std::cout << *it1 << std::endl;
@@ -89,8 +95,10 @@ void test4() {
 
     // Constant reverse iterator over a list of strings
     std::list<std::string> names {"Larry", "Moe", "Curly"};
+
     auto it2 = names.crbegin();  // Const reverse iterator pointing to "Curly"
     std::cout << *it2 << std::endl;
+
     it2++;  // Points to "Moe"
     std::cout << *it2 << std::endl;
 
@@ -100,6 +108,7 @@ void test4() {
         {"Bill", "Java"},
         {"James", "Haskell"}
     };
+
     auto it3 = favorites.begin();  // Iterator over map<string, string> pairs
     while (it3 != favorites.end()) {
         std::cout << it3->first << " : " << it3->second << std::endl;
@@ -108,8 +117,11 @@ void test4() {
 }
 
 void test5() {
+    std::cout << "\n=============================" << std::endl;
+
     // Iterate over a contiguous subrange of vector elements
     std::vector<int> vec {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+
     auto start = vec.begin() + 2;
     auto finish = vec.end() - 3;
 
