@@ -103,6 +103,8 @@ void replace_test() {
 
 // Check whether every element satisfies the predicate with std::all_of
 void all_of_test() {
+    std::cout << "\n========================" << std::endl;
+
     std::vector<int> vec1 {1, 3, 5, 7, 9, 1, 3, 13, 19, 5};
 
     if (std::all_of(vec1.begin(), vec1.end(), [](int x) { return x > 10; }))
