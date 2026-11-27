@@ -1,11 +1,12 @@
 // Section 20
 // List
 
-#include <iostream>
-#include <string>
-#include <list>
 #include <algorithm>
+#include <iostream>
 #include <iterator>  // For std::advance
+#include <limits>
+#include <list>
+#include <string>
 
 class Person {
     std::string name;
@@ -16,7 +17,7 @@ public:
     Person() : name{"Unknown"}, age{0} {}
 
     Person(std::string name, int age)
-        : name{name}, age{age} {}
+        : name{std::move(name)}, age{age} {}
 
     bool operator<(const Person &rhs) const {
         return this->age < rhs.age;
@@ -67,7 +68,7 @@ void test2() {
 
     std::list<int> l {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     display(l);
-    std::cout << "Size: " << l.size() << std::endl;
+    std::cout << "Size  : " << l.size() << std::endl;
     std::cout << "Front : " << l.front() << std::endl;
     std::cout << "Back  : " << l.back() << std::endl;
 
@@ -132,14 +133,16 @@ void test5() {
     getline(std::cin, name);
     std::cout << "Enter their age: ";
     std::cin >> age;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     stooges.emplace_back(name, age);
     display(stooges);
 
     // Insert Frank before Moe
     auto it = std::find(stooges.begin(), stooges.end(), Person{"Moe", 25});
-    if (it != stooges.end())
+    if (it != stooges.end()) {
         stooges.emplace(it, "Frank", 18);
+    }
     display(stooges);
 }
 
