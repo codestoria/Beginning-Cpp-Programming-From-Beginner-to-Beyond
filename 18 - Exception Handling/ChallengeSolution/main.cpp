@@ -11,6 +11,7 @@ using namespace std;
 int main() {
     std::unique_ptr<Account> moes_account;
     std::unique_ptr<Account> larrys_account;
+
     try {
         larrys_account = std::make_unique<Savings_Account>("Larry", -2000.0);
         std::cout << *larrys_account << std::endl;
@@ -31,6 +32,8 @@ int main() {
     } catch (const InsufficientFundsException &ex) {
         std::cerr << ex.what() << std::endl;
     }
+
     std::cout << "Program completed successfully" << std::endl;
+
     return 0;
 }

@@ -30,4 +30,4 @@ class Trust_Account : public Savings_Account {
     virtual ~Trust_Account() = default;
 };
 
-#endif // TRUST_ACCOUNT_H
+#endif  // TRUST_ACCOUNT_H
