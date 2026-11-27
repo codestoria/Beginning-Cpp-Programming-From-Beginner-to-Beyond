@@ -19,10 +19,13 @@ class Array {
 
     friend std::ostream &operator<<(std::ostream &os, const Array<T, N> &arr) {
         os << "[ ";
+    
         for (const auto &val : arr.values) {
             os << val << " ";
         }
+    
         os << "]" << std::endl;
+    
         return os;
     }
 
