@@ -8,8 +8,7 @@
 
 // Print contents of an std::array.
 // The template size parameter must be specified when passing std::array to a function.
-void display(const std::array<int, 5> &arr)
-{
+void display(const std::array<int, 5> &arr) {
     std::cout << "[ ";
 
     for (const auto &i : arr) {
