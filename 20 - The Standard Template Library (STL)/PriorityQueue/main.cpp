@@ -12,6 +12,7 @@ class Person {
 
 public:
     Person() : name{"Unknown"}, age{0} {}
+
     Person(std::string name, int age)
         : name{name}, age{age} {}
 
@@ -35,11 +36,13 @@ std::ostream &operator<<(std::ostream &os, const Person &p) {
 template <typename T>
 void display(std::priority_queue<T> pq) {
     std::cout << "[ ";
+
     while (!pq.empty()) {
         T elem = pq.top();
         pq.pop();
         std::cout << elem << " ";
     }
+
     std::cout << "]" << std::endl;
 }
 
@@ -62,6 +65,7 @@ void test2() {
     std::cout << "\nTest2 =========================" << std::endl;
 
     std::priority_queue<Person> pq;
+
     pq.push(Person{"A", 10});
     pq.push(Person{"B", 1});
     pq.push(Person{"C", 14});
