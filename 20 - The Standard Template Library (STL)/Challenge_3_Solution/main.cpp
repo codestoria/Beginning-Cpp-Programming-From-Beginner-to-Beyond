@@ -26,8 +26,7 @@ void display_words(const std::map<std::string, int> &words) {
 // Used for Part2
 // Display the word and occurrences from the
 // std::map<std::string, std::set<int>>
-void display_words(const std::map<std::string, std::set<int>> &words)
-{
+void display_words(const std::map<std::string, std::set<int>> &words) {
     std::cout << std::setw(12) << std::left << "\nWord"
               << "Occurrences" << std::endl;
     std::cout << "=====================================================================" << std::endl;
