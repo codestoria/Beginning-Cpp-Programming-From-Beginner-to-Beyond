@@ -14,7 +14,7 @@ public:
     Person() : name{"Unknown"}, age{0} {}
 
     Person(std::string name, int age)
-        : name{name}, age{age} {}
+        : name{std::move(name)}, age{age} {}
 
     bool operator<(const Person &rhs) const {
         // return this->age < rhs.age;
@@ -38,7 +38,7 @@ void display(std::priority_queue<T> pq) {
     std::cout << "[ ";
 
     while (!pq.empty()) {
-        T elem = pq.top();
+        T elem = std::move(pq.top());
         pq.pop();
         std::cout << elem << " ";
     }
