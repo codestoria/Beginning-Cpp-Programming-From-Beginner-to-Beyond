@@ -12,6 +12,7 @@ class Person {
 
 public:
     Person() : name{"Unknown"}, age{0} {}
+
     Person(std::string name, int age)
         : name{name}, age{age} {}
 
@@ -32,9 +33,11 @@ std::ostream &operator<<(std::ostream &os, const Person &p) {
 template <typename T>
 void display(const std::set<T> &l) {
     std::cout << "[ ";
+
     for (const auto &elem : l) {
         std::cout << elem << " ";
     }
+
     std::cout << "]" << std::endl;
 }
 
